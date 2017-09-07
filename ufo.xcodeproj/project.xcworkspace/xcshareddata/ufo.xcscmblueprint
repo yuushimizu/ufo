@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6E10B9771BD3BEF69727B7A3A1650E4320FD2DE8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E15DB660177565C906872B5A14481570386BFA7A" : 9223372036854775807,
+    "76A15575C5B740800EF8E92EA66B97A276AEF659" : 9223372036854775807,
+    "6E10B9771BD3BEF69727B7A3A1650E4320FD2DE8" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2CD75710-725B-40F3-B955-0186A14E9454",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E15DB660177565C906872B5A14481570386BFA7A" : "..\/..",
+    "76A15575C5B740800EF8E92EA66B97A276AEF659" : "ufo\/extsrc\/googletest\/",
+    "6E10B9771BD3BEF69727B7A3A1650E4320FD2DE8" : "ufo\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ufo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ufo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:yuushimizu\/UFO",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6E10B9771BD3BEF69727B7A3A1650E4320FD2DE8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:google\/googletest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "76A15575C5B740800EF8E92EA66B97A276AEF659"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:yuushimizu\/RogueLikeRPG.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E15DB660177565C906872B5A14481570386BFA7A"
+    }
+  ]
+}

@@ -130,7 +130,7 @@ namespace {
     
     TEST(CoordTest, Range) {
         std::vector<int> r {};
-        for (auto &&c : range(Coord<int>(3, 4), Coord<int>(8, 7))) {
+        for (auto c : range(Coord<int>(3, 4), Coord<int>(8, 7))) {
             r.emplace_back(c.x() * c.y());
         }
         ASSERT_EQ((std::vector<int> {12, 16, 20, 24, 28, 15, 20, 25, 30, 35, 18, 24, 30, 36, 42}), r);
@@ -138,7 +138,7 @@ namespace {
     
     TEST(CoordTest, RangeWithoutBegin) {
         std::vector<int> r {};
-        for (auto &&c : range(Coord<int>(2, 3))) {
+        for (auto c : range(Coord<int>(2, 3))) {
             r.emplace_back(c.x() * c.y());
         }
         ASSERT_EQ((std::vector<int> {0, 0, 0, 1, 0, 2}), r);

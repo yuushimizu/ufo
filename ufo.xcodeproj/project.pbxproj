@@ -19,6 +19,7 @@
 		CA5AEDF01F60E37E0095F382 /* join.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDEA1F60E37E0095F382 /* join.cpp */; };
 		CA5AEDF11F60E37E0095F382 /* repeatedly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDEB1F60E37E0095F382 /* repeatedly.cpp */; };
 		CA5AEDF21F60E37E0095F382 /* transformed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDEC1F60E37E0095F382 /* transformed.cpp */; };
+		CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC0C0D21F72557100A22185 /* coroutine.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		CA5AEDEB1F60E37E0095F382 /* repeatedly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = repeatedly.cpp; path = ../../../Test/util/range/repeatedly.cpp; sourceTree = "<group>"; };
 		CA5AEDEC1F60E37E0095F382 /* transformed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = transformed.cpp; path = ../../../Test/util/range/transformed.cpp; sourceTree = "<group>"; };
 		CA684D151F5FE24B00F18476 /* libufo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libufo.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAC0C0D21F72557100A22185 /* coroutine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = coroutine.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 				CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */,
 				CA5AEDDD1F5FFB860095F382 /* math.cpp */,
 				CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */,
+				CAC0C0D21F72557100A22185 /* coroutine.cpp */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -235,7 +238,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0900;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Yuu Shimizu";
 				TargetAttributes = {
 					CA3ED33F1F5FE43500DA2EF1 = {
@@ -333,6 +336,7 @@
 			files = (
 				CA5AEDE01F5FFBBF0095F382 /* memory.cpp in Sources */,
 				CA3ED3431F5FE43500DA2EF1 /* main.cpp in Sources */,
+				CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */,
 				CA5AEDF11F60E37E0095F382 /* repeatedly.cpp in Sources */,
 				CA5AEDF21F60E37E0095F382 /* transformed.cpp in Sources */,
 				CA5AEDF01F60E37E0095F382 /* join.cpp in Sources */,
@@ -397,11 +401,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -409,7 +415,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -435,10 +445,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-std=c++1z",
-				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -449,11 +455,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -461,7 +469,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -480,10 +492,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-std=c++1z",
-				);
 				SDKROOT = macosx;
 			};
 			name = Release;

@@ -16,7 +16,7 @@ namespace {
         v[coord(1, 2)] = 12;
         std::vector<Coord<int>> indices;
         std::vector<int> values;
-        for (auto &&entry : indexed_range(v)) {
+        for (auto entry : indexed_range(v)) {
             indices.emplace_back(entry.index);
             values.emplace_back(entry.value);
         }
@@ -26,7 +26,7 @@ namespace {
     
     TEST(Vector2DTest, IndexedRangeReturnsReference) {
         Vector2D<int> v(coord(3, 2));
-        for (auto &&entry : indexed_range(v)) {
+        for (auto entry : indexed_range(v)) {
             entry.value = entry.index.area();
         }
         ASSERT_EQ((std::vector<int> {0, 0, 0, 0, 1, 2}), v | as_vector());

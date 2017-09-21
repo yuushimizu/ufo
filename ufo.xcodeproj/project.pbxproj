@@ -95,12 +95,12 @@
 		CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2D.cpp; sourceTree = "<group>"; };
 		CA5AEDDD1F5FFB860095F382 /* math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = math.cpp; sourceTree = "<group>"; };
 		CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
-		CA5AEDE71F60E37E0095F382 /* arithmetic_progression.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = arithmetic_progression.cpp; path = ../../../Test/util/range/arithmetic_progression.cpp; sourceTree = "<group>"; };
-		CA5AEDE81F60E37E0095F382 /* filtered.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filtered.cpp; path = ../../../Test/util/range/filtered.cpp; sourceTree = "<group>"; };
-		CA5AEDE91F60E37E0095F382 /* iterate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = iterate.cpp; path = ../../../Test/util/range/iterate.cpp; sourceTree = "<group>"; };
-		CA5AEDEA1F60E37E0095F382 /* join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = join.cpp; path = ../../../Test/util/range/join.cpp; sourceTree = "<group>"; };
-		CA5AEDEB1F60E37E0095F382 /* repeatedly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = repeatedly.cpp; path = ../../../Test/util/range/repeatedly.cpp; sourceTree = "<group>"; };
-		CA5AEDEC1F60E37E0095F382 /* transformed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = transformed.cpp; path = ../../../Test/util/range/transformed.cpp; sourceTree = "<group>"; };
+		CA5AEDE71F60E37E0095F382 /* arithmetic_progression.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = arithmetic_progression.cpp; path = range/arithmetic_progression.cpp; sourceTree = "<group>"; };
+		CA5AEDE81F60E37E0095F382 /* filtered.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filtered.cpp; path = range/filtered.cpp; sourceTree = "<group>"; };
+		CA5AEDE91F60E37E0095F382 /* iterate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = iterate.cpp; path = range/iterate.cpp; sourceTree = "<group>"; };
+		CA5AEDEA1F60E37E0095F382 /* join.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = join.cpp; path = range/join.cpp; sourceTree = "<group>"; };
+		CA5AEDEB1F60E37E0095F382 /* repeatedly.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = repeatedly.cpp; path = range/repeatedly.cpp; sourceTree = "<group>"; };
+		CA5AEDEC1F60E37E0095F382 /* transformed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = transformed.cpp; path = range/transformed.cpp; sourceTree = "<group>"; };
 		CA684D151F5FE24B00F18476 /* libufo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libufo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAC0C0D21F72557100A22185 /* coroutine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = coroutine.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */

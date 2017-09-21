@@ -5,11 +5,13 @@ using namespace ufo;
 
 namespace {
     TEST(CoroutineTest, Flat) {
-        auto coro = coroutine<int>([]() {
-            return 42;
-        }, []() {
-            return 84;
-        });
+        auto coro = coroutine<int()> {
+            []() {
+                return 42;
+            }, []() {
+                return 84;
+            }
+        };
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ(42, coro());
         ASSERT_FALSE(coro.is_finished());
@@ -18,13 +20,17 @@ namespace {
     }
     
     TEST(CoroutineTest, Nested) {
-        auto coro = coroutine<int>([]() {
-            return coroutine<int>([]() {
-                return 10;
-            }, []() {
-                return 20;
-            });
-        });
+        auto coro = coroutine<int()> {
+            []() {
+                return coroutine<int()> {
+                    []() {
+                        return 10;
+                    }, []() {
+                        return 20;
+                    }
+                };
+            }
+        };
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ(10, coro());
         ASSERT_FALSE(coro.is_finished());
@@ -33,17 +39,21 @@ namespace {
     }
     
     TEST(CoroutineTest, Mixed) {
-        auto coro = coroutine<std::string>([]() {
-            return "foo";
-        }, [] () {
-            return coroutine<std::string>([]() {
-                return "foo/hoge";
+        auto coro = coroutine<std::string()> {
+            []() {
+                return "foo";
+            }, [] () {
+                return coroutine<std::string()> {
+                    []() {
+                        return "foo/hoge";
+                    }, []() {
+                        return "foo/piyo";
+                    }
+                };
             }, []() {
-                return "foo/piyo";
-            });
-        }, []() {
-            return "bar";
-        });
+                return "bar";
+            }
+        };
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ("foo", coro());
         ASSERT_FALSE(coro.is_finished());
@@ -56,11 +66,13 @@ namespace {
     }
     
     TEST(CoroutineTest, Parameters) {
-        auto coro = coroutine<int, int, int>([](int n, int m) {
-            return n + m;
-        }, [](int n, int m) {
-            return n * m;
-        });
+        auto coro = coroutine<int(int, int)> {
+            [](int n, int m) {
+                return n + m;
+            }, [](int n, int m) {
+                return n * m;
+            }
+        };
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ(7, coro(5, 2));
         ASSERT_FALSE(coro.is_finished());
@@ -69,13 +81,17 @@ namespace {
     }
     
     TEST(CoroutineTest, ParametersNested) {
-        auto coro = coroutine<int, int>([](int n) {
-            return coroutine<int, int>([n](int m) {
-                return n * m;
-            }, [n](int m) {
-                return n + m;
-            });
-        });
+        auto coro = coroutine<int(int)> {
+            [](int n) {
+                return coroutine<int(int)> {
+                    [n](int m) {
+                        return n * m;
+                    }, [n](int m) {
+                        return n + m;
+                    }
+                };
+            }
+        };
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ(64, coro(8));
         ASSERT_FALSE(coro.is_finished());
@@ -84,11 +100,13 @@ namespace {
     }
     
     TEST(CoroutineTest, ParametersReference) {
-        auto coro = coroutine<void, int &>([](int &acc) {
-            acc += 1;
-        }, [](int &acc) {
-            acc += 10;
-        });
+        auto coro = coroutine<void(int &)> {
+            [](int &acc) {
+                acc += 1;
+            }, [](int &acc) {
+                acc += 10;
+            }
+        };
         int x = 5;
         ASSERT_FALSE(coro.is_finished());
         coro(x);
@@ -99,17 +117,21 @@ namespace {
         ASSERT_TRUE(coro.is_finished());
     }
     
-    Coroutine<int> make_coro(int n) {
+    coroutine<int()> make_coro(int n) {
         if (n > 1) {
-            return coroutine<int>([n]() {
-                return n;
-            }, [n]() {
-                return make_coro(n - 1);
-            });
+            return coroutine<int()> {
+                [n]() {
+                    return n;
+                }, [n]() {
+                    return make_coro(n - 1);
+                }
+            };
         } else {
-            return coroutine<int>([]() {
-                return 1;
-            });
+            return coroutine<int()> {
+                []() {
+                    return 1;
+                }
+            };
         }
     }
     
@@ -129,13 +151,20 @@ namespace {
     }
     
     TEST(CoroutineTest, Concat) {
-        auto coro = coroutine<int>(coroutine<int>([]() {
-            return 1;
-        }, []() {
-            return 2;
-        }), coroutine<int>([]() {
-            return 3;
-        }));
+        auto coro = coroutine<int()> {
+            coroutine<int()> {
+                []() {
+                    return 1;
+                }, []() {
+                    return 2;
+                }
+            },
+            coroutine<int()> {
+                []() {
+                    return 3;
+                }
+            }
+        };
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ(1, coro());
         ASSERT_FALSE(coro.is_finished());

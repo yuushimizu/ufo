@@ -8,8 +8,11 @@
 #include "scope_exit.hpp"
 
 namespace ufo {
+    template <typename>
+    class coroutine;
+    
     template <typename R, typename ... Args>
-    class Coroutine {
+    class coroutine<R(Args ...)> {
     public:
         class Part {
         private:
@@ -50,7 +53,7 @@ namespace ufo {
             
             class Nested : public Impl {
             public:
-                Nested(std::function<Coroutine<R, Args ...>(Args ...)> f) : f_(std::move(f)) {
+                Nested(std::function<coroutine<R(Args ...)>(Args ...)> f) : f_(std::move(f)) {
                 }
                 
                 virtual R operator()(Args ... args) {
@@ -65,14 +68,14 @@ namespace ufo {
                 }
                 
             private:
-                std::function<Coroutine<R, Args ...>(Args ...)> f_;
-                std::experimental::optional<Coroutine<R, Args ...>> coro_ = std::experimental::nullopt;
+                std::function<coroutine<R(Args ...)>(Args ...)> f_;
+                std::experimental::optional<coroutine<R(Args ...)>> coro_ = std::experimental::nullopt;
                 bool called_ = false;
             };
             
             class Delegate : public Impl {
             public:
-                Delegate(Coroutine<R, Args ...> coro) : coro_(std::move(coro)) {
+                Delegate(coroutine<R(Args ...)> coro) : coro_(std::move(coro)) {
                 }
                 
                 virtual R operator()(Args ... args) {
@@ -83,16 +86,16 @@ namespace ufo {
                 }
                 
             private:
-                Coroutine<R, Args ...> coro_;
+                coroutine<R(Args ...)> coro_;
             };
         public:
-            Part(std::function<R(Args ...)> f) : impl_(std::make_unique<Normal>(std::move(f))) {
+            explicit Part(std::function<R(Args ...)> f) : impl_(std::make_unique<Normal>(std::move(f))) {
             }
             
-            Part(std::function<Coroutine<R, Args ...>(Args ...)> f) : impl_(std::make_unique<Nested>(std::move(f))) {
+            explicit Part(std::function<coroutine<R(Args ...)>(Args ...)> f) : impl_(std::make_unique<Nested>(std::move(f))) {
             }
             
-            Part(Coroutine<R, Args ...> coro) : impl_(std::make_unique<Delegate>(std::move(coro))) {
+            explicit Part(coroutine<R(Args ...)> coro) : impl_(std::make_unique<Delegate>(std::move(coro))) {
             }
             
             R operator()(Args ... args) {
@@ -107,19 +110,24 @@ namespace ufo {
             std::unique_ptr<Impl> impl_;
         };
         
-        Coroutine() : parts_ {} {
+        coroutine() : parts_ {} {
+        }
+
+        template <typename F, typename ... Fs>
+        explicit coroutine(F f, Fs ... fs) : coroutine(std::move(fs) ...) {
+            parts_.push_front(Part(std::move(f)));
         }
         
-        Coroutine(std::deque<Part> parts) : parts_(std::move(parts)) {
+        explicit coroutine(std::deque<Part> parts) : parts_(std::move(parts)) {
         }
         
-        Coroutine(const Coroutine &) = delete;
+        coroutine(const coroutine &) = delete;
         
-        Coroutine(Coroutine &&) = default;
+        coroutine(coroutine &&) = default;
         
-        Coroutine &operator=(const Coroutine &) = delete;
+        coroutine &operator=(const coroutine &) = delete;
         
-        Coroutine &operator=(Coroutine &&) = default;
+        coroutine &operator=(coroutine &&) = default;
         
         R operator()(Args ... args) {
             auto pop_finished = scope_exit([this]() {
@@ -135,25 +143,6 @@ namespace ufo {
     private:
         std::deque<Part> parts_;
     };
-    
-    namespace coroutine_ {
-        template <typename R, typename ... Args>
-        void create_parts(std::deque<typename Coroutine<R, Args ...>::Part> &parts) {
-        }
-        
-        template <typename R, typename ... Args, typename F, typename ... Fs>
-        void create_parts(std::deque<typename Coroutine<R, Args ...>::Part> &parts, F f, Fs ... fs) {
-            parts.push_back(typename Coroutine<R, Args ...>::Part(std::move(f)));
-            create_parts<R, Args ...>(parts, std::move(fs) ...);
-        }
-    }
-    
-    template <typename R, typename ... Args, typename ... Fs>
-    auto coroutine(Fs && ... fs) {
-        std::deque<typename Coroutine<R, Args ...>::Part> parts {};
-        coroutine_::create_parts<R, Args ...>(parts, std::move(fs) ...);
-        return Coroutine<R, Args ...>(std::move(parts));
-    }
 }
 
 #endif

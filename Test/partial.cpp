@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
-#include "ufo/it.hpp"
+#include "ufo/partial.hpp"
 
 using namespace ufo;
 
 namespace {
-    TEST(ItTest, LeftEqual) {
-        auto f = (it == 10);
+    TEST(PartialTest, LeftEqual) {
+        auto f = (_ == 10);
         ASSERT_TRUE(f(10));
         ASSERT_FALSE(f(11));
     }
     
-    TEST(ItTest, RightEqual) {
-        auto f = (24 == it);
+    TEST(PartialTest, RightEqual) {
+        auto f = (24 == _);
         ASSERT_TRUE(f(24));
         ASSERT_FALSE(f(20));
     }

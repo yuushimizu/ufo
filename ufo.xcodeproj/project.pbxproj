@@ -21,6 +21,7 @@
 		CA5AEDF21F60E37E0095F382 /* transformed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDEC1F60E37E0095F382 /* transformed.cpp */; };
 		CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC0C0D21F72557100A22185 /* coroutine.cpp */; };
 		CAF018931F7A575300E301CE /* partial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018911F7A575300E301CE /* partial.cpp */; };
+		CAF018A81F7A7F4D00E301CE /* scope_exit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +106,7 @@
 		CA684D151F5FE24B00F18476 /* libufo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libufo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAC0C0D21F72557100A22185 /* coroutine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = coroutine.cpp; sourceTree = "<group>"; };
 		CAF018911F7A575300E301CE /* partial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = partial.cpp; sourceTree = "<group>"; };
+		CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scope_exit.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */,
 				CAC0C0D21F72557100A22185 /* coroutine.cpp */,
 				CAF018911F7A575300E301CE /* partial.cpp */,
+				CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */,
 				CA5AEDF11F60E37E0095F382 /* repeatedly.cpp in Sources */,
 				CA5AEDF21F60E37E0095F382 /* transformed.cpp in Sources */,
+				CAF018A81F7A7F4D00E301CE /* scope_exit.cpp in Sources */,
 				CA5AEDF01F60E37E0095F382 /* join.cpp in Sources */,
 				CA5AEDEF1F60E37E0095F382 /* iterate.cpp in Sources */,
 				CA5AEDD81F5FF74C0095F382 /* Coord.cpp in Sources */,

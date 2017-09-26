@@ -7,24 +7,14 @@
 #include "OptionalReference.hpp"
 
 namespace ufo {
-    template <typename Container, typename T>
-    void remove(Container &container, const T &element) {
-        container.erase(std::remove(adl_begin(container), adl_end(container), element), adl_end(container));
+    template <typename Range, typename F>
+    constexpr auto find_iterator(Range &&range, F &&predicate) {
+        return std::find_if(adl_begin(range), adl_end(range), std::forward<F>(predicate));
     }
     
-    template <typename Container, typename UnaryFunction>
-    void remove_if(Container &container, UnaryFunction &&predicate) {
-        container.erase(std::remove_if(adl_begin(container), adl_end(container), std::forward<UnaryFunction>(predicate)), adl_end(container));
-    }
-    
-    template <typename Range, typename T>
-    constexpr bool contains(const Range &range, const T &value) {
-        return std::find(adl_begin(range), adl_end(range), value) != adl_end(range);
-    }
-    
-    template <typename Range, typename UnaryFunction>
-    constexpr bool contains_if(const Range &range, UnaryFunction &&predicate) {
-        return std::find_if(adl_begin(range), adl_end(range), std::forward<UnaryFunction>(predicate)) != adl_end(range);
+    template <typename Range, typename F>
+    constexpr bool contains(const Range &range, F &&predicate) {
+        return find_iterator(range, std::forward<F>(predicate)) != adl_end(range);
     }
     
     template <typename Range, typename Iterator>
@@ -39,24 +29,19 @@ namespace ufo {
         return *iterator;
     }
 
-    template <typename Range, typename T>
-    constexpr auto find(Range &&range, const T &value) {
-        return iterator_value_optional(range, std::find(adl_begin(range), adl_end(range), value));
+    template <typename Range, typename F>
+    constexpr auto find(Range &&range, F &&predicate) {
+        return iterator_value_optional(range, find_iterator(range, std::forward<F>(predicate)));
     }
     
-    template <typename Range, typename T>
-    constexpr auto find_reference(Range &&range, const T &value) {
-        return iterator_reference_optional(range, std::find(adl_begin(range), adl_end(range), value));
+    template <typename Range, typename F>
+    constexpr auto find_reference(Range &&range, F &&predicate) {
+        return iterator_reference_optional(range, find_iterator(range, std::forward<F>(predicate)));
     }
     
-    template <typename Range, typename Predicate>
-    constexpr auto find_if(Range &&range, Predicate &&predicate) {
-        return iterator_value_optional(range, std::find_if(adl_begin(range), adl_end(range), std::forward<Predicate>(predicate)));
-    }
-    
-    template <typename Range, typename Predicate>
-    constexpr auto find_reference_if(Range &&range, Predicate &&predicate) {
-        return iterator_reference_optional(range, std::find_if(adl_begin(range), adl_end(range), std::forward<Predicate>(predicate)));
+    template <typename Container, typename F>
+    void remove(Container &container, F &&predicate) {
+        container.erase(std::remove_if(adl_begin(container), adl_end(container), std::forward<F>(predicate)), adl_end(container));
     }
 }
 

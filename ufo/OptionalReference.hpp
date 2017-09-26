@@ -6,7 +6,7 @@
 
 namespace ufo {
     template <typename T>
-    class OptionalReference {
+    class OptionalReference final {
     public:
         OptionalReference() : optional_ {} {
         }

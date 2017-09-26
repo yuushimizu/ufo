@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <type_traits>
+#include <sstream>
 #include "ufo/Coord.hpp"
 
 using namespace ufo;
@@ -142,5 +143,11 @@ namespace {
             r.emplace_back(c.x() * c.y());
         }
         ASSERT_EQ((std::vector<int> {0, 0, 0, 1, 0, 2}), r);
+    }
+    
+    TEST(CoordTest, Output) {
+        std::stringstream ss {};
+        ss << Coord<int>(1, 2);
+        ASSERT_EQ("(1, 2)", ss.str());
     }
 }

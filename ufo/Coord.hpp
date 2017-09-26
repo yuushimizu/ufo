@@ -130,14 +130,14 @@ namespace ufo {
     }
 
     template<typename T>
-    auto range(const Coord<T> &last) noexcept {
+    constexpr auto range(const Coord<T> &last) noexcept {
         return irange(last.area()) | transformed([last = last](auto &&n) {
             return coord(T(n % last.x()), T(std::floor(n / last.x())));
         });
     }
 
     template<typename T>
-    auto range(const Coord<T> &first, const Coord<T> &last) noexcept {
+    constexpr auto range(const Coord<T> &first, const Coord<T> &last) noexcept {
         return range(last - first) | transformed([first = first](auto &&coord) {
             return coord + first;
         });
@@ -150,7 +150,7 @@ namespace ufo {
     constexpr auto COORD_ONE = Coord<T>(1, 1);
 
     template<typename T>
-    auto &operator<<(std::ostream &o, const Coord<T> &coord) {
+    constexpr auto &operator<<(std::ostream &o, const Coord<T> &coord) {
         return o << "(" << coord.x() << ", " << coord.y() << ")";
     }
 }

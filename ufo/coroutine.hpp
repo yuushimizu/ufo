@@ -12,13 +12,23 @@ namespace ufo {
     class coroutine;
     
     template <typename R, typename ... Args>
-    class coroutine<R(Args ...)> {
+    class coroutine<R(Args ...)> final {
     public:
-        class Part {
+        class Part final {
         private:
             class Impl {
             public:
+                Impl() = default;
+                
                 virtual ~Impl() = default;
+                
+                Impl(const Impl &) = delete;
+                
+                Impl(Impl &&) = delete;
+                
+                Impl &operator=(const Impl &) = delete;
+                
+                Impl &operator=(Impl &&) = delete;
                 
                 virtual R operator()(Args ...) = 0;
                 
@@ -40,7 +50,9 @@ namespace ufo {
                 Normal(std::function<R(Args ...)> f) : f_(std::move(f)) {
                 }
                 
-                virtual R operator()(Args ... args) {
+                virtual ~Normal() = default;
+                
+                virtual R operator()(Args ... args) override {
                     auto finish = scope_exit([this]() {
                         this->finish();
                     });
@@ -56,7 +68,9 @@ namespace ufo {
                 Nested(std::function<coroutine<R(Args ...)>(Args ...)> f) : f_(std::move(f)) {
                 }
                 
-                virtual R operator()(Args ... args) {
+                virtual ~Nested() = default;
+                
+                virtual R operator()(Args ... args) override {
                     if (!called_) {
                         coro_ = f_(args ...);
                         called_ = true;
@@ -78,7 +92,9 @@ namespace ufo {
                 Delegate(coroutine<R(Args ...)> coro) : coro_(std::move(coro)) {
                 }
                 
-                virtual R operator()(Args ... args) {
+                virtual ~Delegate() = default;
+                
+                virtual R operator()(Args ... args) override {
                     auto finish = scope_exit([this]() {
                         if (this->coro_.is_finished()) this->finish();
                     });
@@ -97,6 +113,16 @@ namespace ufo {
             
             explicit Part(coroutine<R(Args ...)> coro) : impl_(std::make_unique<Delegate>(std::move(coro))) {
             }
+            
+            ~Part() = default;
+            
+            Part(const Part &) = delete;
+            
+            Part(Part &&) = default;
+            
+            Part &operator=(const Part &) = delete;
+            
+            Part &operator=(Part &&) = default;
             
             R operator()(Args ... args) {
                 return (*impl_)(std::forward<Args>(args) ...);
@@ -120,6 +146,8 @@ namespace ufo {
         
         explicit coroutine(std::deque<Part> parts) : parts_(std::move(parts)) {
         }
+        
+        ~coroutine() = default;
         
         coroutine(const coroutine &) = delete;
         

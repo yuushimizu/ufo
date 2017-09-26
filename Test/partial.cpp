@@ -16,6 +16,16 @@ namespace {
         ASSERT_FALSE(f(20));
     }
     
+    TEST(PartialTest, LeftPlus) {
+        auto f = (_ + 1);
+        ASSERT_EQ(15, f(14));
+    }
+
+    TEST(PartialTest, RightPlus) {
+        auto f = (10 + _);
+        ASSERT_EQ(23, f(13));
+    }
+    
     TEST(PartialTest, LeftModulo) {
         auto f = (_ % 2);
         ASSERT_EQ(1, f(7));

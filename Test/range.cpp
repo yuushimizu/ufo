@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
 #include "ufo/range.hpp"
 #include <vector>
-#include "ufo/placeholder.hpp"
+#include <placeholder/placeholder.hpp>
 
 using namespace ufo;
+using placeholder::_;
 
 namespace {
     // TODO find_iterator

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "ufo/range.hpp"
 #include <vector>
-#include "ufo/partial.hpp"
+#include "ufo/placeholder.hpp"
 
 using namespace ufo;
 

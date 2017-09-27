@@ -2,8 +2,8 @@
 #define ufo_type_traits
 
 namespace ufo {
-    template <bool value>
-    using nullptr_t_if_t = std::enable_if_t<value, std::nullptr_t>;
+    template <bool value, typename T = std::nullptr_t>
+    using enable_if_t = std::enable_if_t<value, T>;
     
     template <template <typename ...> class Template, typename T>
     struct is_instantiation_of : std::false_type {};

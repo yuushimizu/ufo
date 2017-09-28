@@ -131,14 +131,14 @@ namespace ufo {
 
     template<typename T>
     constexpr auto range(const Coord<T> &last) noexcept {
-        return irange(last.area()) | transformed([last = last](auto &&n) {
+        return irange(last.area()) | transformed(last](auto &&n) {
             return coord(T(n % last.x()), T(std::floor(n / last.x())));
         });
     }
 
     template<typename T>
     constexpr auto range(const Coord<T> &first, const Coord<T> &last) noexcept {
-        return range(last - first) | transformed([first = first](auto &&coord) {
+        return range(last - first) | transformed([first](auto &&coord) {
             return coord + first;
         });
     }

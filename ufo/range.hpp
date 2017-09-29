@@ -4,7 +4,7 @@
 #include <algorithm>
 #include "iterator.hpp"
 #include "optional.hpp"
-#include "OptionalReference.hpp"
+#include "optref.hpp"
 
 namespace ufo {
     template <typename Range, typename F>
@@ -24,7 +24,7 @@ namespace ufo {
     }
     
     template <typename Range, typename Iterator>
-    constexpr auto iterator_reference_optional(Range &&range, Iterator &&iterator) -> OptionalReference<std::remove_reference_t<decltype(*iterator)>> {
+    constexpr auto iterator_reference_optional(Range &&range, Iterator &&iterator) -> optref<std::remove_reference_t<decltype(*iterator)>> {
         if (iterator == adl_end(range)) return nullopt;
         return *iterator;
     }

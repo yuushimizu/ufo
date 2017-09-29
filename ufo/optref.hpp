@@ -1,47 +1,47 @@
-#ifndef ufo_OptionalReference
-#define ufo_OptionalReference
+#ifndef ufo_optref
+#define ufo_optref
 
 #include <functional>
 #include "optional.hpp"
 
 namespace ufo {
     template <typename T>
-    class OptionalReference final {
+    class optref final {
     public:
-        constexpr OptionalReference() : optional_ {} {
+        constexpr optref() : optional_ {} {
         }
         
-        constexpr OptionalReference(T &reference) : optional_(std::ref(reference)) {
+        constexpr optref(T &reference) : optional_(std::ref(reference)) {
         }
         
-        constexpr OptionalReference(nullopt_t) : optional_(nullopt) {
+        constexpr optref(nullopt_t) : optional_(nullopt) {
         }
         
-        ~OptionalReference() = default;
+        ~optref() = default;
         
-        constexpr OptionalReference(const OptionalReference &) = default;
+        constexpr optref(const optref &) = default;
         
-        constexpr OptionalReference(OptionalReference &&) = default;
+        constexpr optref(optref &&) = default;
         
         template <typename U>
-        constexpr OptionalReference(const OptionalReference<U> &other) : OptionalReference(*other) {
+        constexpr optref(const optref<U> &other) : optref(*other) {
         }
         
-        constexpr OptionalReference &operator=(const OptionalReference &) = default;
+        constexpr optref &operator=(const optref &) = default;
         
-        constexpr OptionalReference &operator=(OptionalReference &&) = default;
+        constexpr optref &operator=(optref &&) = default;
         
-        constexpr OptionalReference &operator=(T &reference) {
+        constexpr optref &operator=(T &reference) {
             optional_ = std::ref(reference);
             return *this;
         }
         
-        constexpr OptionalReference &operator=(nullopt_t) {
+        constexpr optref &operator=(nullopt_t) {
             optional_ = nullopt;
         }
         
         template <typename U>
-        constexpr OptionalReference &operator=(const OptionalReference<U> &other) {
+        constexpr optref &operator=(const optref<U> &other) {
             *this = *other;
             return *this;
         }
@@ -86,19 +86,18 @@ namespace ufo {
     private:
         optional<std::reference_wrapper<T>> optional_;
         
-        friend constexpr bool operator==(const OptionalReference &, const OptionalReference &);
+        friend constexpr bool operator==(const optref &, const optref &);
     };
     
     template <typename LHS, typename RHS>
-    constexpr bool operator==(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
+    constexpr bool operator==(const optref<LHS> &lhs, const optref<RHS> &rhs) {
         return lhs.optional_ == rhs.optional_;
     }
     
     template <typename LHS, typename RHS>
-    constexpr bool operator!=(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
+    constexpr bool operator!=(const optref<LHS> &lhs, const optref<RHS> &rhs) {
         return !(lhs == rhs);
     }
-    
 }
 
 #endif

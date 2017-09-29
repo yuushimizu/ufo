@@ -2,7 +2,7 @@
 #define ufo_TD
 
 namespace ufo {
-    template <typename T>
+    template <typename>
     class TD;
 }
 

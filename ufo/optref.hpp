@@ -2,7 +2,7 @@
 #define ufo_optref
 
 #include <functional>
-#include "optional.hpp"
+#include <experimental/optional>
 
 namespace ufo {
     template <typename T>
@@ -14,7 +14,7 @@ namespace ufo {
         constexpr optref(T &reference) : optional_(std::ref(reference)) {
         }
         
-        constexpr optref(nullopt_t) : optional_(nullopt) {
+        constexpr optref(std::experimental::nullopt_t) : optional_(std::experimental::nullopt) {
         }
         
         ~optref() = default;
@@ -36,8 +36,8 @@ namespace ufo {
             return *this;
         }
         
-        constexpr optref &operator=(nullopt_t) {
-            optional_ = nullopt;
+        constexpr optref &operator=(std::experimental::nullopt_t) {
+            optional_ =std::experimental:: nullopt;
         }
         
         template <typename U>
@@ -52,7 +52,7 @@ namespace ufo {
         }
         
         constexpr void reset() {
-            optional_ = nullopt;
+            optional_ = std::experimental::nullopt;
         }
         
         constexpr operator bool() const {
@@ -76,7 +76,7 @@ namespace ufo {
         }
         
     private:
-        optional<std::reference_wrapper<T>> optional_;
+        std::experimental::optional<std::reference_wrapper<T>> optional_;
         
         friend constexpr bool operator==(const optref &, const optref &);
     };

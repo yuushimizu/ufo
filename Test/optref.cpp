@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "ufo/optref.hpp"
+#include <experimental/optional>
 
 using namespace ufo;
 
@@ -26,7 +27,7 @@ namespace {
     }
     
     TEST(OptrefTest, NulloptConstructor) {
-        optref<int> o(nullopt);
+        optref<int> o(std::experimental::nullopt);
         ASSERT_FALSE(o);
     }
 }

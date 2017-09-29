@@ -1,6 +1,8 @@
 #ifndef ufo_type_traits
 #define ufo_type_traits
 
+#include <type_traits>
+
 namespace ufo {
     template <bool value, typename T = std::nullptr_t>
     using enable_if_t = std::enable_if_t<value, T>;

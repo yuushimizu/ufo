@@ -4,7 +4,6 @@
 #include <algorithm>
 #include "iterator.hpp"
 #include "optional.hpp"
-#include "optref.hpp"
 
 namespace ufo {
     template <typename Range, typename F>

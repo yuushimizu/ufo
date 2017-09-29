@@ -18,13 +18,13 @@ namespace ufo {
     }
     
     template <typename Range, typename Iterator>
-    constexpr auto iterator_optional(const Range &range, Iterator iterator) -> optional<iterator_value_type_t<Iterator>> {
+    constexpr auto iterator_optional(Range &&range, Iterator iterator) -> optional<iterator_value_type_t<Iterator>> {
         if (iterator == adl_end(range)) return nullopt;
         return *iterator;
     }
     
     template <typename Range, typename Iterator>
-    constexpr auto iterator_optref(const Range &range, Iterator iterator) -> optref<std::remove_reference_t<decltype(*iterator)>> {
+    constexpr auto iterator_optref(Range &&range, Iterator iterator) -> optref<std::remove_reference_t<decltype(*iterator)>> {
         if (iterator == adl_end(range)) return nullopt;
         return *iterator;
     }

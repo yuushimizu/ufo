@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "ufo/range.hpp"
 #include "ufo/placeholder.hpp"
+#include "ufo/range/transformed.hpp"
 #include <vector>
 #include <map>
 
@@ -33,35 +34,82 @@ namespace {
     
     TEST(RangeTest, FindConstLValue) {
         const std::vector<int> v {1, 2, 3, 4, 5};
-        auto found = find(v, _ == 3);
-        ASSERT_TRUE(found);
-        ASSERT_EQ(3, *found);
-        auto not_found = find(v, _ == 7);
-        ASSERT_FALSE(not_found);
+        auto r = find(v, _ == 3);
+        ASSERT_TRUE(r);
+        ASSERT_EQ(3, *r);
+        *r = 4;
+        ASSERT_EQ(3, v[2]);
+    }
+    
+    TEST(RangeTest, FindConstLValueNotFound) {
+        const std::vector<int> v {1, 2, 3, 4, 5};
+        auto r = find(v, _ == 7);
+        ASSERT_FALSE(r);
     }
     
     TEST(RangeTest, FindLValue) {
         std::vector<int> v {1, 2, 3, 4, 5};
-        auto found = find(v, _ == 3);
-        ASSERT_TRUE(found);
-        ASSERT_EQ(3, *found);
-        *found = 10;
+        auto r = find(v, _ == 3);
+        ASSERT_TRUE(r);
+        ASSERT_EQ(3, *r);
+        *r = 4;
         ASSERT_EQ(3, v[2]);
-        auto not_found = find(v, _ == 7);
-        ASSERT_FALSE(not_found);
     }
     
-    // TODO find rvalue
+    TEST(RangeTest, FindLValueNotFound) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto r = find(v, _ == 7);
+        ASSERT_FALSE(r);
+    }
     
-    // TODO find_ref
+    TEST(RangeTest, FindRValue) {
+        auto r = find(std::vector<int> {1, 2, 3, 4, 5}, _ == 4);
+        ASSERT_TRUE(r);
+        ASSERT_EQ(4, *r);
+    }
+    
+    TEST(RangeTest, FindRValueNotFound) {
+        auto r = find(std::vector<int> {1, 2, 3, 4, 5}, _ == 7);
+        ASSERT_FALSE(r);
+    }
+    
+    TEST(RangeTest, FindRefConstLValue) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        const auto &cv = v;
+        auto r = find_ref(cv, _ == 3);
+        ASSERT_TRUE(r);
+        ASSERT_EQ(&v[2], &*r);
+        static_assert(std::is_same_v<const int &, decltype(*r)>);
+    }
     
     TEST(RangeTest, FindRefLValue) {
-        const std::vector<int> v {1, 2, 3, 4, 5};
-        auto found = find_ref(v, _ == 3);
-        ASSERT_TRUE(found);
-        ASSERT_EQ(&v[2], &*found);
-        auto not_found = find_ref(v, _ == 7);
-        ASSERT_FALSE(not_found);
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto r = find_ref(v, _ == 3);
+        ASSERT_TRUE(r);
+        ASSERT_EQ(&v[2], &*r);
+        *r = 5;
+        ASSERT_EQ(5, v[2]);
+    }
+    
+    TEST(RangeTest, FindRefLValueNotFound) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto r = find_ref(v, _ == 7);
+        ASSERT_FALSE(r);
+    }
+    
+    TEST(RangeTest, FindRefRValue) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto r = find_ref(std::vector<int> {4, 0, 2} | transformed([&v](int i) -> int & {return v[i];}), _ == 3);
+        ASSERT_TRUE(r);
+        ASSERT_EQ(&v[2], &*r);
+        *r = 7;
+        ASSERT_EQ(7, v[2]);
+    }
+    
+    TEST(RangeTest, FindRefRValueNotFound) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto r = find_ref(std::vector<int> {4, 0, 2} | transformed([&v](int i) -> int & {return v[i];}), _ == 7);
+        ASSERT_FALSE(r);
     }
     
     // TODO remove

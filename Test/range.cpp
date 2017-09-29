@@ -27,9 +27,9 @@ namespace {
         ASSERT_FALSE(contains(std::vector<int> {3, 4, 5, 6}, _ == 8));
     }
     
-    // TODO iterator_value_optional
+    // TODO iterator_optional
     
-    // TODO iterator_reference_optional
+    // TODO iterator_optref
     
     TEST(RangeTest, FindConstLValue) {
         const std::vector<int> v {1, 2, 3, 4, 5};
@@ -53,11 +53,11 @@ namespace {
     
     // TODO find rvalue
     
-    // TODO find_reference
+    // TODO find_ref
     
-    TEST(RangeTest, FindReferenceLValue) {
+    TEST(RangeTest, FindRefLValue) {
         std::vector<int> v {1, 2, 3, 4, 5};
-        auto found = find_reference(v, _ == 3);
+        auto found = find_ref(v, _ == 3);
         ASSERT_TRUE(found);
         ASSERT_EQ(&v[2], &*found);
         auto not_found = find(v, _ == 7);

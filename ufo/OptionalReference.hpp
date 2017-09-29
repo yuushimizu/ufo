@@ -2,7 +2,7 @@
 #define ufo_OptionalReference
 
 #include <functional>
-#include <experimental/optional>
+#include "optional.hpp"
 
 namespace ufo {
     template <typename T>
@@ -14,7 +14,7 @@ namespace ufo {
         OptionalReference(T &reference) : optional_(std::ref(reference)) {
         }
         
-        OptionalReference(std::experimental::nullopt_t) : optional_(std::experimental::nullopt) {
+        OptionalReference(nullopt_t) : optional_(nullopt) {
         }
         
         ~OptionalReference() = default;
@@ -36,8 +36,8 @@ namespace ufo {
             return *this;
         }
         
-        OptionalReference &operator=(std::experimental::nullopt_t) {
-            optional_ = std::experimental::nullopt;
+        OptionalReference &operator=(nullopt_t) {
+            optional_ = nullopt;
         }
         
         template <typename U>
@@ -52,7 +52,7 @@ namespace ufo {
         }
         
         void reset() {
-            optional_ = std::experimental::nullopt;
+            optional_ = nullopt;
         }
         
         operator bool() const {
@@ -84,7 +84,7 @@ namespace ufo {
         }
         
     private:
-        std::experimental::optional<std::reference_wrapper<T>> optional_;
+        optional<std::reference_wrapper<T>> optional_;
         
         friend bool operator==(const OptionalReference &, const OptionalReference &);
     };

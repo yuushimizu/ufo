@@ -7,25 +7,25 @@
 
 namespace ufo {
     template <typename Range>
-    auto adl_begin(Range &&range) {
+    constexpr auto adl_begin(Range &&range) {
         using std::begin;
         return begin(std::forward<Range>(range));
     }
     
     template <typename Range>
-    auto adl_end(Range &&range) {
+    constexpr auto adl_end(Range &&range) {
         using std::end;
         return end(std::forward<Range>(range));
     }
     
     template <typename Range>
-    auto adl_cbegin(Range &&range) {
+    constexpr auto adl_cbegin(Range &&range) {
         using std::cbegin;
         return cbegin(std::forward<Range>(range));
     }
     
     template <typename Range>
-    auto adl_cend(Range &&range) {
+    constexpr auto adl_cend(Range &&range) {
         using std::cend;
         return cend(std::forward<Range>(range));
     }

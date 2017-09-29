@@ -9,6 +9,15 @@
 #include "placeholder.hpp"
 
 namespace ufo {
+    template <typename T>
+    class Coord;
+    
+    template<typename T>
+    constexpr Coord<T> coord(T x, T y) noexcept;
+    
+    template<typename F, typename ... Ts>
+    constexpr auto transform_coord(const F &f, const Ts &... args);
+    
     template<typename T>
     class Coord final {
     public:
@@ -18,11 +27,11 @@ namespace ufo {
         constexpr Coord() noexcept : Coord(T {}, T {}) {
         }
         
-        constexpr T x() const {
+        constexpr T x() const noexcept {
             return x_;
         }
         
-        constexpr T y() const {
+        constexpr T y() const noexcept {
             return y_;
         }
 
@@ -33,6 +42,30 @@ namespace ufo {
 
         constexpr auto area() const noexcept {
             return x_ * y_;
+        }
+        
+        template <typename Other>
+        constexpr auto add_x(const Other &amount) const noexcept {
+            return coord(x_ + amount, y_);
+        }
+        
+        template <typename Other>
+        constexpr auto add_y(const Other &amount) const noexcept {
+            return coord(x_, y_ + amount);
+        }
+        
+        template <typename Other>
+        constexpr auto multiply(const Coord<Other> &other) const noexcept {
+            return transform_coord([](const auto &lhs, const auto &rhs) constexpr {
+                return lhs * rhs;
+            }, *this, other);
+        }
+        
+        template <typename Other>
+        constexpr auto divide(const Coord<Other> &other) const noexcept {
+            return transform_coord([](const auto &lhs, const auto &rhs) constexpr {
+                return lhs / rhs;
+            }, *this, other);
         }
         
     private:
@@ -67,14 +100,12 @@ namespace ufo {
 
     template<typename T>
     constexpr Coord<T> operator-(const Coord<T> &coord) noexcept {
-        return transform_coord([](auto &&n) {
-            return -n;
-        }, coord);
+        return transform_coord(-_, coord);
     }
 
     template<typename LHS, typename RHS>
     constexpr auto operator+(const Coord<LHS> &lhs, const Coord<RHS> &rhs) noexcept {
-        return transform_coord([](auto &&lhs, auto &&rhs) {
+        return transform_coord([](const auto &lhs, const auto &rhs) constexpr noexcept {
             return lhs + rhs;
         }, lhs, rhs);
     }
@@ -86,7 +117,7 @@ namespace ufo {
 
     template<typename LHS, typename RHS>
     constexpr auto operator*(const Coord<LHS> &lhs, const RHS &rhs) noexcept {
-        return coord(lhs.x() * rhs, lhs.y() * rhs);
+        return transform_coord(_ * rhs, lhs);
     }
 
     template<typename LHS, typename RHS>
@@ -96,52 +127,19 @@ namespace ufo {
 
     template<typename LHS, typename RHS>
     constexpr auto operator/(const Coord<LHS> &lhs, const RHS &rhs) noexcept {
-        return transform_coord([&rhs](auto &&lhs) {
-            return lhs / rhs;
-        }, lhs);
-    }
-
-    template<typename T, typename X>
-    constexpr auto add_x(const Coord<T> &lhs, const X &rhs) noexcept {
-        return coord(lhs.x() + rhs, lhs.y());
-    }
-
-    template<typename T, typename Y>
-    constexpr auto add_y(const Coord<T> &lhs, const Y &rhs) noexcept {
-        return coord(lhs.x(), lhs.y() + rhs);
-    }
-
-    template<typename LHS, typename RHS>
-    constexpr auto multiply_each(const Coord<LHS> &lhs, const Coord<RHS> &rhs) noexcept {
-        return transform_coord([](auto &&lhs, auto &&rhs) {
-            return lhs * rhs;
-        }, lhs, rhs);
-    }
-
-    template<typename LHS, typename RHS>
-    constexpr auto divide_each(const Coord<LHS> &lhs, const Coord<RHS> &rhs) noexcept {
-        return transform_coord([](auto &&lhs, auto &&rhs) {
-            return lhs / rhs;
-        }, lhs, rhs);
-    }
-    
-    template <typename T>
-    constexpr auto abs(const Coord<T> coord) {
-        return transform_coord([](auto &&n) {return n >= 0 ? n : -n;}, coord);
+        return transform_coord(_ / rhs, lhs);
     }
 
     template<typename T>
     constexpr auto range(const Coord<T> &last) noexcept {
-        return irange(last.area()) | transformed([last](auto &&n) {
+        return irange(last.area()) | transformed([last](const auto &n) constexpr noexcept {
             return coord(T(n % last.x()), T(std::floor(n / last.x())));
         });
     }
 
     template<typename T>
     constexpr auto range(const Coord<T> &first, const Coord<T> &last) noexcept {
-        return range(last - first) | transformed([first](auto &&coord) {
-            return coord + first;
-        });
+        return range(last - first) | transformed(_ + first);
     }
 
     template<typename T>

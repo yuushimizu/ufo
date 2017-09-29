@@ -75,14 +75,6 @@ namespace ufo {
             return optional_->get();
         }
         
-        constexpr operator const T &() const {
-            return optional_->get();
-        }
-        
-        constexpr operator T &() {
-            return optional_->get();
-        }
-        
     private:
         optional<std::reference_wrapper<T>> optional_;
         

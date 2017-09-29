@@ -2,7 +2,7 @@
 #include "ufo/range.hpp"
 #include "ufo/placeholder.hpp"
 #include <vector>
-#include "ufo/TD.hpp"
+#include <map>
 
 using namespace ufo;
 using placeholder::_;
@@ -37,7 +37,7 @@ namespace {
         ASSERT_TRUE(found);
         ASSERT_EQ(3, *found);
         auto not_found = find(v, _ == 7);
-        ASSERT_EQ(nullopt, not_found);
+        ASSERT_FALSE(not_found);
     }
     
     TEST(RangeTest, FindLValue) {
@@ -48,7 +48,7 @@ namespace {
         *found = 10;
         ASSERT_EQ(3, v[2]);
         auto not_found = find(v, _ == 7);
-        ASSERT_EQ(nullopt, not_found);
+        ASSERT_FALSE(not_found);
     }
     
     // TODO find rvalue
@@ -56,13 +56,48 @@ namespace {
     // TODO find_ref
     
     TEST(RangeTest, FindRefLValue) {
-        std::vector<int> v {1, 2, 3, 4, 5};
+        const std::vector<int> v {1, 2, 3, 4, 5};
         auto found = find_ref(v, _ == 3);
         ASSERT_TRUE(found);
         ASSERT_EQ(&v[2], &*found);
-        auto not_found = find(v, _ == 7);
-        ASSERT_EQ(nullopt, not_found);
+        auto not_found = find_ref(v, _ == 7);
+        ASSERT_FALSE(not_found);
     }
     
     // TODO remove
+    
+    TEST(RangeTest, GetConstLValue) {
+        const std::map<int ,std::string> m {{5, "foo"}, {8, "bar"}, {11, "baz"}};
+        auto found = get(m, 8);
+        ASSERT_TRUE(found);
+        ASSERT_EQ("bar", *found);
+        auto not_found = get(m, 99);
+        ASSERT_FALSE(not_found);
+    }
+    
+    // TODO get lvalue
+    
+    // TODO get rvalue
+    
+    TEST(RangeTest, GetRefConstLValue) {
+        /*
+        const std::map<int, std::string> m {{2, "two"}, {4, "four"}};
+        auto found = get_ref(m, 4);
+        ASSERT_TRUE(found);
+        ASSERT_EQ("foud", *found);
+        auto not_found = get(m, 123);
+        ASSERT_EQ(nullopt, not_found);
+         */
+    }
+    
+    TEST(RangeTest, GetRefLValue) {
+        std::map<int, std::string> m {{1, "one"}, {3, "three"}};
+//        auto found = get_ref(m, 3);
+//        ASSERT_TRUE(found);
+//        ASSERT_EQ(&m.at(3), &*found);
+        auto not_found = get_ref(m, 88);
+        ASSERT_FALSE(not_found);
+    }
+    
+    // get_ref rvalue
 }

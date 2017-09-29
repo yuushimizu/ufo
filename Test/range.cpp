@@ -36,7 +36,7 @@ namespace {
         ASSERT_TRUE(found);
         ASSERT_EQ(3, *found);
         auto not_found = find(v, _ == 7);
-        ASSERT_EQ(std::experimental::nullopt, not_found);
+        ASSERT_EQ(nullopt, not_found);
     }
     
     // TODO find lvalue

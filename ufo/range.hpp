@@ -2,8 +2,8 @@
 #define ufo_range
 
 #include <algorithm>
-#include <experimental/optional>
 #include "iterator.hpp"
+#include "optional.hpp"
 #include "OptionalReference.hpp"
 
 namespace ufo {
@@ -18,14 +18,14 @@ namespace ufo {
     }
     
     template <typename Range, typename Iterator>
-    constexpr auto iterator_value_optional(Range &&range, Iterator &&iterator) -> std::experimental::optional<iterator_value_type_t<Iterator>> {
-        if (iterator == adl_end(range)) return std::experimental::nullopt;
+    constexpr auto iterator_value_optional(Range &&range, Iterator &&iterator) -> optional<iterator_value_type_t<Iterator>> {
+        if (iterator == adl_end(range)) return nullopt;
         return *iterator;
     }
     
     template <typename Range, typename Iterator>
     constexpr auto iterator_reference_optional(Range &&range, Iterator &&iterator) -> OptionalReference<std::remove_reference_t<decltype(*iterator)>> {
-        if (iterator == adl_end(range)) return std::experimental::nullopt;
+        if (iterator == adl_end(range)) return nullopt;
         return *iterator;
     }
 

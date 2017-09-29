@@ -2,7 +2,7 @@
 #define ufo_range_min
 
 #include <utility>
-#include <experimental/optional>
+#include "../optional.hpp"
 #include "../iterator.hpp"
 #include "RangeAdaptor.hpp"
 
@@ -15,10 +15,10 @@ namespace ufo {
             }
             
             template <typename Range>
-            constexpr auto operator()(Range &&range) -> std::experimental::optional<iterator_value_type_t<decltype(adl_begin(range))>> {
+            constexpr auto operator()(Range &&range) -> optional<iterator_value_type_t<decltype(adl_begin(range))>> {
                 auto iter = adl_begin(range);
                 auto end = adl_end(range);
-                if (iter == end) return std::experimental::nullopt;
+                if (iter == end) return nullopt;
                 auto min_value = *iter;
                 auto min_key = key_function_(min_value);
                 for (++iter; iter != end; ++iter) {

@@ -86,7 +86,7 @@ namespace ufo {
     private:
         optional<std::reference_wrapper<T>> optional_;
         
-        friend bool operator==(const OptionalReference &, const OptionalReference &);
+        friend constexpr bool operator==(const OptionalReference &, const OptionalReference &);
     };
     
     template <typename LHS, typename RHS>
@@ -95,7 +95,7 @@ namespace ufo {
     }
     
     template <typename LHS, typename RHS>
-    constexpr gsbool operator!=(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
+    constexpr bool operator!=(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
         return !(lhs == rhs);
     }
     

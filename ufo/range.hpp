@@ -23,7 +23,7 @@ namespace ufo {
     }
     
     template <typename Range, typename Iterator>
-    constexpr auto iterator_optref(Range &&range, Iterator iterator) -> optref<std::remove_reference_t<decltype(*iterator)>> {
+    constexpr auto iterator_optref(Range &&range, Iterator iterator) -> optional<std::remove_reference_t<decltype(*iterator)> &> {
         if (iterator == adl_end(range)) return nullopt;
         return *iterator;
     }
@@ -50,7 +50,7 @@ namespace ufo {
     }
     
     template <typename Map, typename Key>
-    constexpr auto get_ref(Map &&map, const Key &key) -> optref<std::remove_reference_t<decltype(map.at(key))>> {
+    constexpr auto get_ref(Map &&map, const Key &key) -> optional<std::remove_reference_t<decltype(map.at(key))> &> {
         if (map.find(key) == adl_end(map)) return nullopt;
         return map.at(key);
     }

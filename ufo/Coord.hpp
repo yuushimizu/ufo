@@ -6,6 +6,7 @@
 #include "range/irange.hpp"
 #include "range/transformed.hpp"
 #include "hash.hpp"
+#include "placeholder.hpp"
 
 namespace ufo {
     template<typename T>
@@ -131,7 +132,7 @@ namespace ufo {
 
     template<typename T>
     constexpr auto range(const Coord<T> &last) noexcept {
-        return irange(last.area()) | transformed(last](auto &&n) {
+        return irange(last.area()) | transformed([last](auto &&n) {
             return coord(T(n % last.x()), T(std::floor(n / last.x())));
         });
     }

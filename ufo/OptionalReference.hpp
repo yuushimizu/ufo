@@ -8,78 +8,78 @@ namespace ufo {
     template <typename T>
     class OptionalReference final {
     public:
-        OptionalReference() : optional_ {} {
+        constexpr OptionalReference() : optional_ {} {
         }
         
-        OptionalReference(T &reference) : optional_(std::ref(reference)) {
+        constexpr OptionalReference(T &reference) : optional_(std::ref(reference)) {
         }
         
-        OptionalReference(nullopt_t) : optional_(nullopt) {
+        constexpr OptionalReference(nullopt_t) : optional_(nullopt) {
         }
         
         ~OptionalReference() = default;
         
-        OptionalReference(const OptionalReference &) = default;
+        constexpr OptionalReference(const OptionalReference &) = default;
         
-        OptionalReference(OptionalReference &&) = default;
+        constexpr OptionalReference(OptionalReference &&) = default;
         
         template <typename U>
-        OptionalReference(const OptionalReference<U> &other) : OptionalReference(*other) {
+        constexpr OptionalReference(const OptionalReference<U> &other) : OptionalReference(*other) {
         }
         
-        OptionalReference &operator=(const OptionalReference &) = default;
+        constexpr OptionalReference &operator=(const OptionalReference &) = default;
         
-        OptionalReference &operator=(OptionalReference &&) = default;
+        constexpr OptionalReference &operator=(OptionalReference &&) = default;
         
-        OptionalReference &operator=(T &reference) {
+        constexpr OptionalReference &operator=(T &reference) {
             optional_ = std::ref(reference);
             return *this;
         }
         
-        OptionalReference &operator=(nullopt_t) {
+        constexpr OptionalReference &operator=(nullopt_t) {
             optional_ = nullopt;
         }
         
         template <typename U>
-        OptionalReference &operator=(const OptionalReference<U> &other) {
+        constexpr OptionalReference &operator=(const OptionalReference<U> &other) {
             *this = *other;
             return *this;
         }
         
         template <typename U>
-        void emplace(U &reference) {
+        constexpr void emplace(U &reference) {
             optional_.emplace(reference);
         }
         
-        void reset() {
+        constexpr void reset() {
             optional_ = nullopt;
         }
         
-        operator bool() const {
+        constexpr operator bool() const {
             return static_cast<bool>(optional_);
         }
         
-        const T *operator->() const {
+        constexpr const T *operator->() const {
             return &optional_->get();
         }
         
-        T *operator->() {
+        constexpr T *operator->() {
             return &optional_->get();
         }
         
-        const T &operator*() const {
+        constexpr const T &operator*() const {
             return optional_->get();
         }
         
-        T &operator*() {
+        constexpr T &operator*() {
             return optional_->get();
         }
         
-        operator const T &() const {
+        constexpr operator const T &() const {
             return optional_->get();
         }
         
-        operator T &() {
+        constexpr operator T &() {
             return optional_->get();
         }
         
@@ -90,12 +90,12 @@ namespace ufo {
     };
     
     template <typename LHS, typename RHS>
-    bool operator==(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
+    constexpr bool operator==(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
         return lhs.optional_ == rhs.optional_;
     }
     
     template <typename LHS, typename RHS>
-    bool operator!=(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
+    constexpr gsbool operator!=(const OptionalReference<LHS> &lhs, const OptionalReference<RHS> &rhs) {
         return !(lhs == rhs);
     }
     

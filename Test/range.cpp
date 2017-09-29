@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 #include "ufo/range.hpp"
+#include "ufo/placeholder.hpp"
 #include <vector>
-#include <placeholder/placeholder.hpp>
+#include "ufo/TD.hpp"
 
 using namespace ufo;
 using placeholder::_;
@@ -39,11 +40,29 @@ namespace {
         ASSERT_EQ(nullopt, not_found);
     }
     
-    // TODO find lvalue
+    TEST(RangeTest, FindLValue) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto found = find(v, _ == 3);
+        ASSERT_TRUE(found);
+        ASSERT_EQ(3, *found);
+        *found = 10;
+        ASSERT_EQ(3, v[2]);
+        auto not_found = find(v, _ == 7);
+        ASSERT_EQ(nullopt, not_found);
+    }
     
     // TODO find rvalue
     
     // TODO find_reference
+    
+    TEST(RangeTest, FindReferenceLValue) {
+        std::vector<int> v {1, 2, 3, 4, 5};
+        auto found = find_reference(v, _ == 3);
+        ASSERT_TRUE(found);
+        ASSERT_EQ(&v[2], &*found);
+        auto not_found = find(v, _ == 7);
+        ASSERT_EQ(nullopt, not_found);
+    }
     
     // TODO remove
 }

@@ -128,21 +128,19 @@ namespace {
     // TODO get rvalue
     
     TEST(RangeTest, GetRefConstLValue) {
-        /*
         const std::map<int, std::string> m {{2, "two"}, {4, "four"}};
         auto found = get_ref(m, 4);
         ASSERT_TRUE(found);
-        ASSERT_EQ("foud", *found);
+        ASSERT_EQ("four", *found);
         auto not_found = get(m, 123);
         ASSERT_EQ(nullopt, not_found);
-         */
     }
     
     TEST(RangeTest, GetRefLValue) {
         std::map<int, std::string> m {{1, "one"}, {3, "three"}};
-//        auto found = get_ref(m, 3);
-//        ASSERT_TRUE(found);
-//        ASSERT_EQ(&m.at(3), &*found);
+        auto found = get_ref(m, 3);
+        ASSERT_TRUE(found);
+        ASSERT_EQ(&m.at(3), &*found);
         auto not_found = get_ref(m, 88);
         ASSERT_FALSE(not_found);
     }

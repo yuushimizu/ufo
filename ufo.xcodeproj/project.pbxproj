@@ -91,7 +91,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CA3ED32C1F5FE3AB00DA2EF1 /* ufo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ufo; sourceTree = "<group>"; };
 		CA3ED3401F5FE43500DA2EF1 /* Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Test; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3ED3421F5FE43500DA2EF1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CA5AEDBC1F5FF1050095F382 /* gtest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtest.xcodeproj; path = extsrc/googletest/googletest/xcode/gtest.xcodeproj; sourceTree = "<group>"; };
@@ -111,6 +110,44 @@
 		CAF018A91F7A8D7B00E301CE /* range.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = range.cpp; sourceTree = "<group>"; };
 		CAF018BE1F7E1E2700E301CE /* optref.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = optref.cpp; sourceTree = "<group>"; };
 		CAF018C01F7E664000E301CE /* optional.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = optional.cpp; sourceTree = "<group>"; };
+		CAF018C41F7F4E9D00E301CE /* coroutine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = coroutine.hpp; sourceTree = "<group>"; };
+		CAF018C51F7F4E9D00E301CE /* iterator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = iterator.hpp; sourceTree = "<group>"; };
+		CAF018C61F7F4E9D00E301CE /* type_traits.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = type_traits.hpp; sourceTree = "<group>"; };
+		CAF018C71F7F4E9D00E301CE /* math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
+		CAF018C81F7F4E9D00E301CE /* random.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = random.hpp; sourceTree = "<group>"; };
+		CAF018C91F7F4E9D00E301CE /* Rect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rect.hpp; sourceTree = "<group>"; };
+		CAF018CA1F7F4E9D00E301CE /* optional.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = optional.hpp; sourceTree = "<group>"; };
+		CAF018CB1F7F4E9E00E301CE /* hash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hash.hpp; sourceTree = "<group>"; };
+		CAF018CC1F7F4E9E00E301CE /* placeholder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = placeholder.hpp; sourceTree = "<group>"; };
+		CAF018CD1F7F4E9E00E301CE /* scope_exit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = scope_exit.hpp; sourceTree = "<group>"; };
+		CAF018CE1F7F4E9E00E301CE /* Coord.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Coord.hpp; sourceTree = "<group>"; };
+		CAF018CF1F7F4E9E00E301CE /* string.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string.hpp; sourceTree = "<group>"; };
+		CAF018D01F7F4E9E00E301CE /* optref.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = optref.hpp; sourceTree = "<group>"; };
+		CAF018D11F7F4E9E00E301CE /* memory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = memory.hpp; sourceTree = "<group>"; };
+		CAF018D21F7F4E9E00E301CE /* range.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = range.hpp; sourceTree = "<group>"; };
+		CAF018D31F7F4E9E00E301CE /* TD.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TD.hpp; sourceTree = "<group>"; };
+		CAF018D41F7F4E9E00E301CE /* Vector2D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Vector2D.hpp; sourceTree = "<group>"; };
+		CAF018EE1F7F4EE300E301CE /* RangeAdaptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RangeAdaptor.hpp; path = range/RangeAdaptor.hpp; sourceTree = "<group>"; };
+		CAF018EF1F7F4EE300E301CE /* combine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = combine.hpp; path = range/combine.hpp; sourceTree = "<group>"; };
+		CAF018F01F7F4EE300E301CE /* filtered.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = filtered.hpp; path = range/filtered.hpp; sourceTree = "<group>"; };
+		CAF018F11F7F4EE300E301CE /* repeatedly.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = repeatedly.hpp; path = range/repeatedly.hpp; sourceTree = "<group>"; };
+		CAF018F21F7F4EE300E301CE /* as_container.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = as_container.hpp; path = range/as_container.hpp; sourceTree = "<group>"; };
+		CAF018F31F7F4EE300E301CE /* taken_while.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = taken_while.hpp; path = range/taken_while.hpp; sourceTree = "<group>"; };
+		CAF018F41F7F4EE300E301CE /* RangeFacade.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = RangeFacade.hpp; path = range/RangeFacade.hpp; sourceTree = "<group>"; };
+		CAF018F51F7F4EE400E301CE /* rejected.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = rejected.hpp; path = range/rejected.hpp; sourceTree = "<group>"; };
+		CAF018F61F7F4EE400E301CE /* transformed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = transformed.hpp; path = range/transformed.hpp; sourceTree = "<group>"; };
+		CAF018F71F7F4EE400E301CE /* shuffled.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = shuffled.hpp; path = range/shuffled.hpp; sourceTree = "<group>"; };
+		CAF018F81F7F4EE400E301CE /* taken.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = taken.hpp; path = range/taken.hpp; sourceTree = "<group>"; };
+		CAF018F91F7F4EE400E301CE /* IteratorFacade.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = IteratorFacade.hpp; path = range/IteratorFacade.hpp; sourceTree = "<group>"; };
+		CAF018FA1F7F4EE400E301CE /* join.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = join.hpp; path = range/join.hpp; sourceTree = "<group>"; };
+		CAF018FB1F7F4EE400E301CE /* arithmetic_progression.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = arithmetic_progression.hpp; path = range/arithmetic_progression.hpp; sourceTree = "<group>"; };
+		CAF018FC1F7F4EE400E301CE /* as_vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = as_vector.hpp; path = range/as_vector.hpp; sourceTree = "<group>"; };
+		CAF018FD1F7F4EE400E301CE /* irange.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = irange.hpp; path = range/irange.hpp; sourceTree = "<group>"; };
+		CAF018FE1F7F4EE400E301CE /* iterate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = iterate.hpp; path = range/iterate.hpp; sourceTree = "<group>"; };
+		CAF018FF1F7F4EE400E301CE /* IteratorAdaptor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = IteratorAdaptor.hpp; path = range/IteratorAdaptor.hpp; sourceTree = "<group>"; };
+		CAF019001F7F4EE400E301CE /* unindexed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = unindexed.hpp; path = range/unindexed.hpp; sourceTree = "<group>"; };
+		CAF019011F7F4EE500E301CE /* indexed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = indexed.hpp; path = range/indexed.hpp; sourceTree = "<group>"; };
+		CAF019021F7F4EE500E301CE /* min.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = min.hpp; path = range/min.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +217,7 @@
 		CA684D0C1F5FE24B00F18476 = {
 			isa = PBXGroup;
 			children = (
-				CA3ED32C1F5FE3AB00DA2EF1 /* ufo */,
+				CAF018C31F7F4E4D00E301CE /* ufo */,
 				CA3ED3411F5FE43500DA2EF1 /* Test */,
 				CA684D161F5FE24B00F18476 /* Products */,
 				CA5AEDBC1F5FF1050095F382 /* gtest.xcodeproj */,
@@ -194,6 +231,59 @@
 				CA3ED3401F5FE43500DA2EF1 /* Test */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CAF018C31F7F4E4D00E301CE /* ufo */ = {
+			isa = PBXGroup;
+			children = (
+				CAF018ED1F7F4ECF00E301CE /* range */,
+				CAF018CE1F7F4E9E00E301CE /* Coord.hpp */,
+				CAF018C41F7F4E9D00E301CE /* coroutine.hpp */,
+				CAF018CB1F7F4E9E00E301CE /* hash.hpp */,
+				CAF018C51F7F4E9D00E301CE /* iterator.hpp */,
+				CAF018C71F7F4E9D00E301CE /* math.hpp */,
+				CAF018D11F7F4E9E00E301CE /* memory.hpp */,
+				CAF018CA1F7F4E9D00E301CE /* optional.hpp */,
+				CAF018D01F7F4E9E00E301CE /* optref.hpp */,
+				CAF018CC1F7F4E9E00E301CE /* placeholder.hpp */,
+				CAF018C81F7F4E9D00E301CE /* random.hpp */,
+				CAF018D21F7F4E9E00E301CE /* range.hpp */,
+				CAF018C91F7F4E9D00E301CE /* Rect.hpp */,
+				CAF018CD1F7F4E9E00E301CE /* scope_exit.hpp */,
+				CAF018CF1F7F4E9E00E301CE /* string.hpp */,
+				CAF018D31F7F4E9E00E301CE /* TD.hpp */,
+				CAF018C61F7F4E9D00E301CE /* type_traits.hpp */,
+				CAF018D41F7F4E9E00E301CE /* Vector2D.hpp */,
+			);
+			path = ufo;
+			sourceTree = "<group>";
+		};
+		CAF018ED1F7F4ECF00E301CE /* range */ = {
+			isa = PBXGroup;
+			children = (
+				CAF018FB1F7F4EE400E301CE /* arithmetic_progression.hpp */,
+				CAF018F21F7F4EE300E301CE /* as_container.hpp */,
+				CAF018FC1F7F4EE400E301CE /* as_vector.hpp */,
+				CAF018EF1F7F4EE300E301CE /* combine.hpp */,
+				CAF018F01F7F4EE300E301CE /* filtered.hpp */,
+				CAF019011F7F4EE500E301CE /* indexed.hpp */,
+				CAF018FD1F7F4EE400E301CE /* irange.hpp */,
+				CAF018FE1F7F4EE400E301CE /* iterate.hpp */,
+				CAF018FF1F7F4EE400E301CE /* IteratorAdaptor.hpp */,
+				CAF018F91F7F4EE400E301CE /* IteratorFacade.hpp */,
+				CAF018FA1F7F4EE400E301CE /* join.hpp */,
+				CAF019021F7F4EE500E301CE /* min.hpp */,
+				CAF018EE1F7F4EE300E301CE /* RangeAdaptor.hpp */,
+				CAF018F41F7F4EE300E301CE /* RangeFacade.hpp */,
+				CAF018F51F7F4EE400E301CE /* rejected.hpp */,
+				CAF018F11F7F4EE300E301CE /* repeatedly.hpp */,
+				CAF018F71F7F4EE400E301CE /* shuffled.hpp */,
+				CAF018F31F7F4EE300E301CE /* taken_while.hpp */,
+				CAF018F81F7F4EE400E301CE /* taken.hpp */,
+				CAF018F61F7F4EE400E301CE /* transformed.hpp */,
+				CAF019001F7F4EE400E301CE /* unindexed.hpp */,
+			);
+			name = range;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

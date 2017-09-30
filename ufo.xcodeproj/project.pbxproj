@@ -24,6 +24,7 @@
 		CAF018AA1F7A8D7B00E301CE /* range.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018A91F7A8D7B00E301CE /* range.cpp */; };
 		CAF018BF1F7E1E2700E301CE /* optref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018BE1F7E1E2700E301CE /* optref.cpp */; };
 		CAF018C21F7E664000E301CE /* optional.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018C01F7E664000E301CE /* optional.cpp */; };
+		CAF019071F7F557100E301CE /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019061F7F557100E301CE /* container_wrapper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +149,8 @@
 		CAF019001F7F4EE400E301CE /* unindexed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = unindexed.hpp; path = range/unindexed.hpp; sourceTree = "<group>"; };
 		CAF019011F7F4EE500E301CE /* indexed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = indexed.hpp; path = range/indexed.hpp; sourceTree = "<group>"; };
 		CAF019021F7F4EE500E301CE /* min.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = min.hpp; path = range/min.hpp; sourceTree = "<group>"; };
+		CAF019041F7F4F2200E301CE /* container_wrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = container_wrapper.hpp; path = range2/container_wrapper.hpp; sourceTree = "<group>"; };
+		CAF019061F7F557100E301CE /* container_wrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = container_wrapper.cpp; path = range2/container_wrapper.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +175,7 @@
 		CA3ED3411F5FE43500DA2EF1 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				CAF019051F7F555800E301CE /* range2 */,
 				CA5AEDE21F60083F0095F382 /* range */,
 				CA3ED3421F5FE43500DA2EF1 /* main.cpp */,
 				CA5AEDD71F5FF74C0095F382 /* Coord.cpp */,
@@ -236,6 +240,7 @@
 		CAF018C31F7F4E4D00E301CE /* ufo */ = {
 			isa = PBXGroup;
 			children = (
+				CAF019031F7F4EFE00E301CE /* range2 */,
 				CAF018ED1F7F4ECF00E301CE /* range */,
 				CAF018CE1F7F4E9E00E301CE /* Coord.hpp */,
 				CAF018C41F7F4E9D00E301CE /* coroutine.hpp */,
@@ -284,6 +289,22 @@
 				CAF019001F7F4EE400E301CE /* unindexed.hpp */,
 			);
 			name = range;
+			sourceTree = "<group>";
+		};
+		CAF019031F7F4EFE00E301CE /* range2 */ = {
+			isa = PBXGroup;
+			children = (
+				CAF019041F7F4F2200E301CE /* container_wrapper.hpp */,
+			);
+			name = range2;
+			sourceTree = "<group>";
+		};
+		CAF019051F7F555800E301CE /* range2 */ = {
+			isa = PBXGroup;
+			children = (
+				CAF019061F7F557100E301CE /* container_wrapper.cpp */,
+			);
+			name = range2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF019071F7F557100E301CE /* container_wrapper.cpp in Sources */,
 				CA5AEDE01F5FFBBF0095F382 /* memory.cpp in Sources */,
 				CA3ED3431F5FE43500DA2EF1 /* main.cpp in Sources */,
 				CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */,

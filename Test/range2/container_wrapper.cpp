@@ -48,7 +48,7 @@ namespace {
         auto cw1 = container_wrapper(std::vector<int> {10, 20, 30});
         auto cw2 = cw1;
         ASSERT_EQ(10, cw1.first());
-        ASSERT_EQ(10, cw2.first());
+        ASSERT_EQ(10, cw2.first()); // maybe wrong
     }
     
     TEST(ContainerWrapperTest, MoveConstLValue) {
@@ -68,7 +68,7 @@ namespace {
     TEST(ContainerWrapperTest, MoveRValue) {
         auto cw1 = container_wrapper(std::vector<std::string> {"foo", "bar", "baz"});
         auto cw2 = std::move(cw1);
-        ASSERT_EQ("bar", cw2.first());
+        ASSERT_EQ("foo", cw2.first());
     }
 }
 

@@ -7,10 +7,20 @@
 
 namespace ufo {
     template <typename F>
-    class RangeOperator {
+    class RangeOperator final {
     public:
         constexpr RangeOperator(F f) : f_(std::move(f)) {
         }
+        
+        ~RangeOperator() = default;
+        
+        RangeOperator(const RangeOperator &) = delete;
+        
+        RangeOperator(RangeOperator &&) = delete;
+        
+        RangeOperator &operator=(const RangeOperator &) = delete;
+        
+        RangeOperator &operator=(RangeOperator &&) = delete;
         
         template <typename Range, enable_if_t<std::is_base_of_v<range, Range>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) const & {
@@ -43,7 +53,7 @@ namespace ufo {
         }
 
     private:
-        F f_;
+        const F f_;
     };
     
     template <typename Range, typename F>

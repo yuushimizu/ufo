@@ -11,13 +11,40 @@ namespace ufo {
         constexpr ContainerWrapper(Container &&container) : container_(std::move(container)), iterator_(adl_begin(container_)) {
         }
         
-        auto first() const {
+        ~ContainerWrapper() = default;
+        
+        constexpr ContainerWrapper(const ContainerWrapper &other) : container_(other.container_), iterator_(adl_begin(container_) + (other.iterator_ - adl_begin(other.container_))) {
+        }
+        
+        constexpr ContainerWrapper(ContainerWrapper &&other) {
+            auto diff = other.iterator_ - adl_begin(other.container_);
+            container_ = std::move(other.container_);
+            iterator_ = adl_begin(container_) + diff;
+        }
+        
+        constexpr ContainerWrapper &operator=(const ContainerWrapper &other) {
+            container_ = other.container_;
+            iterator_ = adl_begin(container_) + (other.iterator_ - adl_begin(other.container_));
+            return *this;
+        }
+        
+        constexpr ContainerWrapper &operator=(ContainerWrapper &&other) {
+            auto diff = other.iterator_ - adl_begin(other.container_);
+            container_ = std::move(other.container_);
+            iterator_ = adl_begin(container_) + diff;
+            return *this;
+        }
+        
+        constexpr auto first() const {
             return *iterator_;
         }
         
-        auto rest() && {
+        constexpr void pop() {
             ++iterator_;
-            return std::move(*this);
+        }
+        
+        constexpr bool empty() const {
+            return iterator_ == adl_end(container_);
         }
         
     private:
@@ -31,13 +58,16 @@ namespace ufo {
         constexpr ContainerWrapper(Container &container) : container_(container), iterator_(adl_begin(container)) {
         }
         
-        decltype(auto) first() const {
+        constexpr decltype(auto) first() const {
             return *iterator_;
         }
         
-        auto rest() && {
+        constexpr void pop() {
             ++iterator_;
-            return std::move(*this);
+        }
+        
+        constexpr bool empty() const {
+            return iterator_ == adl_end(container_.get());
         }
         
     private:

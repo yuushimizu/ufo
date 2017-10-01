@@ -22,32 +22,32 @@ namespace ufo {
         
         RangeOperator &operator=(RangeOperator &&) = delete;
         
-        template <typename Range, enable_if_t<std::is_base_of_v<range, Range>> = nullptr>
+        template <typename Range, enable_if_t<std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) const & {
             return f_(std::forward<Range>(range));
         }
         
-        template <typename Range, enable_if_t<std::is_base_of_v<range, Range>> = nullptr>
+        template <typename Range, enable_if_t<std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) & {
             return f_(std::forward<Range>(range));
         }
         
-        template <typename Range, enable_if_t<std::is_base_of_v<range, Range>> = nullptr>
+        template <typename Range, enable_if_t<std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) && {
             return std::move(f_)(std::forward<Range>(range));
         }
         
-        template <typename Range, enable_if_t<!std::is_base_of_v<range, Range>> = nullptr>
+        template <typename Range, enable_if_t<!std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) const & {
             return f_(container_wrapper(std::forward<Range>(range)));
         }
         
-        template <typename Range, enable_if_t<!std::is_base_of_v<range, Range>> = nullptr>
+        template <typename Range, enable_if_t<!std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) & {
             return f_(container_wrapper(std::forward<Range>(range)));
         }
         
-        template <typename Range, enable_if_t<!std::is_base_of_v<range, Range>> = nullptr>
+        template <typename Range, enable_if_t<!std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) && {
             return std::move(f_)(container_wrapper(std::forward<Range>(range)));
         }

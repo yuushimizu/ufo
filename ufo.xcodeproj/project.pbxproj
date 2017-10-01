@@ -26,6 +26,7 @@
 		CAF018C21F7E664000E301CE /* optional.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018C01F7E664000E301CE /* optional.cpp */; };
 		CAF019071F7F557100E301CE /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019061F7F557100E301CE /* container_wrapper.cpp */; };
 		CAF0195E1F81321E00E301CE /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF0195D1F81321E00E301CE /* core.cpp */; };
+		CAF019641F815E6D00E301CE /* take.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019631F815E6D00E301CE /* take.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,8 @@
 		CAF0195C1F8129F600E301CE /* range_operator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = range_operator.hpp; path = range2/range_operator.hpp; sourceTree = "<group>"; };
 		CAF0195D1F81321E00E301CE /* core.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = core.cpp; path = range2/core.cpp; sourceTree = "<group>"; };
 		CAF0195F1F813A2A00E301CE /* range.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = range.hpp; path = range2/range.hpp; sourceTree = "<group>"; };
+		CAF019621F81504000E301CE /* take.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = take.hpp; path = range2/take.hpp; sourceTree = "<group>"; };
+		CAF019631F815E6D00E301CE /* take.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = take.cpp; path = range2/take.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +306,7 @@
 				CAF019521F8112E300E301CE /* core.hpp */,
 				CAF0195C1F8129F600E301CE /* range_operator.hpp */,
 				CAF0195F1F813A2A00E301CE /* range.hpp */,
+				CAF019621F81504000E301CE /* take.hpp */,
 			);
 			name = range2;
 			sourceTree = "<group>";
@@ -312,6 +316,7 @@
 			children = (
 				CAF019061F7F557100E301CE /* container_wrapper.cpp */,
 				CAF0195D1F81321E00E301CE /* core.cpp */,
+				CAF019631F815E6D00E301CE /* take.cpp */,
 			);
 			name = range2;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				CA5AEDF01F60E37E0095F382 /* join.cpp in Sources */,
 				CA5AEDEF1F60E37E0095F382 /* iterate.cpp in Sources */,
 				CA5AEDD81F5FF74C0095F382 /* Coord.cpp in Sources */,
+				CAF019641F815E6D00E301CE /* take.cpp in Sources */,
 				CA5AEDED1F60E37E0095F382 /* arithmetic_progression.cpp in Sources */,
 				CAF018BF1F7E1E2700E301CE /* optref.cpp in Sources */,
 				CA5AEDDC1F5FFB5D0095F382 /* Vector2D.cpp in Sources */,

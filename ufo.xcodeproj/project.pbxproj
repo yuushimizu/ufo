@@ -25,6 +25,7 @@
 		CAF018BF1F7E1E2700E301CE /* optref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018BE1F7E1E2700E301CE /* optref.cpp */; };
 		CAF018C21F7E664000E301CE /* optional.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018C01F7E664000E301CE /* optional.cpp */; };
 		CAF019071F7F557100E301CE /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019061F7F557100E301CE /* container_wrapper.cpp */; };
+		CAF0195E1F81321E00E301CE /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF0195D1F81321E00E301CE /* core.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,10 @@
 		CAF019021F7F4EE500E301CE /* min.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = min.hpp; path = range/min.hpp; sourceTree = "<group>"; };
 		CAF019041F7F4F2200E301CE /* container_wrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = container_wrapper.hpp; path = range2/container_wrapper.hpp; sourceTree = "<group>"; };
 		CAF019061F7F557100E301CE /* container_wrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = container_wrapper.cpp; path = range2/container_wrapper.cpp; sourceTree = "<group>"; };
+		CAF019521F8112E300E301CE /* core.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = core.hpp; path = range2/core.hpp; sourceTree = "<group>"; };
+		CAF0195C1F8129F600E301CE /* range_operator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = range_operator.hpp; path = range2/range_operator.hpp; sourceTree = "<group>"; };
+		CAF0195D1F81321E00E301CE /* core.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = core.cpp; path = range2/core.cpp; sourceTree = "<group>"; };
+		CAF0195F1F813A2A00E301CE /* range.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = range.hpp; path = range2/range.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +300,9 @@
 			isa = PBXGroup;
 			children = (
 				CAF019041F7F4F2200E301CE /* container_wrapper.hpp */,
+				CAF019521F8112E300E301CE /* core.hpp */,
+				CAF0195C1F8129F600E301CE /* range_operator.hpp */,
+				CAF0195F1F813A2A00E301CE /* range.hpp */,
 			);
 			name = range2;
 			sourceTree = "<group>";
@@ -303,6 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				CAF019061F7F557100E301CE /* container_wrapper.cpp */,
+				CAF0195D1F81321E00E301CE /* core.cpp */,
 			);
 			name = range2;
 			sourceTree = "<group>";
@@ -459,6 +468,7 @@
 			files = (
 				CAF019071F7F557100E301CE /* container_wrapper.cpp in Sources */,
 				CA5AEDE01F5FFBBF0095F382 /* memory.cpp in Sources */,
+				CAF0195E1F81321E00E301CE /* core.cpp in Sources */,
 				CA3ED3431F5FE43500DA2EF1 /* main.cpp in Sources */,
 				CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */,
 				CAF018C21F7E664000E301CE /* optional.cpp in Sources */,

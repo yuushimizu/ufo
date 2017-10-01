@@ -2,11 +2,12 @@
 #define ufo_range2_container_wrapper
 
 #include <functional>
+#include "range.hpp"
 #include "../iterator.hpp"
 
 namespace ufo {
     template <typename Container>
-    class ContainerWrapper {
+    class ContainerWrapper : public range {
     public:
         constexpr ContainerWrapper(Container &&container) : container_(std::move(container)), iterator_(adl_begin(container_)) {
         }
@@ -53,7 +54,7 @@ namespace ufo {
     };
     
     template <typename Container>
-    class ContainerWrapper<Container &> {
+    class ContainerWrapper<Container &> : public range {
     public:
         constexpr ContainerWrapper(Container &container) : container_(container), iterator_(adl_begin(container)) {
         }

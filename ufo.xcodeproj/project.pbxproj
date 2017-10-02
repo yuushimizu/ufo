@@ -27,6 +27,9 @@
 		CAF019071F7F557100E301CE /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019061F7F557100E301CE /* container_wrapper.cpp */; };
 		CAF0195E1F81321E00E301CE /* core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF0195D1F81321E00E301CE /* core.cpp */; };
 		CAF019641F815E6D00E301CE /* take.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019631F815E6D00E301CE /* take.cpp */; };
+		CAF019681F81F22C00E301CE /* foreach.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019671F81F22C00E301CE /* foreach.cpp */; };
+		CAF0196C1F81F92800E301CE /* as_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF0196B1F81F92800E301CE /* as_container.cpp */; };
+		CAF019781F81FC2200E301CE /* as_vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF019771F81FC2200E301CE /* as_vector.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -159,6 +162,13 @@
 		CAF0195F1F813A2A00E301CE /* range.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = range.hpp; path = range2/range.hpp; sourceTree = "<group>"; };
 		CAF019621F81504000E301CE /* take.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = take.hpp; path = range2/take.hpp; sourceTree = "<group>"; };
 		CAF019631F815E6D00E301CE /* take.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = take.cpp; path = range2/take.cpp; sourceTree = "<group>"; };
+		CAF019651F81DD0D00E301CE /* as_container.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = as_container.hpp; path = range2/as_container.hpp; sourceTree = "<group>"; };
+		CAF019661F81E5CF00E301CE /* foreach.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = foreach.hpp; path = range2/foreach.hpp; sourceTree = "<group>"; };
+		CAF019671F81F22C00E301CE /* foreach.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = foreach.cpp; path = range2/foreach.cpp; sourceTree = "<group>"; };
+		CAF019691F81F49200E301CE /* delete_copy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = delete_copy.hpp; path = range2/delete_copy.hpp; sourceTree = "<group>"; };
+		CAF0196B1F81F92800E301CE /* as_container.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = as_container.cpp; path = range2/as_container.cpp; sourceTree = "<group>"; };
+		CAF019761F81FBC500E301CE /* as_vector.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = as_vector.hpp; path = range2/as_vector.hpp; sourceTree = "<group>"; };
+		CAF019771F81FC2200E301CE /* as_vector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = as_vector.cpp; path = range2/as_vector.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +317,9 @@
 				CAF0195C1F8129F600E301CE /* range_operator.hpp */,
 				CAF0195F1F813A2A00E301CE /* range.hpp */,
 				CAF019621F81504000E301CE /* take.hpp */,
+				CAF019651F81DD0D00E301CE /* as_container.hpp */,
+				CAF019661F81E5CF00E301CE /* foreach.hpp */,
+				CAF019761F81FBC500E301CE /* as_vector.hpp */,
 			);
 			name = range2;
 			sourceTree = "<group>";
@@ -317,6 +330,10 @@
 				CAF019061F7F557100E301CE /* container_wrapper.cpp */,
 				CAF0195D1F81321E00E301CE /* core.cpp */,
 				CAF019631F815E6D00E301CE /* take.cpp */,
+				CAF019671F81F22C00E301CE /* foreach.cpp */,
+				CAF019691F81F49200E301CE /* delete_copy.hpp */,
+				CAF0196B1F81F92800E301CE /* as_container.cpp */,
+				CAF019771F81FC2200E301CE /* as_vector.cpp */,
 			);
 			name = range2;
 			sourceTree = "<group>";
@@ -487,7 +504,10 @@
 				CAF019641F815E6D00E301CE /* take.cpp in Sources */,
 				CA5AEDED1F60E37E0095F382 /* arithmetic_progression.cpp in Sources */,
 				CAF018BF1F7E1E2700E301CE /* optref.cpp in Sources */,
+				CAF019781F81FC2200E301CE /* as_vector.cpp in Sources */,
+				CAF019681F81F22C00E301CE /* foreach.cpp in Sources */,
 				CA5AEDDC1F5FFB5D0095F382 /* Vector2D.cpp in Sources */,
+				CAF0196C1F81F92800E301CE /* as_container.cpp in Sources */,
 				CA5AEDEE1F60E37E0095F382 /* filtered.cpp in Sources */,
 				CA5AEDDE1F5FFB860095F382 /* math.cpp in Sources */,
 			);

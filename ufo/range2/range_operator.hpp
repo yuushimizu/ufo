@@ -12,16 +12,6 @@ namespace ufo {
         constexpr RangeOperator(F f) : f_(std::move(f)) {
         }
         
-        ~RangeOperator() = default;
-        
-        RangeOperator(const RangeOperator &) = delete;
-        
-        RangeOperator(RangeOperator &&) = delete;
-        
-        RangeOperator &operator=(const RangeOperator &) = delete;
-        
-        RangeOperator &operator=(RangeOperator &&) = delete;
-        
         template <typename Range, enable_if_t<std::is_base_of_v<range, std::decay_t<Range>>> = nullptr>
         constexpr decltype(auto) operator()(Range &&range) const & {
             return f_(std::forward<Range>(range));

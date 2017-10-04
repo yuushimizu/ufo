@@ -25,6 +25,5 @@ namespace {
         r.pop();
         ASSERT_FALSE(r.empty());
         ASSERT_EQ(32, r.first());
-        r.pop();
     }
 }

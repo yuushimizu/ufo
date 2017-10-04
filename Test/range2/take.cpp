@@ -13,10 +13,10 @@ namespace {
         static_assert(std::is_same_v<int &, decltype(r | first)>);
         ASSERT_FALSE(r | is_empty);
         ASSERT_EQ(&v[0], &(r | first));
-        r = std::move(r) | rest;
+        r.pop();
         ASSERT_FALSE(r | is_empty);
         ASSERT_EQ(&v[1], &(r | first));
-        r = std::move(r) | rest;
+        r.pop();
         ASSERT_TRUE(r | is_empty);
     }
     
@@ -25,10 +25,10 @@ namespace {
         static_assert(std::is_same_v<int, decltype(r | first)>);
         ASSERT_FALSE(r | is_empty);
         ASSERT_EQ(10, r | first);
-        r = std::move(r) | rest;
+        r.pop();
         ASSERT_FALSE(r | is_empty);
         ASSERT_EQ(20, r | first);
-        r = std::move(r) | rest;
+        r.pop();
         ASSERT_TRUE(r | is_empty);
     }
     
@@ -40,7 +40,7 @@ namespace {
     TEST(TakeTest, Over) {
         auto r = std::vector<int> {10} | take(5);
         ASSERT_FALSE(r | is_empty);
-        r = std::move(r) | rest;
+        r.pop();
         ASSERT_TRUE(r | is_empty);
     }
 }

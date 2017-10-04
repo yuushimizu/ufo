@@ -6,7 +6,7 @@
 namespace ufo {
     template <typename F>
     constexpr auto foreach(F f) {
-        return range_operator([f](auto &&range) constexpr {
+        return range_operator([f = std::move(f)](auto &&range) constexpr {
             for (auto current = std::forward<decltype(range)>(range); !current.empty(); current.pop()) {
                 f(current.first());
             }

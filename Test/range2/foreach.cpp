@@ -27,5 +27,13 @@ namespace {
         });
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
+    
+    TEST(ForeachTest, FunctionNotCopied) {
+        std::vector<int> r {};
+        std::vector<int> {10, 20, 30} | foreach(test::delete_function_copy([&r](auto n) {
+            r.push_back(n);
+        }));
+        ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
+    }
 }
 

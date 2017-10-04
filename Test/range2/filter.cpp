@@ -4,6 +4,7 @@
 #include <type_traits>
 #include "ufo/range2/core.hpp"
 #include "ufo/placeholder.hpp"
+#include "delete_copy.hpp"
 
 using namespace ufo;
 
@@ -47,23 +48,7 @@ namespace {
     }
     
     TEST(FilterTest, FunctionNotCopied) {
-        class F {
-        public:
-            F() = default;
-            
-            F(const F &) = delete;
-            
-            F(F &&) = default;
-            
-            F &operator=(const F &) = delete;
-            
-            F &operator=(F &&) = default;
-            
-            bool operator()(int n) {
-                return n % 2 == 0;
-            }
-        } f;
-        auto r = std::vector<int> {1, 2, 3} | filter(std::move(f));
+        auto r = std::vector<int> {1, 2, 3} | filter(test::delete_function_copy([](auto n) {return n % 2 == 0;}));
         ASSERT_FALSE(r.empty());
         ASSERT_EQ(2, r.first());
         r.pop();

@@ -1,13 +1,13 @@
-#ifndef ufo_test_range2_delete_copy
-#define ufo_test_range2_delete_copy
+#ifndef ufo_test_sequence_delete_copy
+#define ufo_test_sequence_delete_copy
 
-#include "ufo/range2/range_operator.hpp"
+#include "ufo/sequence/sequence_operator.hpp"
 
 namespace ufo::test {
-    template <typename Range>
-    class DeleteCopy : public range {
+    template <typename Sequence>
+    class DeleteCopy : public sequence {
     public:
-        constexpr DeleteCopy(Range range) : range_(std::move(range)) {
+        constexpr DeleteCopy(Sequence sequence) : sequence_(std::move(sequence)) {
         }
         
         ~DeleteCopy() = default;
@@ -21,23 +21,23 @@ namespace ufo::test {
         DeleteCopy &operator=(DeleteCopy &&) = default;
         
         constexpr decltype(auto) first() const {
-            return range_.first();
+            return sequence_.first();
         }
         
         constexpr void pop() {
-            range_.pop();
+            sequence_.pop();
         }
         
         constexpr bool empty() const {
-            return range_.empty();
+            return sequence_.empty();
         }
         
     private:
-        Range range_;
+        Sequence sequence_;
     };
     
-    constexpr const auto delete_copy = range_operator([](auto range) constexpr {
-        return DeleteCopy<decltype(range)>(std::move(range));
+    constexpr const auto delete_copy = sequence_operator([](auto sequence) constexpr {
+        return DeleteCopy<decltype(sequence)>(std::move(sequence));
     });
     
     template <typename F>

@@ -1,11 +1,11 @@
-#ifndef ufo_range2_iterate
-#define ufo_range2_iterate
+#ifndef ufo_sequence_iterate
+#define ufo_sequence_iterate
 
-#include "range.hpp"
+#include "sequence.hpp"
 
 namespace ufo {
     template <typename F, typename T>
-    class Iterate : public range {
+    class Iterate : public sequence {
     public:
         constexpr Iterate(F f, T initial_value) : f_(std::move(f)), current_(std::move(initial_value)) {
         }

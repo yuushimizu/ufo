@@ -1,5 +1,5 @@
-#ifndef ufo_range2_couting
-#define ufo_range2_couting
+#ifndef ufo_sequence_couting
+#define ufo_sequence_couting
 
 #include "iterate.hpp"
 

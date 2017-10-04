@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include "ufo/range2/filter.hpp"
+#include "ufo/sequence/filter.hpp"
 #include <vector>
 #include <type_traits>
-#include "ufo/range2/core.hpp"
+#include "ufo/sequence/core.hpp"
 #include "ufo/placeholder.hpp"
 #include "delete_copy.hpp"
 

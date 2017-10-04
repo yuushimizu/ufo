@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/range2/as_vector.hpp"
+#include "ufo/sequence/as_vector.hpp"
 #include <deque>
 #include <type_traits>
 #include "delete_copy.hpp"

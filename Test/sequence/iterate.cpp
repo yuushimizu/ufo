@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/range2/iterate.hpp"
+#include "ufo/sequence/iterate.hpp"
 #include <type_traits>
 
 using namespace ufo;

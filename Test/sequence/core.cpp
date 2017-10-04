@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include "ufo/range2/core.hpp"
+#include "ufo/sequence/core.hpp"
 #include <type_traits>
 #include <vector>
-#include "ufo/range2/container_wrapper.hpp"
+#include "ufo/sequence/container_wrapper.hpp"
 
 using namespace ufo;
 

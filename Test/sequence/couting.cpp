@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/range2/counting.hpp"
+#include "ufo/sequence/counting.hpp"
 #include <type_traits>
 
 using namespace ufo;

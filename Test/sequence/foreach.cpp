@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/range2/foreach.hpp"
+#include "ufo/sequence/foreach.hpp"
 #include <vector>
 #include <type_traits>
 #include <functional>

@@ -2,13 +2,12 @@
 #define ufo_sequence_couting
 
 #include "iterate.hpp"
+#include "../placeholder.hpp"
 
 namespace ufo {
     template <typename T, typename Step>
     constexpr auto couting(T begin, Step step) {
-        return iterate([step = std::move(step)](auto current) constexpr {
-            return current + step;
-        }, std::move(begin));
+        return iterate(_ + std::move(step), std::move(begin));
     }
     
     template <typename T>

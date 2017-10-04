@@ -12,34 +12,19 @@ namespace ufo {
         constexpr SequenceOperator(F f) : f_(std::move(f)) {
         }
         
-        template <typename Sequence, enable_if_t<std::is_base_of_v<sequence, std::decay_t<Sequence>>> = nullptr>
+        template <typename Sequence>
         constexpr decltype(auto) operator()(Sequence &&sequence) const & {
-            return f_(std::forward<Sequence>(sequence));
+            return f_(container_wrapper(std::forward<Sequence>(sequence)));
         }
         
-        template <typename Sequence, enable_if_t<std::is_base_of_v<sequence, std::decay_t<Sequence>>> = nullptr>
+        template <typename Sequence>
         constexpr decltype(auto) operator()(Sequence &&sequence) & {
-            return f_(std::forward<Sequence>(sequence));
+            return f_(container_wrapper(std::forward<Sequence>(sequence)));
         }
         
-        template <typename Sequence, enable_if_t<std::is_base_of_v<sequence, std::decay_t<Sequence>>> = nullptr>
+        template <typename Sequence>
         constexpr decltype(auto) operator()(Sequence &&sequence) && {
-            return std::move(f_)(std::forward<Sequence>(sequence));
-        }
-        
-        template <typename Sequence, enable_if_t<!std::is_base_of_v<sequence, std::decay_t<Sequence>>> = nullptr>
-        constexpr decltype(auto) operator()(Sequence &&sequence) const & {
-            return (*this)(container_wrapper(std::forward<Sequence>(sequence)));
-        }
-        
-        template <typename Sequence, enable_if_t<!std::is_base_of_v<sequence, std::decay_t<Sequence>>> = nullptr>
-        constexpr decltype(auto) operator()(Sequence &&sequence) & {
-            return (*this)(container_wrapper(std::forward<Sequence>(sequence)));
-        }
-        
-        template <typename Sequence, enable_if_t<!std::is_base_of_v<sequence, std::decay_t<Sequence>>> = nullptr>
-        constexpr decltype(auto) operator()(Sequence &&sequence) && {
-            return std::move(*this)(container_wrapper(std::forward<Sequence>(sequence)));
+            return std::move(f_)(container_wrapper(std::forward<Sequence>(sequence)));
         }
 
     private:

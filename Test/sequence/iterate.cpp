@@ -1,12 +1,13 @@
 #include <gtest/gtest.h>
 #include "ufo/sequence/iterate.hpp"
 #include <type_traits>
+#include "ufo/placeholder.hpp"
 
 using namespace ufo;
 
 namespace {
     TEST(IterateTest, Iteration) {
-        auto r = iterate([](int n) {return n * 2;}, 1);
+        auto r = iterate(_ * 2, 1);
         static_assert(std::is_same_v<int, decltype(r.first())>);
         ASSERT_FALSE(r.empty());
         ASSERT_EQ(1, r.first());

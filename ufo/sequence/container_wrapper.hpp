@@ -4,6 +4,7 @@
 #include <functional>
 #include "sequence.hpp"
 #include "../iterator.hpp"
+#include "../type_traits.hpp"
 
 namespace ufo {
     template <typename Container>
@@ -76,9 +77,14 @@ namespace ufo {
         decltype(adl_begin(container_.get())) iterator_;
     };
     
-    template <typename Container>
+    template <typename Container, enable_if_t<!is_sequence_v<Container>> = nullptr>
     constexpr auto container_wrapper(Container &&container) {
         return ContainerWrapper<Container>(std::forward<Container>(container));
+    }
+    
+    template <typename Sequence, enable_if_t<is_sequence_v<Sequence>> = nullptr>
+    constexpr auto container_wrapper(Sequence &&container) {
+        return std::forward<Sequence>(container);
     }
 }
 

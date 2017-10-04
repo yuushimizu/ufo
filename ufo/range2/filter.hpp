@@ -3,15 +3,13 @@
 
 #include "range.hpp"
 #include "range_operator.hpp"
-#include "core.hpp"
 #include "../optional.hpp"
-#include "../TD.hpp"
 
 namespace ufo {
     template <typename F, typename Range>
     class Filtered : public range {
     private:
-        using reference = decltype(std::declval<Range>() | first);
+        using reference = decltype(std::declval<Range>().first());
         
     public:
         constexpr Filtered(F f, Range range) : f_(std::move(f)), range_(std::move(range)) {
@@ -37,7 +35,7 @@ namespace ufo {
         optional<reference> current_;
         
         void normalize() {
-            while (!(range_ | is_empty)) {
+            while (!(range_.empty())) {
                 current_ = range_.first();
                 if (f_(*current_)) return;
                 range_.pop();

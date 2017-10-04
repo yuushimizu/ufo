@@ -4,10 +4,9 @@
 #include <vector>
 #include "range_operator.hpp"
 #include "as_container.hpp"
-#include "core.hpp"
 
 namespace ufo {
-    constexpr const auto as_vector = range_operator([](auto &&range) -> std::vector<std::decay_t<decltype(std::forward<decltype(range)>(range) | first)>> {
+    constexpr const auto as_vector = range_operator([](auto &&range) -> std::vector<std::decay_t<decltype(std::forward<decltype(range)>(range).first())>> {
         return std::forward<decltype(range)>(range) | as_container;
     });
 }

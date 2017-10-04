@@ -11,43 +11,43 @@ namespace {
         const std::vector<int> v {10, 20, 30};
         auto cw = container_wrapper(v);
         static_assert(std::is_same_v<ContainerWrapper<const std::vector<int> &>, decltype(cw)>);
-        static_assert(std::is_same_v<const int &, decltype(cw.first())>);
-        ASSERT_EQ(&v[0], &cw.first());
+        static_assert(std::is_same_v<const int &, decltype(cw.front())>);
+        ASSERT_EQ(&v[0], &cw.front());
     }
     
     TEST(ContainerWrapperTest, LValue) {
         std::vector<int> v {10, 20, 30};
         auto cw = container_wrapper(v);
         static_assert(std::is_same_v<ContainerWrapper<std::vector<int> &>, decltype(cw)>);
-        static_assert(std::is_same_v<int &, decltype(cw.first())>);
-        ASSERT_EQ(&v[0], &cw.first());
+        static_assert(std::is_same_v<int &, decltype(cw.front())>);
+        ASSERT_EQ(&v[0], &cw.front());
     }
     
     TEST(ContainerWrapperTest, RValue) {
         auto cw = container_wrapper(std::vector<int> {10, 20, 30});
         static_assert(std::is_same_v<ContainerWrapper<std::vector<int>>, decltype(cw)>);
-        static_assert(std::is_same_v<int, decltype(cw.first())>);
-        ASSERT_EQ(10, cw.first());
+        static_assert(std::is_same_v<int, decltype(cw.front())>);
+        ASSERT_EQ(10, cw.front());
     }
     
     TEST(ContainerWrapperTest, PopConstLValue) {
         const std::vector<int> v {10, 20, 30};
         auto cw = container_wrapper(v);
         cw.pop();
-        ASSERT_EQ(&v[1], &cw.first());
+        ASSERT_EQ(&v[1], &cw.front());
     }
     
     TEST(ContainerWrapperTest, PopLValue) {
         std::vector<int> v {10, 20, 30};
         auto cw = container_wrapper(v);
         cw.pop();
-        ASSERT_EQ(&v[1], &cw.first());
+        ASSERT_EQ(&v[1], &cw.front());
     }
     
     TEST(ContainerWrapperTest, PopRValue) {
         auto cw = container_wrapper(std::vector<int> {10, 20, 30});
         cw.pop();
-        ASSERT_EQ(20, cw.first());
+        ASSERT_EQ(20, cw.front());
     }
     
     TEST(ContainerWrapperTest, EmptyConstLValue) {
@@ -121,12 +121,12 @@ namespace {
         const std::vector<int> v {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = cw1;
-        ASSERT_EQ(&v[0], &cw1.first());
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw1.front());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -135,12 +135,12 @@ namespace {
         std::vector<int> v {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = cw1;
-        ASSERT_EQ(&v[0], &cw1.first());
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw1.front());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -148,12 +148,12 @@ namespace {
     TEST(ContainerWrapperTest, CopyRValue) {
         auto cw1 = container_wrapper(std::vector<int> {10, 20, 30});
         auto cw2 = cw1;
-        ASSERT_EQ(10, cw1.first());
-        ASSERT_EQ(10, cw2.first()); // maybe wrong
+        ASSERT_EQ(10, cw1.front());
+        ASSERT_EQ(10, cw2.front());
         cw2.pop();
-        ASSERT_EQ(20, cw2.first());
+        ASSERT_EQ(20, cw2.front());
         cw2.pop();
-        ASSERT_EQ(30, cw2.first());
+        ASSERT_EQ(30, cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -162,11 +162,11 @@ namespace {
         const std::vector<int> v {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = std::move(cw1);
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -175,11 +175,11 @@ namespace {
         std::vector<int> v {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = std::move(cw1);
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -187,11 +187,11 @@ namespace {
     TEST(ContainerWrapperTest, MoveRValue) {
         auto cw1 = container_wrapper(std::vector<int> {10, 20, 30});
         auto cw2 = std::move(cw1);
-        ASSERT_EQ(10, cw2.first());
+        ASSERT_EQ(10, cw2.front());
         cw2.pop();
-        ASSERT_EQ(20, cw2.first());
+        ASSERT_EQ(20, cw2.front());
         cw2.pop();
-        ASSERT_EQ(30, cw2.first());
+        ASSERT_EQ(30, cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -202,12 +202,12 @@ namespace {
         const std::vector<int> v2 {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = cw1;
-        ASSERT_EQ(&v[0], &cw1.first());
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw1.front());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -218,12 +218,12 @@ namespace {
         std::vector<int> v2 {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = cw1;
-        ASSERT_EQ(&v[0], &cw1.first());
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw1.front());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -232,12 +232,12 @@ namespace {
         auto cw1 = container_wrapper(std::vector<int> {10, 20, 30});
         auto cw2 = container_wrapper(std::vector<int> {1, 2, 3});
         cw2 = cw1;
-        ASSERT_EQ(10, cw1.first());
-        ASSERT_EQ(10, cw2.first()); // maybe wrong
+        ASSERT_EQ(10, cw1.front());
+        ASSERT_EQ(10, cw2.front());
         cw2.pop();
-        ASSERT_EQ(20, cw2.first());
+        ASSERT_EQ(20, cw2.front());
         cw2.pop();
-        ASSERT_EQ(30, cw2.first());
+        ASSERT_EQ(30, cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -248,11 +248,11 @@ namespace {
         const std::vector<int> v2 {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = cw1;
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -263,11 +263,11 @@ namespace {
         std::vector<int> v2 {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = cw1;
-        ASSERT_EQ(&v[0], &cw2.first());
+        ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[1], &cw2.first());
+        ASSERT_EQ(&v[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&v[2], &cw2.first());
+        ASSERT_EQ(&v[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -276,11 +276,11 @@ namespace {
         auto cw1 = container_wrapper(std::vector<int> {10, 20, 30});
         auto cw2 = container_wrapper(std::vector<int> {1, 2, 3});
         cw2 = cw1;
-        ASSERT_EQ(10, cw2.first());
+        ASSERT_EQ(10, cw2.front());
         cw2.pop();
-        ASSERT_EQ(20, cw2.first());
+        ASSERT_EQ(20, cw2.front());
         cw2.pop();
-        ASSERT_EQ(30, cw2.first());
+        ASSERT_EQ(30, cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -289,11 +289,11 @@ namespace {
         const std::array<int, 3> a {10, 20, 30};
         auto cw1 = container_wrapper(a);
         auto cw2 = std::move(cw1);
-        ASSERT_EQ(&a[0], &cw2.first());
+        ASSERT_EQ(&a[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[1], &cw2.first());
+        ASSERT_EQ(&a[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[2], &cw2.first());
+        ASSERT_EQ(&a[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -302,11 +302,11 @@ namespace {
         std::array<int, 3> a {10, 20, 30};
         auto cw1 = container_wrapper(a);
         auto cw2 = std::move(cw1);
-        ASSERT_EQ(&a[0], &cw2.first());
+        ASSERT_EQ(&a[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[1], &cw2.first());
+        ASSERT_EQ(&a[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[2], &cw2.first());
+        ASSERT_EQ(&a[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -314,11 +314,11 @@ namespace {
     TEST(ContainerWrapperTest, MoveArrayRValue) {
         auto cw1 = container_wrapper(std::array<int, 3> {10, 20, 30});
         auto cw2 = std::move(cw1);
-        ASSERT_EQ(10, cw2.first());
+        ASSERT_EQ(10, cw2.front());
         cw2.pop();
-        ASSERT_EQ(20, cw2.first());
+        ASSERT_EQ(20, cw2.front());
         cw2.pop();
-        ASSERT_EQ(30, cw2.first());
+        ASSERT_EQ(30, cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -329,11 +329,11 @@ namespace {
         const std::array<int, 3> a2 {1, 2, 3};
         auto cw2 = container_wrapper(a2);
         cw2 = cw1;
-        ASSERT_EQ(&a[0], &cw2.first());
+        ASSERT_EQ(&a[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[1], &cw2.first());
+        ASSERT_EQ(&a[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[2], &cw2.first());
+        ASSERT_EQ(&a[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -344,11 +344,11 @@ namespace {
         std::array<int, 3> a2 {1, 2, 3};
         auto cw2 = container_wrapper(a2);
         cw2 = cw1;
-        ASSERT_EQ(&a[0], &cw2.first());
+        ASSERT_EQ(&a[0], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[1], &cw2.first());
+        ASSERT_EQ(&a[1], &cw2.front());
         cw2.pop();
-        ASSERT_EQ(&a[2], &cw2.first());
+        ASSERT_EQ(&a[2], &cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }
@@ -357,11 +357,11 @@ namespace {
         auto cw1 = container_wrapper(std::array<int, 3> {10, 20, 30});
         auto cw2 = container_wrapper(std::array<int, 3> {1, 2, 3});
         cw2 = cw1;
-        ASSERT_EQ(10, cw2.first());
+        ASSERT_EQ(10, cw2.front());
         cw2.pop();
-        ASSERT_EQ(20, cw2.first());
+        ASSERT_EQ(20, cw2.front());
         cw2.pop();
-        ASSERT_EQ(30, cw2.first());
+        ASSERT_EQ(30, cw2.front());
         cw2.pop();
         ASSERT_TRUE(cw2.empty());
     }

@@ -5,7 +5,7 @@
 
 namespace ufo {
     constexpr const auto first = sequence_operator([](auto &&sequence) constexpr -> decltype(auto) {
-        return std::forward<decltype(sequence)>(sequence).first();
+        return std::forward<decltype(sequence)>(sequence).front();
     });
     
     constexpr const auto rest = sequence_operator([](auto &&sequence) constexpr -> decltype(auto) {

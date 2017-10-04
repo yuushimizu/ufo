@@ -11,8 +11,8 @@ namespace ufo {
         constexpr Taken(int rest, Sequence sequence) : rest_(rest), sequence_(std::move(sequence)) {
         }
         
-        constexpr decltype(auto) first() const {
-            return sequence_.first();
+        constexpr decltype(auto) front() const {
+            return sequence_.front();
         }
         
         constexpr void pop() {

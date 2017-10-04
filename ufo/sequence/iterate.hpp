@@ -10,7 +10,7 @@ namespace ufo {
         constexpr Iterate(F f, T initial_value) : f_(std::move(f)), current_(std::move(initial_value)) {
         }
         
-        constexpr auto first() const {
+        constexpr auto front() const {
             return current_;
         }
         

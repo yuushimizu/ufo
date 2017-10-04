@@ -13,9 +13,9 @@ namespace ufo {
         constexpr Mapped(F f, Sequences ... sequences) : f_(std::move(f)), sequences_(std::move(sequences) ...) {
         }
         
-        constexpr decltype(auto) first() const {
+        constexpr decltype(auto) front() const {
             return std::apply([this](const auto & ... sequences) constexpr {
-                return this->f_(sequences.first() ...);
+                return this->f_(sequences.front() ...);
             }, sequences_);
         }
         

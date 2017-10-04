@@ -8,7 +8,7 @@ namespace ufo {
     constexpr auto foreach(F f) {
         return sequence_operator([f = std::move(f)](auto &&sequence) constexpr {
             for (auto current = std::forward<decltype(sequence)>(sequence); !current.empty(); current.pop()) {
-                f(current.first());
+                f(current.front());
             }
         });
     }

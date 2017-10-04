@@ -6,7 +6,7 @@
 #include "as_container.hpp"
 
 namespace ufo {
-    constexpr const auto as_vector = sequence_operator([](auto &&sequence) -> std::vector<std::decay_t<decltype(std::forward<decltype(sequence)>(sequence).first())>> {
+    constexpr const auto as_vector = sequence_operator([](auto &&sequence) -> std::vector<std::decay_t<decltype(std::forward<decltype(sequence)>(sequence).front())>> {
         return std::forward<decltype(sequence)>(sequence) | as_container;
     });
 }

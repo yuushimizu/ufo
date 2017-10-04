@@ -20,8 +20,8 @@ namespace ufo::test {
         
         DeleteCopy &operator=(DeleteCopy &&) = default;
         
-        constexpr decltype(auto) first() const {
-            return sequence_.first();
+        constexpr decltype(auto) front() const {
+            return sequence_.front();
         }
         
         constexpr void pop() {

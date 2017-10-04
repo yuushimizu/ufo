@@ -9,14 +9,14 @@ namespace ufo {
     template <typename F, typename Sequence>
     class Filtered : public sequence {
     private:
-        using reference = decltype(std::declval<Sequence>().first());
+        using reference = decltype(std::declval<Sequence>().front());
         
     public:
         constexpr Filtered(F f, Sequence sequence) : f_(std::move(f)), sequence_(std::move(sequence)) {
             normalize();
         }
         
-        constexpr reference first() const {
+        constexpr reference front() const {
             return *current_;
         }
         
@@ -36,7 +36,7 @@ namespace ufo {
         
         constexpr void normalize() {
             while (!(sequence_.empty())) {
-                current_ = sequence_.first();
+                current_ = sequence_.front();
                 if (f_(*current_)) return;
                 sequence_.pop();
             }

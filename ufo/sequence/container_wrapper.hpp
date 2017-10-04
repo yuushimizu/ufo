@@ -37,7 +37,7 @@ namespace ufo {
             return *this;
         }
         
-        constexpr auto first() const {
+        constexpr auto front() const {
             return *iterator_;
         }
         
@@ -60,7 +60,7 @@ namespace ufo {
         constexpr ContainerWrapper(Container &container) : container_(container), iterator_(adl_begin(container)) {
         }
         
-        constexpr decltype(auto) first() const {
+        constexpr decltype(auto) front() const {
             return *iterator_;
         }
         

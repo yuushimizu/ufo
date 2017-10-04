@@ -45,4 +45,28 @@ namespace {
         auto r = std::vector<int> {1, 2, 3} | filter(_ > 5);
         ASSERT_TRUE(r | is_empty);
     }
+    
+    TEST(FilterTest, FunctionNotCopied) {
+        class F {
+        public:
+            F() = default;
+            
+            F(const F &) = delete;
+            
+            F(F &&) = default;
+            
+            F &operator=(const F &) = delete;
+            
+            F &operator=(F &&) = default;
+            
+            bool operator()(int n) {
+                return n % 2 == 0;
+            }
+        } f;
+        auto r = std::vector<int> {1, 2, 3} | filter(std::move(f));
+        ASSERT_FALSE(r.empty());
+        ASSERT_EQ(2, r.first());
+        r.pop();
+        ASSERT_TRUE(r.empty());
+    }
 }

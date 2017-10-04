@@ -43,7 +43,7 @@ namespace ufo {
         }
 
     private:
-        const F f_;
+        F f_;
     };
     
     template <typename Range, typename F>

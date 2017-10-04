@@ -8,7 +8,7 @@ namespace ufo {
     template <typename Range>
     class Taken : public range {
     public:
-        constexpr Taken(Range range, int rest) : range_(std::move(range)), rest_(rest) {
+        constexpr Taken(int rest, Range range) : rest_(rest), range_(std::move(range)) {
         }
         
         constexpr decltype(auto) first() const {
@@ -25,13 +25,13 @@ namespace ufo {
         }
         
     private:
-        Range range_;
         int rest_;
+        Range range_;
     };
     
     constexpr auto take(int n) {
         return range_operator([n](auto range) constexpr {
-            return Taken<decltype(range)>(std::move(range), n);
+            return Taken<decltype(range)>(n, std::move(range));
         });
     }
 }

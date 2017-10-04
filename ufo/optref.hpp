@@ -59,19 +59,11 @@ namespace ufo {
             return static_cast<bool>(optional_);
         }
         
-        constexpr const T *operator->() const {
+        constexpr T *operator->() const {
             return &optional_->get();
         }
         
-        constexpr T *operator->() {
-            return &optional_->get();
-        }
-        
-        constexpr const T &operator*() const {
-            return optional_->get();
-        }
-        
-        constexpr T &operator*() {
+        constexpr T &operator*() const {
             return optional_->get();
         }
         

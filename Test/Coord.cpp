@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
-#include <type_traits>
-#include <sstream>
 #include "ufo/Coord.hpp"
+#include <type_traits>
+#include <functional>
+#include <sstream>
+#include "ufo/placeholder.hpp"
 
 using namespace ufo;
 
@@ -102,13 +104,13 @@ namespace {
     }
     
     TEST(CoordTest, TransformCoord) {
-        auto c = transform_coord([](const auto &n, const auto &m) {return n * m;}, coord(3, 7), coord(8, 9));
+        auto c = transform_coord(std::multiplies<> {}, coord(3, 7), coord(8, 9));
         ASSERT_EQ(3 * 8, c.x());
         ASSERT_EQ(7 * 9, c.y());
     }
     
     TEST(CoordTest, TransformCoordOne) {
-        auto c = transform_coord([](const auto &n) {return n * 2;}, coord(10, 20));
+        auto c = transform_coord(_ * 2, coord(10, 20));
         ASSERT_EQ(20, c.x());
         ASSERT_EQ(40, c.y());
     }

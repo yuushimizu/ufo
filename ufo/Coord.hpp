@@ -2,6 +2,7 @@
 #define ufo_Coord
 
 #include <cmath>
+#include <functional>
 #include <iostream>
 #include "range/irange.hpp"
 #include "range/transformed.hpp"
@@ -56,16 +57,12 @@ namespace ufo {
         
         template <typename Other>
         constexpr auto multiply(const Coord<Other> &other) const noexcept {
-            return transform_coord([](const auto &lhs, const auto &rhs) constexpr {
-                return lhs * rhs;
-            }, *this, other);
+            return transform_coord(std::multiplies<> {}, *this, other);
         }
         
         template <typename Other>
         constexpr auto divide(const Coord<Other> &other) const noexcept {
-            return transform_coord([](const auto &lhs, const auto &rhs) constexpr {
-                return lhs / rhs;
-            }, *this, other);
+            return transform_coord(std::divides<> {}, *this, other);
         }
         
     private:
@@ -105,9 +102,7 @@ namespace ufo {
 
     template<typename LHS, typename RHS>
     constexpr auto operator+(const Coord<LHS> &lhs, const Coord<RHS> &rhs) noexcept {
-        return transform_coord([](const auto &lhs, const auto &rhs) constexpr noexcept {
-            return lhs + rhs;
-        }, lhs, rhs);
+        return transform_coord(std::plus<> {}, lhs, rhs);
     }
 
     template<typename LHS, typename RHS>

@@ -12,6 +12,14 @@ namespace ufo {
             f_();
         }
         
+        ScopeExit(const ScopeExit &) = delete;
+        
+        ScopeExit(ScopeExit &&) = delete;
+        
+        ScopeExit &operator=(const ScopeExit &) = delete;
+        
+        ScopeExit &operator=(ScopeExit &&) = delete;
+        
     private:
         T f_;
     };

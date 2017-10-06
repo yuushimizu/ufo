@@ -28,6 +28,18 @@ namespace {
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
     
+    TEST(ForeachTest, Twice) {
+        std::vector<int> v {10, 20, 30};
+        std::vector<int> r {};
+        v | foreach([&r](int n) {
+            r.push_back(n);
+        });
+        v | foreach([&r](int n) {
+            r.push_back(n);
+        });
+        ASSERT_EQ((std::vector<int> {10, 20, 30, 10, 20, 30}), r);
+    }
+    
     TEST(ForeachTest, FunctionNotCopied) {
         std::vector<int> r {};
         std::vector<int> {10, 20, 30} | foreach(test::delete_function_copy([&r](auto n) {

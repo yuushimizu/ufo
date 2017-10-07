@@ -18,7 +18,7 @@ namespace ufo {
         constexpr ContainerWrapper(const ContainerWrapper &other) : container_(other.container_), iterator_(adl_begin(container_) + (other.iterator_ - adl_begin(other.container_))) {
         }
         
-        constexpr ContainerWrapper(ContainerWrapper &&other) {
+        constexpr ContainerWrapper(ContainerWrapper &&other) noexcept(noexcept(adl_begin(container_)) && noexcept(container_ = std::move(other.container_))) {
             auto diff = other.iterator_ - adl_begin(other.container_);
             container_ = std::move(other.container_);
             iterator_ = adl_begin(container_) + diff;

@@ -18,20 +18,21 @@ namespace ufo {
         constexpr ContainerWrapper(const ContainerWrapper &other) : container_(other.container_), iterator_(adl_begin(container_) + (other.iterator_ - adl_begin(other.container_))) {
         }
         
-        constexpr ContainerWrapper(ContainerWrapper &&other) noexcept(noexcept(adl_begin(container_)) && noexcept(container_ = std::move(other.container_))) {
+        constexpr ContainerWrapper(ContainerWrapper &&other) noexcept {
             auto diff = other.iterator_ - adl_begin(other.container_);
             container_ = std::move(other.container_);
             iterator_ = adl_begin(container_) + diff;
         }
         
         constexpr ContainerWrapper &operator=(const ContainerWrapper &other) {
-            container_ = other.container_;
-            iterator_ = adl_begin(container_) + (other.iterator_ - adl_begin(other.container_));
+            *this = ContainerWrapper(other);
             return *this;
         }
         
-        constexpr ContainerWrapper &operator=(ContainerWrapper &&other) {
-            *this = ContainerWrapper(std::move(other));
+        constexpr ContainerWrapper &operator=(ContainerWrapper &&other) noexcept {
+            auto diff = other.iterator_ - adl_begin(other.container_);
+            container_ = std::move(other.container_);
+            iterator_ = adl_begin(container_) + diff;
             return *this;
         }
         

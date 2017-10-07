@@ -31,9 +31,7 @@ namespace ufo {
         }
         
         constexpr ContainerWrapper &operator=(ContainerWrapper &&other) {
-            auto diff = other.iterator_ - adl_begin(other.container_);
-            container_ = std::move(other.container_);
-            iterator_ = adl_begin(container_) + diff;
+            *this = ContainerWrapper(std::move(other));
             return *this;
         }
         

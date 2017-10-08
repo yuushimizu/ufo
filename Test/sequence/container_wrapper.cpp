@@ -247,7 +247,7 @@ namespace {
         auto cw1 = container_wrapper(v);
         const std::vector<int> v2 {1, 2, 3};
         auto cw2 = container_wrapper(v2);
-        cw2 = cw1;
+        cw2 = std::move(cw1);
         ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
         ASSERT_EQ(&v[1], &cw2.front());
@@ -262,7 +262,7 @@ namespace {
         auto cw1 = container_wrapper(v);
         std::vector<int> v2 {1, 2, 3};
         auto cw2 = container_wrapper(v2);
-        cw2 = cw1;
+        cw2 = std::move(cw1);
         ASSERT_EQ(&v[0], &cw2.front());
         cw2.pop();
         ASSERT_EQ(&v[1], &cw2.front());
@@ -275,7 +275,7 @@ namespace {
     TEST(ContainerWrapperTest, MoveAssignRValue) {
         auto cw1 = container_wrapper(std::vector<int> {10, 20, 30});
         auto cw2 = container_wrapper(std::vector<int> {1, 2, 3});
-        cw2 = cw1;
+        cw2 = std::move(cw1);
         ASSERT_EQ(10, cw2.front());
         cw2.pop();
         ASSERT_EQ(20, cw2.front());
@@ -328,7 +328,7 @@ namespace {
         auto cw1 = container_wrapper(a);
         const std::array<int, 3> a2 {1, 2, 3};
         auto cw2 = container_wrapper(a2);
-        cw2 = cw1;
+        cw2 = std::move(cw1);
         ASSERT_EQ(&a[0], &cw2.front());
         cw2.pop();
         ASSERT_EQ(&a[1], &cw2.front());
@@ -343,7 +343,7 @@ namespace {
         auto cw1 = container_wrapper(a);
         std::array<int, 3> a2 {1, 2, 3};
         auto cw2 = container_wrapper(a2);
-        cw2 = cw1;
+        cw2 = std::move(cw1);
         ASSERT_EQ(&a[0], &cw2.front());
         cw2.pop();
         ASSERT_EQ(&a[1], &cw2.front());
@@ -356,7 +356,7 @@ namespace {
     TEST(ContainerWrapperTest, MoveAssignArrayRValue) {
         auto cw1 = container_wrapper(std::array<int, 3> {10, 20, 30});
         auto cw2 = container_wrapper(std::array<int, 3> {1, 2, 3});
-        cw2 = cw1;
+        cw2 = std::move(cw1);
         ASSERT_EQ(10, cw2.front());
         cw2.pop();
         ASSERT_EQ(20, cw2.front());

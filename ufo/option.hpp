@@ -10,6 +10,9 @@ namespace ufo {
     
     template <typename T>
     class option {
+    private:
+        std::experimental::optional<T> optional_;
+        
     public:
         constexpr option() noexcept : optional_ {} {
         }
@@ -95,10 +98,24 @@ namespace ufo {
             return std::move(*optional_);
         }
         
-    private:
-        std::experimental::optional<T> optional_;
+        template <typename F>
+        constexpr auto map(F &&f) const & -> option<decltype(std::forward<F>(f)(*optional_))> {
+            if (!*this) return nullopt;
+            return std::forward<F>(f)(*optional_);
+        }
         
-    public:
+        template <typename F>
+        constexpr auto map(F &&f) & -> option<decltype(std::forward<F>(f)(*optional_))> {
+            if (!*this) return nullopt;
+            return std::forward<F>(f)(*optional_);
+        }
+        
+        template <typename F>
+        constexpr auto map(F &&f) && -> option<decltype(std::forward<F>(f)(std::move(*optional_)))> {
+            if (!*this) return nullopt;
+            return std::forward<F>(f)(std::move(*optional_));
+        }
+        
         template <typename LHS, typename RHS>
         friend constexpr bool operator==(const option<LHS> &, const option<RHS> &) noexcept;
         
@@ -131,6 +148,9 @@ namespace ufo {
     
     template <typename T>
     class option<T &> {
+    private:
+        T *pointer_;
+        
     public:
         constexpr option() noexcept : pointer_(nullptr) {
         }
@@ -192,8 +212,11 @@ namespace ufo {
             return *pointer_;
         }
         
-    private:
-        T *pointer_;
+        template <typename F>
+        constexpr auto map(F &&f) const & -> option<decltype(std::forward<F>(f)(*pointer_))> {
+            if (!*this) return nullopt;
+            return std::forward<F>(f)(*pointer_);
+        }
         
         template <typename LHS, typename RHS>
         friend constexpr bool operator==(const option<LHS &> &lhs, const option<RHS &> &rhs) noexcept;

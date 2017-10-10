@@ -15,7 +15,7 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr Mapped(F f, Sequence sequence) : f_(std::move(f)), sequence_(std::move(sequence)) {
+        constexpr Mapped(F f, Sequence sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() ->  decltype(sequence_.next().map(f_)) {
@@ -25,8 +25,11 @@ namespace ufo {
     
     template <typename F>
     class Map {
+    private:
+        F f_;
+        
     public:
-        constexpr Map(F f) : f_(std::move(f)) {
+        constexpr Map(F f) noexcept : f_(std::move(f)) {
         }
         
         template <typename Sequence>
@@ -43,13 +46,10 @@ namespace ufo {
         constexpr auto operator()(Sequence &&sequence) && {
             return Mapped<F, Sequence>(std::move(f_), std::forward<Sequence>(sequence));
         }
-        
-    private:
-        F f_;
     };
     
     template <typename F>
-    constexpr auto map(F f) {
+    constexpr auto map(F f) noexcept {
         return sequence_operator(Map<F>(std::move(f)));
     }
 }

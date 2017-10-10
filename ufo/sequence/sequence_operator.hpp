@@ -8,27 +8,27 @@
 namespace ufo {
     template <typename F>
     class SequenceOperator final {
-    public:
-        constexpr SequenceOperator(F f) : f_(std::move(f)) {
-        }
-        
-        template <typename Sequence>
-        constexpr decltype(auto) operator()(Sequence &&sequence) const & {
-            return f_(container_wrapper(std::forward<Sequence>(sequence)));
-        }
-        
-        template <typename Sequence>
-        constexpr decltype(auto) operator()(Sequence &&sequence) & {
-            return f_(container_wrapper(std::forward<Sequence>(sequence)));
-        }
-        
-        template <typename Sequence>
-        constexpr decltype(auto) operator()(Sequence &&sequence) && {
-            return std::move(f_)(container_wrapper(std::forward<Sequence>(sequence)));
-        }
-
     private:
         F f_;
+        
+    public:
+        constexpr SequenceOperator(F f) noexcept : f_(std::move(f)) {
+        }
+        
+        template <typename ... Sequences>
+        constexpr decltype(auto) operator()(Sequences && ... sequences) const & {
+            return f_(container_wrapper(std::forward<Sequences>(sequences)) ...);
+        }
+        
+        template <typename ... Sequences>
+        constexpr decltype(auto) operator()(Sequences && ... sequences) & {
+            return f_(container_wrapper(std::forward<Sequences>(sequences)) ...);
+        }
+        
+        template <typename ... Sequences>
+        constexpr decltype(auto) operator()(Sequences && ... sequences) && {
+            return std::move(f_)(container_wrapper(std::forward<Sequences>(sequences)) ...);
+        }
     };
     
     template <typename Sequence, typename Op, enable_if_t<is_instantiation_of_v<SequenceOperator, std::decay_t<Op>>> = nullptr>
@@ -37,7 +37,7 @@ namespace ufo {
     }
     
     template <typename F>
-    constexpr auto sequence_operator(F f) {
+    constexpr auto sequence_operator(F f) noexcept {
         return SequenceOperator<F>(std::move(f));
     }
 }

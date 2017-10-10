@@ -7,8 +7,11 @@
 namespace ufo {
     template <typename Sequence>
     class AsContainer {
+    private:
+        Sequence sequence_;
+        
     public:
-        constexpr AsContainer(Sequence sequence) : sequence_(std::move(sequence)) {
+        constexpr AsContainer(Sequence sequence) noexcept : sequence_(std::move(sequence)) {
         }
         
         template <typename Container>
@@ -19,12 +22,9 @@ namespace ufo {
             });
             return result;
         }
-        
-    private:
-        Sequence sequence_;
     };
     
-    constexpr const auto as_container = sequence_operator([](auto sequence) {
+    constexpr const auto as_container = sequence_operator([](auto sequence) constexpr noexcept {
         return AsContainer<decltype(sequence)>(std::move(sequence));
     });
 }

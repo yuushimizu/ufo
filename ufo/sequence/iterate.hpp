@@ -7,8 +7,12 @@
 namespace ufo {
     template <typename F, typename T>
     class Iterate : public sequence {
+    private:
+        F f_;
+        T current_;
+        
     public:
-        constexpr Iterate(F f, T initial_value) : f_(std::move(f)), current_(std::move(initial_value)) {
+        constexpr Iterate(F f, T initial_value) noexcept : f_(std::move(f)), current_(std::move(initial_value)) {
         }
         
         constexpr option<T> next() {
@@ -16,14 +20,10 @@ namespace ufo {
             current_ = f_(std::move(current_));
             return std::move(value);
         }
-        
-    private:
-        F f_;
-        T current_;
     };
     
     template <typename F, typename T>
-    constexpr auto iterate(F f, T initial_value) {
+    constexpr auto iterate(F f, T initial_value) noexcept {
         return Iterate<F, T>(std::move(f), std::move(initial_value));
     }
 }

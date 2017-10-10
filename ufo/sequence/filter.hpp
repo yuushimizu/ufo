@@ -13,7 +13,7 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr Filtered(F f, Sequence sequence) : f_(std::move(f)), sequence_(std::move(sequence)) {
+        constexpr Filtered(F f, Sequence sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> sequence_option_t<Sequence> {
@@ -27,8 +27,11 @@ namespace ufo {
     
     template <typename F>
     class Filter {
+    private:
+        F f_;
+        
     public:
-        constexpr Filter(F f) : f_(std::move(f)) {
+        constexpr Filter(F f) noexcept : f_(std::move(f)) {
         }
         
         template <typename Sequence>
@@ -45,13 +48,10 @@ namespace ufo {
         constexpr auto operator()(Sequence &&sequence) && {
             return Filtered<F, Sequence>(std::move(f_), std::forward<Sequence>(sequence));
         }
-        
-    private:
-        F f_;
     };
     
     template <typename F>
-    constexpr auto filter(F f) {
+    constexpr auto filter(F f) noexcept {
         return sequence_operator(Filter<F>(std::move(f)));
     }
 }

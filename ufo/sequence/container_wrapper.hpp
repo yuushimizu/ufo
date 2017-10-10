@@ -73,7 +73,7 @@ namespace ufo {
     }
     
     template <typename Sequence, enable_if_t<is_sequence_v<Sequence>> = nullptr>
-    constexpr auto container_wrapper(Sequence &&container) {
+    constexpr decltype(auto) container_wrapper(Sequence &&container) {
         return std::forward<Sequence>(container);
     }
 }

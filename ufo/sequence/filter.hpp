@@ -18,9 +18,11 @@ namespace ufo {
         
         constexpr auto next() -> sequence_option_t<Sequence> {
             while (true) {
-                auto value = sequence_.next();
-                if (!value) return nullopt;
-                if (f_(*value)) return value;
+                if (auto value = sequence_.next()) {
+                    if (f_(*value)) return value;
+                } else {
+                    return nullopt;
+                }
             }
         }
     };

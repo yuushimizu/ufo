@@ -1,23 +1,23 @@
-#ifndef ufo_sequence_couting
-#define ufo_sequence_couting
+#ifndef ufo_sequence_counting
+#define ufo_sequence_counting
 
 #include "iterate.hpp"
 #include "../placeholder.hpp"
 
 namespace ufo {
-    template <typename T, typename Step>
-    constexpr auto couting(T begin, Step step) {
+    template <typename Begin, typename Step>
+    constexpr auto counting(Begin begin, Step step) {
         return iterate(_ + std::move(step), std::move(begin));
     }
     
-    template <typename T>
-    constexpr auto couting(T begin) {
-        return couting(std::move(begin), T(1));
+    template <typename Begin>
+    constexpr auto counting(Begin begin) {
+        return counting(std::move(begin), Begin(1));
     }
     
     template <typename T>
-    constexpr auto couting() {
-        return couting(T {});
+    constexpr auto counting() {
+        return counting(T {});
     }
 }
 

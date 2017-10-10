@@ -18,9 +18,12 @@ namespace ufo {
         
         constexpr auto next() -> sequence_option_t<Sequence> {
             if (rest_ <= 0) return nullopt;
-            auto value = sequence_.next();
-            --rest_;
-            return std::move(value);
+            if (auto value = sequence_.next()) {
+                --rest_;
+                return value;
+            } else {
+                return nullopt;
+            }
         }
     };
     

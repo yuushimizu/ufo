@@ -3,10 +3,17 @@
 
 #include <functional>
 #include <experimental/optional>
+#include <type_traits>
 
 namespace ufo {
     using std::experimental::nullopt_t;
     using std::experimental::nullopt;
+    
+    template <typename T>
+    class option;
+    
+    template <typename T>
+    constexpr option<T> make_option(T &&value) noexcept;
     
     template <typename T>
     class option {
@@ -45,7 +52,16 @@ namespace ufo {
         
         constexpr option &operator=(const option &) = default;
         
-        constexpr option &operator=(option &&) noexcept = default;
+        constexpr option &operator=(option &&other) noexcept(std::is_move_assignable_v<T> ? std::is_nothrow_move_assignable_v<T> : std::is_nothrow_move_constructible_v<T>) {
+            if constexpr (std::is_move_assignable_v<T>) {
+                optional_ = std::move(other.optional_);
+            } else if (other) {
+                optional_.emplace(std::move(*other.optional_));
+            } else {
+                optional_ = nullopt;
+            }
+            return *this;
+        }
         
         template <typename U>
         constexpr option &operator=(const option<U> &other) {
@@ -99,21 +115,21 @@ namespace ufo {
         }
         
         template <typename F>
-        constexpr auto map(F &&f) const & -> option<decltype(std::forward<F>(f)(*optional_))> {
+        constexpr auto map(F &&f) const & -> decltype(make_option(std::forward<F>(f)(*optional_))) {
             if (!*this) return nullopt;
-            return std::forward<F>(f)(*optional_);
+            return make_option(std::forward<F>(f)(*optional_));
         }
         
         template <typename F>
-        constexpr auto map(F &&f) & -> option<decltype(std::forward<F>(f)(*optional_))> {
+        constexpr auto map(F &&f) & -> decltype(make_option(std::forward<F>(f)(*optional_))) {
             if (!*this) return nullopt;
-            return std::forward<F>(f)(*optional_);
+            return make_option(std::forward<F>(f)(*optional_));
         }
         
         template <typename F>
-        constexpr auto map(F &&f) && -> option<decltype(std::forward<F>(f)(std::move(*optional_)))> {
+        constexpr auto map(F &&f) && -> decltype(make_option(std::forward<F>(f)(std::move(*optional_)))) {
             if (!*this) return nullopt;
-            return std::forward<F>(f)(std::move(*optional_));
+            return make_option(std::forward<F>(f)(std::move(*optional_)));
         }
         
         template <typename LHS, typename RHS>
@@ -213,9 +229,9 @@ namespace ufo {
         }
         
         template <typename F>
-        constexpr auto map(F &&f) const & -> option<decltype(std::forward<F>(f)(*pointer_))> {
+        constexpr auto map(F &&f) const & -> decltype(make_option(std::forward<F>(f)(*pointer_))) {
             if (!*this) return nullopt;
-            return std::forward<F>(f)(*pointer_);
+            return make_option(std::forward<F>(f)(*pointer_));
         }
         
         template <typename LHS, typename RHS>
@@ -241,6 +257,11 @@ namespace ufo {
     template <typename T>
     constexpr bool operator==(nullopt_t, const option<T &> &option) noexcept {
         return option.pointer_ == nullptr;
+    }
+    
+    template <typename T>
+    constexpr option<T> make_option(T &&value) noexcept {
+        return std::forward<T>(value);
     }
 }
 

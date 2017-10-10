@@ -37,7 +37,7 @@ namespace {
     }
     
     TEST(FilterTest, FunctionNotCopied) {
-        auto r = std::vector<int> {1, 2, 3} | filter(test::delete_function_copy([](auto n) {return n % 2 == 0;}));
+        auto r = std::vector<int> {1, 2, 3} | filter(test::delete_function_copy(_ % 2 == 0));
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }

@@ -15,6 +15,16 @@ namespace ufo {
         constexpr Iterate(F f, T initial_value) noexcept : f_(std::move(f)), current_(std::move(initial_value)) {
         }
         
+        ~Iterate() = default;
+        
+        Iterate(const Iterate &) = default;
+        
+        Iterate(Iterate &&) noexcept = default;
+        
+        Iterate &operator=(const Iterate &) = default;
+        
+        Iterate &operator=(Iterate &&) noexcept = default;
+        
         constexpr option<T> next() {
             auto value = current_;
             current_ = f_(std::move(current_));

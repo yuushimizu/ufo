@@ -33,7 +33,7 @@ namespace {
     }
     
     TEST(MapTest, FunctionNotCopied) {
-        auto r = std::vector<int> {1} | map(test::delete_function_copy([](auto n) {return n * 2;}));
+        auto r = std::vector<int> {1} | map(test::delete_function_copy(_ * 2));
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }

@@ -8,6 +8,9 @@ namespace ufo {
     
     template <typename T>
     constexpr const auto is_sequence_v = std::is_base_of_v<sequence, std::decay_t<T>>;
+    
+    template <typename T>
+    using sequence_option_t = decltype(std::declval<T>().next());
 }
 
 #endif

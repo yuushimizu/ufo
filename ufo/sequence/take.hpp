@@ -3,30 +3,24 @@
 
 #include "sequence.hpp"
 #include "sequence_operator.hpp"
+#include "../option.hpp"
 
 namespace ufo {
     template <typename Sequence>
     class Taken : public sequence {
+    private:
+        int rest_;
+        Sequence sequence_;
+        
     public:
         constexpr Taken(int rest, Sequence sequence) : rest_(rest), sequence_(std::move(sequence)) {
         }
         
-        constexpr decltype(auto) front() const {
-            return sequence_.front();
-        }
-        
-        constexpr void pop() {
-            sequence_.pop();
+        constexpr auto next() -> sequence_option_t<Sequence> {
+            if (rest_ <= 0) return nullopt;
             --rest_;
+            return sequence_.next();
         }
-        
-        constexpr bool empty() const {
-            return rest_ <= 0 || sequence_.empty();
-        }
-        
-    private:
-        int rest_;
-        Sequence sequence_;
     };
     
     constexpr auto take(int n) {

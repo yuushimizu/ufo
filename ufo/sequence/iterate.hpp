@@ -2,6 +2,7 @@
 #define ufo_sequence_iterate
 
 #include "sequence.hpp"
+#include "../option.hpp"
 
 namespace ufo {
     template <typename F, typename T>
@@ -10,16 +11,10 @@ namespace ufo {
         constexpr Iterate(F f, T initial_value) : f_(std::move(f)), current_(std::move(initial_value)) {
         }
         
-        constexpr auto front() const {
-            return current_;
-        }
-        
-        constexpr void pop() {
+        constexpr option<T> next() {
+            auto value = current_;
             current_ = f_(std::move(current_));
-        }
-        
-        constexpr bool empty() const {
-            return false;
+            return std::move(value);
         }
         
     private:

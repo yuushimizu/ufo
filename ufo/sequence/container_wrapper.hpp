@@ -5,10 +5,15 @@
 #include "sequence.hpp"
 #include "../iterator.hpp"
 #include "../type_traits.hpp"
+#include "../option.hpp"
 
 namespace ufo {
     template <typename Container>
     class ContainerWrapper : public sequence {
+    private:
+        Container container_;
+        decltype(adl_begin(container_)) iterator_;
+        
     public:
         constexpr ContainerWrapper(Container &&container) : container_(std::move(container)), iterator_(adl_begin(container_)) {
         }
@@ -36,44 +41,30 @@ namespace ufo {
             return *this;
         }
         
-        constexpr auto front() const {
-            return *iterator_;
-        }
-        
-        constexpr void pop() {
+        constexpr auto next() noexcept -> option<std::decay_t<decltype(*iterator_)>> {
+            if (iterator_ == adl_end(container_)) return nullopt;
+            auto value = std::move(*iterator_);
             ++iterator_;
+            return std::move(value);
         }
-        
-        constexpr bool empty() const {
-            return iterator_ == adl_end(container_);
-        }
-        
-    private:
-        Container container_;
-        decltype(adl_begin(container_)) iterator_;
     };
     
     template <typename Container>
     class ContainerWrapper<Container &> : public sequence {
+    private:
+        std::reference_wrapper<Container> container_;
+        decltype(adl_begin(container_.get())) iterator_;
+        
     public:
         constexpr ContainerWrapper(Container &container) : container_(container), iterator_(adl_begin(container)) {
         }
         
-        constexpr decltype(auto) front() const {
-            return *iterator_;
-        }
-        
-        constexpr void pop() {
+        constexpr auto next() noexcept -> option<decltype(*iterator_)> {
+            if (iterator_ == adl_end(container_.get())) return nullopt;
+            auto &value = *iterator_;
             ++iterator_;
+            return value;
         }
-        
-        constexpr bool empty() const {
-            return iterator_ == adl_end(container_.get());
-        }
-        
-    private:
-        std::reference_wrapper<Container> container_;
-        decltype(adl_begin(container_.get())) iterator_;
     };
     
     template <typename Container, enable_if_t<!is_sequence_v<Container>> = nullptr>

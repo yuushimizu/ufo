@@ -4,7 +4,7 @@
 #include <functional>
 #include <initializer_list>
 #include <deque>
-#include "optional.hpp"
+#include "option.hpp"
 #include "scope_exit.hpp"
 
 namespace ufo {
@@ -83,7 +83,7 @@ namespace ufo {
                 
             private:
                 std::function<coroutine<R(Args ...)>(Args ...)> f_;
-                optional<coroutine<R(Args ...)>> coro_ = nullopt;
+                option<coroutine<R(Args ...)>> coro_ = nullopt;
                 bool called_ = false;
             };
             

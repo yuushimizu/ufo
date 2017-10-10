@@ -3,7 +3,7 @@
 
 #include "sequence.hpp"
 #include "sequence_operator.hpp"
-#include "../optional.hpp"
+#include "../option.hpp"
 
 namespace ufo {
     template <typename F, typename Sequence>
@@ -32,7 +32,7 @@ namespace ufo {
     private:
         F f_;
         Sequence sequence_;
-        optional<reference> current_;
+        option<reference> current_;
         
         constexpr void normalize() {
             while (!(sequence_.empty())) {

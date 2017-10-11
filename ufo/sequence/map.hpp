@@ -5,13 +5,13 @@
 #include "sequence.hpp"
 #include "container_wrapper.hpp"
 #include "sequence_operator.hpp"
-#include "../option.hpp"
+#include "../lambda_wrapper.hpp"
 
 namespace ufo {
     template <typename F, typename Sequence>
     class Mapped : public sequence {
     private:
-        F f_;
+        LambdaWrapper<F> f_;
         Sequence sequence_;
         
     public:

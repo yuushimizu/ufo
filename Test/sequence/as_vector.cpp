@@ -10,11 +10,18 @@ namespace {
     TEST(AsVectorTest, LValue) {
         std::deque<int> d {10, 20, 30};
         decltype(auto) r = d | as_vector;
+        static_assert(std::is_same_v<std::vector<int>, decltype(r)>);
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
     
     TEST(AsVectorTest, RValue) {
-        decltype(auto) r = std::deque<int> {10, 20, 30} | test::delete_copy | as_vector;
+        decltype(auto) r = std::deque<int> {10, 20, 30} | as_vector;
+        static_assert(std::is_same_v<std::vector<int>, decltype(r)>);
+        ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
+    }
+    
+    TEST(AsVectorTest, SequenceNotCopied) {
+        std::vector<int> r = std::deque<int> {10, 20, 30} | test::delete_copy | as_vector;
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
 }

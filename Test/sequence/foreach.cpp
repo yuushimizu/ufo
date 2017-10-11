@@ -22,7 +22,7 @@ namespace {
     
     TEST(ForeachTest, RValue) {
         std::vector<int> r {};
-        std::vector<int> {10, 20, 30} | test::delete_copy | foreach([&r](int n) {
+        std::vector<int> {10, 20, 30} | foreach([&r](int n) {
             r.push_back(n);
         });
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
@@ -38,6 +38,14 @@ namespace {
             r.push_back(n);
         });
         ASSERT_EQ((std::vector<int> {10, 20, 30, 10, 20, 30}), r);
+    }
+    
+    TEST(ForeachTest, SequenceNotCopied) {
+        std::vector<int> r {};
+        std::vector<int> {10, 20, 30} | test::delete_copy | foreach([&r](int n) {
+            r.push_back(n);
+        });
+        ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
     
     TEST(ForeachTest, FunctionNotCopied) {

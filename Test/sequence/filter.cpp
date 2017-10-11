@@ -31,8 +31,15 @@ namespace {
         ASSERT_FALSE(r.next());
     }
     
-    TEST(FilterTset, NotMatched) {
+    TEST(FilterTest, NotMatched) {
         auto r = std::vector<int> {1, 2, 3} | filter(_ > 5);
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(FilterTest, SequenceNotCopied) {
+        auto r = std::vector<int> {5, 10, 15} | test::delete_copy | filter(_ % 2 == 1);
+        ASSERT_EQ(5, *r.next());
+        ASSERT_EQ(15, *r.next());
         ASSERT_FALSE(r.next());
     }
     

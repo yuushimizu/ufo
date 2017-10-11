@@ -7,7 +7,7 @@ namespace ufo::test {
     template <typename Sequence>
     class DeleteCopy : public sequence {
     public:
-        constexpr DeleteCopy(Sequence sequence) : sequence_(std::move(sequence)) {
+        constexpr DeleteCopy(Sequence sequence) noexcept : sequence_(std::move(sequence)) {
         }
         
         ~DeleteCopy() = default;
@@ -16,9 +16,9 @@ namespace ufo::test {
         
         DeleteCopy(DeleteCopy &&) = default;
         
-        DeleteCopy &operator=(const DeleteCopy &) = delete;
+        DeleteCopy &operator=(const DeleteCopy &) noexcept = delete;
         
-        DeleteCopy &operator=(DeleteCopy &&) = default;
+        DeleteCopy &operator=(DeleteCopy &&) noexcept = default;
         
         constexpr decltype(auto) next() {
             return sequence_.next();
@@ -28,14 +28,14 @@ namespace ufo::test {
         Sequence sequence_;
     };
     
-    constexpr const auto delete_copy = sequence_operator([](auto sequence) constexpr {
+    constexpr const auto delete_copy = sequence_operator([](auto sequence) constexpr noexcept {
         return DeleteCopy<decltype(sequence)>(std::move(sequence));
     });
     
     template <typename F>
     class DeleteFunctionCopy {
     public:
-        constexpr DeleteFunctionCopy(F f) : f_(std::move(f)) {
+        constexpr DeleteFunctionCopy(F f) noexcept : f_(std::move(f)) {
         }
         
         ~DeleteFunctionCopy() = default;
@@ -68,7 +68,7 @@ namespace ufo::test {
     };
     
     template <typename F>
-    constexpr auto delete_function_copy(F &&f) {
+    constexpr auto delete_function_copy(F &&f) noexcept {
         return DeleteFunctionCopy<F>(std::forward<F>(f));
     }
 }

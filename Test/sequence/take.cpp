@@ -2,6 +2,7 @@
 #include "ufo/sequence/take.hpp"
 #include <vector>
 #include <type_traits>
+#include "delete_copy.hpp"
 
 using namespace ufo;
 
@@ -31,6 +32,12 @@ namespace {
     TEST(TakeTest, Over) {
         auto r = std::vector<int> {10} | take(5);
         ASSERT_EQ(10, *r.next());
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(TakeTest, SequenceNotCopied) {
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | take(1);
+        ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }
 }

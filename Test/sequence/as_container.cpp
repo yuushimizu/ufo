@@ -14,6 +14,11 @@ namespace {
     }
     
     TEST(AsContainerTest, RValue) {
+        std::deque<int> r = std::vector<int> {10, 20, 30} | as_container;
+        ASSERT_EQ((std::deque<int> {10, 20, 30}), r);
+    }
+    
+    TEST(AsContainerTest, SequenceNotCopied) {
         std::deque<int> r = std::vector<int> {10, 20, 30} | test::delete_copy | as_container;
         ASSERT_EQ((std::deque<int> {10, 20, 30}), r);
     }

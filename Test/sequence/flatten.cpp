@@ -60,7 +60,7 @@ namespace {
         ASSERT_FALSE(r.next());
     }
     
-    TEST(FlattenTest, NoCopy) {
+    TEST(FlattenTest, SequenceNotCopied) {
         auto r = std::vector<int> {1, 2} | map([](auto n) {return range(n) | test::delete_copy;}) | test::delete_copy | flatten;
         ASSERT_EQ(0, *r.next());
         ASSERT_EQ(0, *r.next());

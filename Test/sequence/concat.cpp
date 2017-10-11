@@ -3,6 +3,7 @@
 #include <vector>
 #include <deque>
 #include <type_traits>
+#include "delete_copy.hpp"
 
 using namespace ufo;
 
@@ -53,6 +54,20 @@ namespace {
         ASSERT_EQ(10, *r.next());
         ASSERT_EQ(20, *r.next());
         ASSERT_EQ(30, *r.next());
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(ConcatTest, SingleSequence) {
+        auto r = concat(std::vector<int> {10, 20});
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(ConcatTest, SequenceNotCopied) {
+        auto r = concat(std::vector<int> {10} | test::delete_copy, std::vector<int> {20} | test::delete_copy);
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
         ASSERT_FALSE(r.next());
     }
 }

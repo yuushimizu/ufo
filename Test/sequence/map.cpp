@@ -19,7 +19,7 @@ namespace {
     }
     
     TEST(MapTest, RValue) {
-        auto r = std::vector<int> {11, 22, 33} | test::delete_copy | map(_ * 2);
+        auto r = std::vector<int> {11, 22, 33} | map(_ * 2);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(22, *r.next());
         ASSERT_EQ(44, *r.next());
@@ -29,6 +29,12 @@ namespace {
     
     TEST(MapTest, Empty) {
         auto r = std::vector<int> {} | map(_ + 10);
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(MapTest, SequenceNotCopied) {
+        auto r = std::vector<int> {1} | test::delete_copy | map(_ * 2);
+        ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }
     

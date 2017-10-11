@@ -3,12 +3,13 @@
 
 #include "sequence.hpp"
 #include "../option.hpp"
+#include "../lambda_wrapper.hpp"
 
 namespace ufo {
     template <typename F, typename T>
     class Iterate : public sequence {
     private:
-        F f_;
+        LambdaWrapper<F> f_;
         T current_;
         
     public:

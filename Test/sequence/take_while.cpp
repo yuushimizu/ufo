@@ -3,6 +3,7 @@
 #include <vector>
 #include <type_traits>
 #include "ufo/placeholder.hpp"
+#include "delete_copy.hpp"
 
 using namespace ufo;
 
@@ -33,6 +34,18 @@ namespace {
     
     TEST(TakeWhileTest, Unmatch) {
         auto r = std::vector<int> {10} | take_while(_ < 10);
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(TakeWhileTest, SequenceNotCopied) {
+        auto r = std::vector<int> {1, 2, 3} | test::delete_copy | take_while(_ < 2);
+        ASSERT_EQ(1, *r.next());
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(TakeWhileTest, FunctionNotCopied) {
+        auto r = std::vector<int> {1, 2, 3} | take_while(test::delete_function_copy(_ < 2));
+        ASSERT_EQ(1, *r.next());
         ASSERT_FALSE(r.next());
     }
 }

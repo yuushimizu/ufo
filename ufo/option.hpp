@@ -17,6 +17,8 @@ namespace ufo {
     
     template <typename T>
     class option {
+        static_assert(std::is_nothrow_move_constructible_v<T>);
+        
     private:
         std::experimental::optional<T> optional_;
         
@@ -50,18 +52,9 @@ namespace ufo {
             return *this;
         }
         
-        constexpr option &operator=(const option &) = default;
+        constexpr option &operator=(const option &other) = default;
         
-        constexpr option &operator=(option &&other) noexcept(std::is_move_assignable_v<T> ? std::is_nothrow_move_assignable_v<T> : std::is_nothrow_move_constructible_v<T>) {
-            if constexpr (std::is_move_assignable_v<T>) {
-                optional_ = std::move(other.optional_);
-            } else if (other) {
-                optional_.emplace(std::move(*other.optional_));
-            } else {
-                optional_ = nullopt;
-            }
-            return *this;
-        }
+        constexpr option &operator=(option &&other) noexcept(std::is_nothrow_move_assignable_v<std::experimental::optional<T>>) = default;
         
         template <typename U>
         constexpr option &operator=(const option<U> &other) {

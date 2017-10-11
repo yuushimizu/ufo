@@ -8,9 +8,10 @@
 using namespace ufo;
 
 namespace {
-    TEST(MapTest, LValue) {
+    TEST(MapTest, FromLValue) {
         std::vector<int> v {10, 20, 30};
-        auto r = v | map(_ * 2);
+        auto cw = container_wrapper(v);
+        auto r = cw | map(_ * 2);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(20, *r.next());
         ASSERT_EQ(40, *r.next());
@@ -18,7 +19,18 @@ namespace {
         ASSERT_FALSE(r.next());
     }
     
-    TEST(MapTest, RValue) {
+    TEST(MapTest, CopiedLValueNotChanged) {
+        auto cw = container_wrapper(std::vector<int> {10, 20});
+        auto r = cw | map(_ * 2);
+        ASSERT_EQ(20, *r.next());
+        ASSERT_EQ(40, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(10, *cw.next());
+        ASSERT_EQ(20, *cw.next());
+        ASSERT_FALSE(cw.next());
+    }
+    
+    TEST(MapTest, FromRValue) {
         auto r = std::vector<int> {11, 22, 33} | map(_ * 2);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(22, *r.next());

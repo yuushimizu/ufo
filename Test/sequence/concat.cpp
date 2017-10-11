@@ -8,10 +8,12 @@
 using namespace ufo;
 
 namespace {
-    TEST(ConcatTest, LValue) {
+    TEST(ConcatTest, FromLValue) {
         std::vector<int> v {10, 20};
+        auto cwv = container_wrapper(v);
         std::deque<int> d {30, 40, 50};
-        auto r = concat(v, d);
+        auto cwd = container_wrapper(d);
+        auto r = concat(cwv, cwd);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&v[0], &*r.next());
         ASSERT_EQ(&v[1], &*r.next());
@@ -21,7 +23,22 @@ namespace {
         ASSERT_FALSE(r.next());
     }
     
-    TEST(ConcatTest, RValue) {
+    TEST(ConcatTest, CopiedLValueNotChanged) {
+        auto cwv = container_wrapper(std::vector<int> {10});
+        auto cwd = container_wrapper(std::vector<int> {20, 30});
+        auto r = concat(cwv, cwd);
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
+        ASSERT_EQ(30, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(10, *cwv.next());
+        ASSERT_FALSE(cwv.next());
+        ASSERT_EQ(20, *cwd.next());
+        ASSERT_EQ(30, *cwd.next());
+        ASSERT_FALSE(cwd.next());
+    }
+    
+    TEST(ConcatTest, FromRValue) {
         auto r = concat(std::vector<int> {11, 22, 33}, std::deque<int> {44, 55});
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(11, *r.next());
@@ -29,6 +46,26 @@ namespace {
         ASSERT_EQ(33, *r.next());
         ASSERT_EQ(44, *r.next());
         ASSERT_EQ(55, *r.next());
+        ASSERT_FALSE(r.next());
+    }
+    
+    TEST(ConcatTest, FromLValueAndRValue) {
+        auto cw = container_wrapper(std::vector<int> {10});
+        auto r = concat(cw, std::vector<int> {20} | test::delete_copy);
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(10, *cw.next());
+        ASSERT_FALSE(cw.next());
+    }
+    
+    TEST(ConcatTest, FromRValueAndLValue) {
+        auto cw = container_wrapper(std::vector<int> {20});
+        auto r = concat(std::vector<int> {10} | test::delete_copy, cw);
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(20, *cw.next());
         ASSERT_FALSE(r.next());
     }
     

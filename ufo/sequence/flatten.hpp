@@ -20,7 +20,10 @@ namespace ufo {
         decltype(next_inner(std::declval<Sequence &>())) current_ {};
         
     public:
-        constexpr Flattened(Sequence sequence) noexcept : sequence_(std::move(sequence)) {
+        constexpr Flattened(const Sequence &sequence) : sequence_(sequence) {
+        }
+        
+        constexpr Flattened(Sequence &&sequence) noexcept : sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> decltype(current_->next()) {
@@ -33,8 +36,8 @@ namespace ufo {
         }
     };
     
-    constexpr const auto flatten = sequence_operator([](auto sequence) {
-        return Flattened<decltype(sequence)>(std::move(sequence));
+    constexpr const auto flatten = sequence_operator([](auto &&sequence) {
+        return Flattened<std::decay_t<decltype(sequence)>>(std::forward<decltype(sequence)>(sequence));
     });
 
 }

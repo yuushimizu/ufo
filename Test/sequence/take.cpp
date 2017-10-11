@@ -7,16 +7,30 @@
 using namespace ufo;
 
 namespace {
-    TEST(TakeTest, LValue) {
+    TEST(TakeTest, FromLValue) {
         std::vector<int> v {10, 20, 30};
-        auto r = v | take(2);
+        auto cw = container_wrapper(v);
+        auto r = cw | take(2);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&v[0], &*r.next());
         ASSERT_EQ(&v[1], &*r.next());
         ASSERT_FALSE(r.next());
     }
     
-    TEST(TakeTest, RValue) {
+    TEST(TakeTest, CopiedLValueNotChanged) {
+        std::vector<int> v {10, 20, 30};
+        auto cw = container_wrapper(std::vector<int> {10, 20, 30});
+        auto r = cw | take(2);
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(10, *cw.next());
+        ASSERT_EQ(20, *cw.next());
+        ASSERT_EQ(30, *cw.next());
+        ASSERT_FALSE(cw.next());
+    }
+    
+    TEST(TakeTest, FromRValue) {
         auto r = std::vector<int> {10, 20, 30} | take(2);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(10, *r.next());

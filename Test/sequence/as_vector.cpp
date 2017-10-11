@@ -7,14 +7,18 @@
 using namespace ufo;
 
 namespace {
-    TEST(AsVectorTest, LValue) {
-        std::deque<int> d {10, 20, 30};
-        decltype(auto) r = d | as_vector;
+    TEST(AsVectorTest, FromLValue) {
+        auto cw = container_wrapper(std::deque<int> {10, 20, 30});
+        decltype(auto) r = cw | as_vector;
         static_assert(std::is_same_v<std::vector<int>, decltype(r)>);
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
+        // cw is not changed
+        ASSERT_EQ(10, *cw.next());
+        ASSERT_EQ(20, *cw.next());
+        ASSERT_EQ(30, *cw.next());
     }
     
-    TEST(AsVectorTest, RValue) {
+    TEST(AsVectorTest, FromRValue) {
         decltype(auto) r = std::deque<int> {10, 20, 30} | as_vector;
         static_assert(std::is_same_v<std::vector<int>, decltype(r)>);
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);

@@ -8,16 +8,29 @@
 using namespace ufo;
 
 namespace {
-    TEST(FilterTest, LValue) {
+    TEST(FilterTest, FromLValue) {
         std::vector<int> v {1, 2, 3, 4, 5};
-        auto r = v | filter(_ % 2 == 0);
+        auto cw = container_wrapper(v);
+        auto r = cw | filter(_ % 2 == 0);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&v[1], &*r.next());
         ASSERT_EQ(&v[3], &*r.next());
         ASSERT_FALSE(r.next());
     }
     
-    TEST(FilterTest, RValue) {
+    TEST(FilterTest, CopiedLValueNotChanged) {
+        auto cw = container_wrapper(std::vector<int> {1, 2, 3});
+        auto r = cw | filter(_ % 2 == 0);
+        ASSERT_EQ(2, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(1, *cw.next());
+        ASSERT_EQ(2, *cw.next());
+        ASSERT_EQ(3, *cw.next());
+        ASSERT_FALSE(cw.next());
+        
+    }
+    
+    TEST(FilterTest, FromRValue) {
         auto r = std::vector<int> {1, 2, 3, 4, 5} | filter(_ % 2 != 0);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(1, *r.next());

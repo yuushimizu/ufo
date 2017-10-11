@@ -13,7 +13,10 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr Filtered(F f, Sequence sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
+        constexpr Filtered(F f, const Sequence &sequence) : f_(std::move(f)), sequence_(sequence) {
+        }
+        
+        constexpr Filtered(F f, Sequence &&sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> sequence_option_t<Sequence> {
@@ -38,17 +41,17 @@ namespace ufo {
         
         template <typename Sequence>
         constexpr auto operator()(Sequence &&sequence) const & {
-            return Filtered<F, Sequence>(f_, std::forward<Sequence>(sequence));
+            return Filtered<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
         }
         
         template <typename Sequence>
         constexpr auto operator()(Sequence &&sequence) & {
-            return Filtered<F, Sequence>(f_, std::forward<Sequence>(sequence));
+            return Filtered<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
         }
         
         template <typename Sequence>
         constexpr auto operator()(Sequence &&sequence) && {
-            return Filtered<F, Sequence>(std::move(f_), std::forward<Sequence>(sequence));
+            return Filtered<F, std::decay_t<Sequence>>(std::move(f_), std::forward<Sequence>(sequence));
         }
     };
     

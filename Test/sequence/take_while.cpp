@@ -8,17 +8,31 @@
 using namespace ufo;
 
 namespace {
-    TEST(TakeWhileTest, LValue) {
+    TEST(TakeWhileTest, FromLValue) {
         std::vector<int> v {1, 7, 5, 8, 9, 3, 2};
-        auto r = v | take_while(_ % 2 != 0);
+        auto cw = container_wrapper(v);
+        auto r = cw | take_while(_ % 2 != 0);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(1, *r.next());
         ASSERT_EQ(7, *r.next());
         ASSERT_EQ(5, *r.next());
         ASSERT_FALSE(r.next());
     }
+    
+    TEST(TakeWhileTest, CopiedLValueNotChanged) {
+        auto cw = container_wrapper(std::vector<int> {1, 2, 3, 4});
+        auto r = cw | take_while(_ < 3);
+        ASSERT_EQ(1, *r.next());
+        ASSERT_EQ(2, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ(1, *cw.next());
+        ASSERT_EQ(2, *cw.next());
+        ASSERT_EQ(3, *cw.next());
+        ASSERT_EQ(4, *cw.next());
+        ASSERT_FALSE(cw.next());
+    }
 
-    TEST(TakeWhileTest, RValue) {
+    TEST(TakeWhileTest, FromRValue) {
         auto r = std::vector<int> {2, 4, 8, 9, 10, 12} | take_while(_ % 2 == 0);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(2, *r.next());

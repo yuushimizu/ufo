@@ -16,7 +16,16 @@ namespace ufo {
         bool front_is_empty_ = false;
         
     public:
-        constexpr Concatenated(Front front, Back back) noexcept : front_(std::move(front)), back_(std::move(back)) {
+        constexpr Concatenated(const Front &front, const Back &back) : front_(front), back_(back) {
+        }
+        
+        constexpr Concatenated(const Front &front, Back &&back) : front_(front), back_(std::move(back)) {
+        }
+        
+        constexpr Concatenated(Front &&front, const Back &back) : front_(std::move(front)), back_(back) {
+        }
+        
+        constexpr Concatenated(Front &&front, Back &&back) noexcept : front_(std::move(front)), back_(std::move(back)) {
         }
         
         constexpr auto next() -> sequence_option_t<Front> {
@@ -29,23 +38,22 @@ namespace ufo {
     };
     
     template <typename Sequence>
-    constexpr const auto concatenated(Sequence sequence) noexcept {
-        return std::move(sequence);
+    constexpr const auto concatenated(Sequence &&sequence) noexcept {
+        return std::forward<Sequence>(sequence);
     }
     
     template <typename Front, typename Back>
-    constexpr const auto concatenated(Front front, Back back) noexcept {
-        return Concatenated<Front, Back>(std::move(front), std::move(back));
+    constexpr const auto concatenated(Front &&front, Back &&back) noexcept {
+        return Concatenated<std::decay_t<Front>, std::decay_t<Back>>(std::forward<Front>(front), std::forward<Back>(back));
     }
     
     template <typename Front, typename ... Rest>
-    constexpr const auto concatenated(Front front, Rest ... rest) noexcept {
-        auto back = concatenated(std::move(rest) ...);
-        return Concatenated<Front, decltype(back)>(std::move(front), std::move(back));
+    constexpr const auto concatenated(Front &&front, Rest && ... rest) noexcept {
+        return concatenated(std::forward<Front>(front), concatenated(std::forward<Rest>(rest) ...));
     }
     
-    constexpr const auto concat = sequence_operator([](auto front, auto ... rest) {
-        return concatenated(std::move(front), std::move(rest) ...);
+    constexpr const auto concat = sequence_operator([](auto &&front, auto && ... rest) {
+        return concatenated(std::forward<decltype(front)>(front), std::forward<decltype(rest)>(rest) ...);
     });
 }
 

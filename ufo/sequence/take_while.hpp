@@ -14,7 +14,10 @@ namespace ufo {
         bool finished_ = false;
         
     public:
-        constexpr TakenWhile(F f, Sequence sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
+        constexpr TakenWhile(F f, const Sequence &sequence) : f_(std::move(f)), sequence_(sequence) {
+        }
+        
+        constexpr TakenWhile(F f, Sequence &&sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> sequence_option_t<Sequence> {
@@ -38,17 +41,17 @@ namespace ufo {
         
         template <typename Sequence>
         constexpr auto operator()(Sequence &&sequence) const & {
-            return TakenWhile<F, Sequence>(f_, std::forward<Sequence>(sequence));
+            return TakenWhile<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
         }
         
         template <typename Sequence>
         constexpr auto operator()(Sequence &&sequence) & {
-            return TakenWhile<F, Sequence>(f_, std::forward<Sequence>(sequence));
+            return TakenWhile<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
         }
         
         template <typename Sequence>
         constexpr auto operator()(Sequence &&sequence) && {
-            return TakenWhile<F, Sequence>(std::move(f_), std::forward<Sequence>(sequence));
+            return TakenWhile<F, std::decay_t<Sequence>>(std::move(f_), std::forward<Sequence>(sequence));
         }
     };
     

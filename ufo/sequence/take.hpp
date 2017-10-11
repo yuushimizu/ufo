@@ -13,7 +13,10 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr Taken(int rest, Sequence sequence) noexcept : rest_(rest), sequence_(std::move(sequence)) {
+        constexpr Taken(int rest, const Sequence &sequence) : rest_(rest), sequence_(sequence) {
+        }
+        
+        constexpr Taken(int rest, Sequence &&sequence) noexcept : rest_(rest), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> sequence_option_t<Sequence> {
@@ -28,8 +31,8 @@ namespace ufo {
     };
     
     constexpr auto take(int n) noexcept {
-        return sequence_operator([n](auto sequence) constexpr noexcept {
-            return Taken<decltype(sequence)>(n, std::move(sequence));
+        return sequence_operator([n](auto &&sequence) constexpr noexcept {
+            return Taken<std::decay_t<decltype(sequence)>>(n, std::forward<decltype(sequence)>(sequence));
         });
     }
 }

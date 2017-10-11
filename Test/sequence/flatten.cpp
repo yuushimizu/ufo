@@ -8,9 +8,10 @@
 using namespace ufo;
 
 namespace {
-    TEST(FlattenTest, LValue) {
+    TEST(FlattenTest, FromLValue) {
         std::vector<std::vector<int>> v {{10, 20}, {30, 40, 50}, {60}};
-        auto r = v | flatten;
+        auto cw = container_wrapper(v);
+        auto r = cw | flatten;
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&v[0][0], &*r.next());
         ASSERT_EQ(&v[0][1], &*r.next());
@@ -21,7 +22,19 @@ namespace {
         ASSERT_FALSE(r.next());
     }
     
-    TEST(FlattenTest, RValue) {
+    TEST(FlattenTest, CopiedLValueNotChanged) {
+        auto cw = container_wrapper(std::vector<std::vector<int>> {{10}, {20, 30}});
+        auto r = cw | flatten;
+        ASSERT_EQ(10, *r.next());
+        ASSERT_EQ(20, *r.next());
+        ASSERT_EQ(30, *r.next());
+        ASSERT_FALSE(r.next());
+        ASSERT_EQ((std::vector<int> {10}), *cw.next());
+        ASSERT_EQ((std::vector<int> {20, 30}), *cw.next());
+        ASSERT_FALSE(cw.next());
+    }
+    
+    TEST(FlattenTest, FromRValue) {
         auto r = std::vector<std::vector<int>> {{10, 20}, {30}, {40}} | flatten;
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(10, *r.next());

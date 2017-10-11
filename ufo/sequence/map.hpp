@@ -27,33 +27,10 @@ namespace ufo {
     };
     
     template <typename F>
-    class Map {
-    private:
-        F f_;
-        
-    public:
-        constexpr Map(F f) noexcept : f_(std::move(f)) {
-        }
-        
-        template <typename Sequence>
-        constexpr auto operator()(Sequence &&sequence) const & {
-            return Mapped<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
-        }
-        
-        template <typename Sequence>
-        constexpr auto operator()(Sequence &&sequence) & {
-            return Mapped<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
-        }
-        
-        template <typename Sequence>
-        constexpr auto operator()(Sequence &&sequence) && {
-            return Mapped<F, std::decay_t<Sequence>>(std::move(f_), std::forward<Sequence>(sequence));
-        }
-    };
-    
-    template <typename F>
     constexpr auto map(F f) noexcept {
-        return sequence_operator(Map<F>(std::move(f)));
+        return sequence_operator([](auto &&f, auto &&sequence) {
+            return Mapped<std::decay_t<decltype(f)>, std::decay_t<decltype(sequence)>>(std::forward<decltype(f)>(f), std::forward<decltype(sequence)>(sequence));
+        }, std::move(f));
     }
 }
 

@@ -6,28 +6,29 @@
 #include "../type_traits.hpp"
 
 namespace ufo {
-    template <typename F>
+    template <typename F, typename ... FixedArgs>
     class SequenceOperator final {
     private:
         F f_;
+        std::tuple<FixedArgs ...> fixed_args_;
         
     public:
-        constexpr SequenceOperator(F f) noexcept : f_(std::move(f)) {
+        constexpr SequenceOperator(F f, std::tuple<FixedArgs ...> fixed_args) noexcept : f_(std::move(f)), fixed_args_(std::move(fixed_args)) {
         }
         
         template <typename ... Sequences>
         constexpr decltype(auto) operator()(Sequences && ... sequences) const & {
-            return f_(container_wrapper(std::forward<Sequences>(sequences)) ...);
+            return std::apply(f_, std::tuple_cat(fixed_args_, std::make_tuple(container_wrapper(std::forward<Sequences>(sequences)) ...)));
         }
         
         template <typename ... Sequences>
         constexpr decltype(auto) operator()(Sequences && ... sequences) & {
-            return f_(container_wrapper(std::forward<Sequences>(sequences)) ...);
+            return std::apply(f_, std::tuple_cat(fixed_args_, std::make_tuple(container_wrapper(std::forward<Sequences>(sequences)) ...)));
         }
         
         template <typename ... Sequences>
         constexpr decltype(auto) operator()(Sequences && ... sequences) && {
-            return std::move(f_)(container_wrapper(std::forward<Sequences>(sequences)) ...);
+            return std::apply(std::move(f_), std::tuple_cat(std::move(fixed_args_), std::make_tuple(container_wrapper(std::forward<Sequences>(sequences)) ...)));
         }
     };
     
@@ -36,9 +37,9 @@ namespace ufo {
         return std::forward<Op>(op)(std::forward<Sequence>(sequence));
     }
     
-    template <typename F>
-    constexpr auto sequence_operator(F f) noexcept {
-        return SequenceOperator<F>(std::move(f));
+    template <typename F, typename ... FixedArgs>
+    constexpr auto sequence_operator(F f, FixedArgs ... fixed_args) noexcept {
+        return SequenceOperator<F, FixedArgs ...>(std::move(f), {std::move(fixed_args) ...});
     }
 }
 

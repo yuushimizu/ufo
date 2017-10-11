@@ -31,33 +31,10 @@ namespace ufo {
     };
     
     template <typename F>
-    class TakeWhile {
-    private:
-        F f_;
-        
-    public:
-        constexpr TakeWhile(F f) noexcept : f_(std::move(f)) {
-        }
-        
-        template <typename Sequence>
-        constexpr auto operator()(Sequence &&sequence) const & {
-            return TakenWhile<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
-        }
-        
-        template <typename Sequence>
-        constexpr auto operator()(Sequence &&sequence) & {
-            return TakenWhile<F, std::decay_t<Sequence>>(f_, std::forward<Sequence>(sequence));
-        }
-        
-        template <typename Sequence>
-        constexpr auto operator()(Sequence &&sequence) && {
-            return TakenWhile<F, std::decay_t<Sequence>>(std::move(f_), std::forward<Sequence>(sequence));
-        }
-    };
-    
-    template <typename F>
     constexpr auto take_while(F f) noexcept {
-        return sequence_operator(TakeWhile<F>(std::move(f)));
+        return sequence_operator([](auto &&f, auto &&sequence) {
+            return TakenWhile<std::decay_t<decltype(f)>, std::decay_t<decltype(sequence)>>(std::forward<decltype(f)>(f), std::forward<decltype(sequence)>(sequence));
+        }, std::move(f));
     }
 }
 

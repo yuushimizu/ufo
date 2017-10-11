@@ -3,6 +3,7 @@
 
 #include "sequence_operator.hpp"
 #include "foreach.hpp"
+#include "../type_traits.hpp"
 
 namespace ufo {
     template <typename Sequence>
@@ -11,21 +12,21 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr AsContainer(Sequence sequence) noexcept : sequence_(std::move(sequence)) {
+        constexpr AsContainer(Sequence &&sequence) noexcept : sequence_(std::forward<Sequence>(sequence)) {
         }
         
         template <typename Container>
         operator Container() && {
             Container result {};
-            std::move(sequence_) | foreach([&result](auto &&v) {
+            std::forward<Sequence>(sequence_) | foreach([&result](auto &&v) {
                 result.push_back(std::forward<decltype(v)>(v));
             });
             return result;
         }
     };
     
-    constexpr const auto as_container = sequence_operator([](auto sequence) constexpr noexcept {
-        return AsContainer<decltype(sequence)>(std::move(sequence));
+    constexpr const auto as_container = sequence_operator([](auto &&sequence) constexpr noexcept {
+        return AsContainer<template_deduce_t<decltype(sequence)>>(std::forward<decltype(sequence)>(sequence));
     });
 }
 

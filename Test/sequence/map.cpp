@@ -84,4 +84,11 @@ namespace {
         ASSERT_DOUBLE_EQ(10, *r.next());
         ASSERT_FALSE(r.next());
     }
+    
+    TEST(MapTest, UnmatchedLength) {
+        auto r = map([](int n, int m) {return n + m;}, std::vector<int> {10, 20, 30}, std::vector<int> {5, 6});
+        ASSERT_EQ(15, *r.next());
+        ASSERT_EQ(26, *r.next());
+        ASSERT_FALSE(r.next());
+    }
 }

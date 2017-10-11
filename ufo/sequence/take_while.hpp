@@ -31,10 +31,10 @@ namespace ufo {
     };
     
     template <typename F>
-    constexpr auto take_while(F f) noexcept {
+    constexpr auto take_while(F &&f) noexcept {
         return sequence_operator([](auto &&f, auto &&sequence) {
             return TakenWhile<std::decay_t<decltype(f)>, std::decay_t<decltype(sequence)>>(std::forward<decltype(f)>(f), std::forward<decltype(sequence)>(sequence));
-        }, std::move(f));
+        }, std::forward<F>(f));
     }
 }
 

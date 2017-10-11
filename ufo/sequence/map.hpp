@@ -6,31 +6,40 @@
 #include "container_wrapper.hpp"
 #include "sequence_operator.hpp"
 #include "../lambda_wrapper.hpp"
+#include "../option.hpp"
 
 namespace ufo {
-    template <typename F, typename Sequence>
+    template <typename F, typename ... Sequences>
     class Mapped : public sequence {
     private:
         LambdaWrapper<F> f_;
-        Sequence sequence_;
+        std::tuple<Sequences ...> sequences_;
         
     public:
-        constexpr Mapped(F f, const Sequence &sequence) : f_(std::move(f)), sequence_(sequence) {
+        template <typename ... Seqs>
+        constexpr Mapped(F f, Seqs && ... sequences) : f_(std::move(f)), sequences_ {std::forward<Seqs>(sequences) ...} {
         }
         
-        constexpr Mapped(F f, Sequence &&sequence) noexcept : f_(std::move(f)), sequence_(std::move(sequence)) {
-        }
-        
-        constexpr auto next() ->  decltype(sequence_.next().map(f_)) {
-            return sequence_.next().map(f_);
+        constexpr auto next() {
+            return std::apply([this](auto & ... sequences) constexpr {
+                return ([this](auto && ... results) constexpr -> decltype(make_option(this->f_(*std::forward<decltype(results)>(results) ...))) {
+                    if ((... && static_cast<bool>(results))) return this->f_(*std::forward<decltype(results)>(results) ...);
+                    return nullopt;
+                })(sequences.next() ...);
+            }, sequences_);
         }
     };
     
     template <typename F>
-    constexpr auto map(F f) noexcept {
-        return sequence_operator([](auto &&f, auto &&sequence) {
-            return Mapped<std::decay_t<decltype(f)>, std::decay_t<decltype(sequence)>>(std::forward<decltype(f)>(f), std::forward<decltype(sequence)>(sequence));
-        }, std::move(f));
+    constexpr auto map(F &&f) noexcept {
+        return sequence_operator([](auto &&f, auto && ... sequences) {
+            return Mapped<std::decay_t<decltype(f)>, std::decay_t<decltype(sequences)> ...>(std::forward<decltype(f)>(f), std::forward<decltype(sequences)>(sequences) ...);
+        }, std::forward<F>(f));
+    }
+    
+    template <typename F, typename ... Sequences>
+    constexpr auto map(F &&f, Sequences && ... sequences) {
+        return map(std::forward<F>(f))(std::forward<Sequences>(sequences) ...);
     }
 }
 

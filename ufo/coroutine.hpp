@@ -1,10 +1,9 @@
 #ifndef ufo_coroutine
 #define ufo_coroutine
 
-#include <functional>
-#include <initializer_list>
 #include <deque>
 #include "option.hpp"
+#include "type_traits.hpp"
 #include "scope_exit.hpp"
 
 namespace ufo {
@@ -13,7 +12,7 @@ namespace ufo {
     
     template <typename R, typename ... Args>
     class coroutine<R(Args ...)> final {
-    public:
+    private:
         class Part final {
         private:
             class Impl {
@@ -45,9 +44,10 @@ namespace ufo {
                 bool finished_ = false;
             };
             
+            template <typename F>
             class Normal : public Impl {
             public:
-                Normal(std::function<R(Args ...)> f) : f_(std::move(f)) {
+                Normal(F f) : f_(std::move(f)) {
                 }
                 
                 virtual ~Normal() = default;
@@ -60,12 +60,13 @@ namespace ufo {
                 }
                 
             private:
-                std::function<R(Args ...)> f_;
+                F f_;
             };
             
+            template <typename F>
             class Nested : public Impl {
             public:
-                Nested(std::function<coroutine<R(Args ...)>(Args ...)> f) : f_(std::move(f)) {
+                Nested(F f) : f_(std::move(f)) {
                 }
                 
                 virtual ~Nested() = default;
@@ -82,7 +83,7 @@ namespace ufo {
                 }
                 
             private:
-                std::function<coroutine<R(Args ...)>(Args ...)> f_;
+                F f_;
                 option<coroutine<R(Args ...)>> coro_ = nullopt;
                 bool called_ = false;
             };
@@ -104,11 +105,17 @@ namespace ufo {
             private:
                 coroutine<R(Args ...)> coro_;
             };
+            
         public:
-            explicit Part(std::function<R(Args ...)> f) : impl_(std::make_unique<Normal>(std::move(f))) {
+            Part(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {
             }
             
-            explicit Part(std::function<coroutine<R(Args ...)>(Args ...)> f) : impl_(std::make_unique<Nested>(std::move(f))) {
+            template <typename F, enable_if_t<std::is_convertible_v<std::result_of_t<F(Args ...)>, R>> = nullptr>
+            explicit Part(F f) : impl_(std::make_unique<Normal<F>>(std::move(f))) {
+            }
+            
+            template <typename F, enable_if_t<std::is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
+            explicit Part(F f) : impl_(std::make_unique<Nested<F>>(std::move(f))) {
             }
             
             explicit Part(coroutine<R(Args ...)> coro) : impl_(std::make_unique<Delegate>(std::move(coro))) {
@@ -124,7 +131,7 @@ namespace ufo {
             
             Part &operator=(Part &&) = default;
             
-            R operator()(Args ... args) {
+            R call(Args ... args) {
                 return (*impl_)(std::forward<Args>(args) ...);
             }
             
@@ -136,9 +143,10 @@ namespace ufo {
             std::unique_ptr<Impl> impl_;
         };
         
+    public:
         coroutine() : parts_ {} {
         }
-
+        
         template <typename F, typename ... Fs>
         explicit coroutine(F f, Fs ... fs) : coroutine(std::move(fs) ...) {
             parts_.push_front(Part(std::move(f)));
@@ -161,7 +169,7 @@ namespace ufo {
             auto pop_finished = scope_exit([this]() {
                 if (this->parts_.front().is_finished()) this->parts_.pop_front();
             });
-            return parts_.front()(std::forward<Args>(args) ...);
+            return parts_.front().call(std::forward<Args>(args) ...);
         }
         
         bool is_finished() const {

@@ -33,6 +33,7 @@ namespace ufo {
     
     template <typename T>
     using template_deduce_t = typename template_deduce<T>::type;
+
 }
 
 #endif

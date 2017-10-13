@@ -30,7 +30,7 @@ namespace ufo {
                 
                 Impl &operator=(Impl &&) = delete;
                 
-                virtual R operator()(Args ...) = 0;
+                virtual R operator()(Args && ...) = 0;
                 
                 bool is_finished() const {
                     return finished_;
@@ -52,7 +52,7 @@ namespace ufo {
                 
                 virtual ~Normal() = default;
                 
-                virtual R operator()(Args ... args) override {
+                virtual R operator()(Args && ... args) override {
                     auto finish = scope_exit([this]() {
                         this->finish();
                     });
@@ -70,7 +70,7 @@ namespace ufo {
                 
                 virtual ~Nested() = default;
                 
-                virtual R operator()(Args ... args) override {
+                virtual R operator()(Args && ... args) override {
                     if (!called_) {
                         coro_ = f_(args ...);
                         called_ = true;
@@ -94,7 +94,7 @@ namespace ufo {
                 
                 virtual ~Delegate() = default;
                 
-                virtual R operator()(Args ... args) override {
+                virtual R operator()(Args && ... args) override {
                     auto finish = scope_exit([this]() {
                         if (this->coro_.is_finished()) this->finish();
                     });

@@ -176,19 +176,36 @@ namespace {
     }
     
     TEST(CoordTest, Range) {
-        std::vector<int> r {};
-        for (auto c : range(Coord<int>(3, 4), Coord<int>(8, 7))) {
-            r.emplace_back(c.x() * c.y());
-        }
-        ASSERT_EQ((std::vector<int> {12, 16, 20, 24, 28, 15, 20, 25, 30, 35, 18, 24, 30, 36, 42}), r);
+        auto r = range(coord(3, 4), coord(8, 7));
+        static_assert(std::is_same_v<option<Coord<int>>, decltype(r.next())>);
+        ASSERT_EQ(coord(3, 4), *r.next());
+        ASSERT_EQ(coord(4, 4), *r.next());
+        ASSERT_EQ(coord(5, 4), *r.next());
+        ASSERT_EQ(coord(6, 4), *r.next());
+        ASSERT_EQ(coord(7, 4), *r.next());
+        ASSERT_EQ(coord(3, 5), *r.next());
+        ASSERT_EQ(coord(4, 5), *r.next());
+        ASSERT_EQ(coord(5, 5), *r.next());
+        ASSERT_EQ(coord(6, 5), *r.next());
+        ASSERT_EQ(coord(7, 5), *r.next());
+        ASSERT_EQ(coord(3, 6), *r.next());
+        ASSERT_EQ(coord(4, 6), *r.next());
+        ASSERT_EQ(coord(5, 6), *r.next());
+        ASSERT_EQ(coord(6, 6), *r.next());
+        ASSERT_EQ(coord(7, 6), *r.next());
+        ASSERT_FALSE(r.next());
     }
     
     TEST(CoordTest, RangeWithoutBegin) {
-        std::vector<int> r {};
-        for (auto c : range(Coord<int>(2, 3))) {
-            r.emplace_back(c.x() * c.y());
-        }
-        ASSERT_EQ((std::vector<int> {0, 0, 0, 1, 0, 2}), r);
+        auto r = range(coord(2, 3));
+        static_assert(std::is_same_v<option<Coord<int>>, decltype(r.next())>);
+        ASSERT_EQ(coord(0, 0), *r.next());
+        ASSERT_EQ(coord(1, 0), *r.next());
+        ASSERT_EQ(coord(0, 1), *r.next());
+        ASSERT_EQ(coord(1, 1), *r.next());
+        ASSERT_EQ(coord(0, 2), *r.next());
+        ASSERT_EQ(coord(1, 2), *r.next());
+        ASSERT_FALSE(r.next());
     }
     
     TEST(CoordTest, COORD_ZERO) {

@@ -4,14 +4,17 @@
 #include <vector>
 #include "Coord.hpp"
 #include "iterator.hpp"
-#include "range/combine.hpp"
-#include "range/indexed.hpp"
+#include "sequence/range.hpp"
+#include "sequence/container_wrapper.hpp"
+#include "sequence/map.hpp"
 
 namespace ufo {
     namespace vector2d_detail {
-        template <typename T>
-        auto indexed_range(T &vector) {
-            return combine(range(vector.size()), vector, [](auto &&index, auto &&value) {return indexed_entry(std::forward<decltype(index)>(index), std::forward<decltype(value)>(value));});
+        template <typename Indices, typename Values>
+        constexpr auto pairs(Indices &&indices, Values &&values) {
+            return map([](auto &&index, auto &&value) {return std::make_tuple(std::forward<decltype(index)>(index), std::forward<decltype(value)>(value));},
+                       std::forward<Indices>(indices),
+                       std::forward<Values>(values));
         }
     }
     
@@ -21,7 +24,7 @@ namespace ufo {
         constexpr Vector2D(Coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
         }
         
-        constexpr explicit Vector2D(const Coord<int> &size) : size_(std::move(size)), values_(size_.area()) {
+        constexpr explicit Vector2D(Coord<int> size) : size_(std::move(size)), values_(size_.area()) {
         }
         
         constexpr Vector2D() : size_ {}, values_ {} {
@@ -43,9 +46,6 @@ namespace ufo {
             return std::move(values_[index.y() * size_.x() + index.x()]);
         }
         
-        template <typename T1, typename T2>
-        friend constexpr bool operator==(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs);
-        
         constexpr auto begin() const {
             return adl_begin(values_);
         }
@@ -62,6 +62,37 @@ namespace ufo {
             return adl_end(values_);
         }
         
+        constexpr auto indices() const {
+            return range(size_);
+        }
+        
+        constexpr auto values() const & {
+            return container_wrapper(values_);
+        }
+        
+        constexpr auto values() & {
+            return container_wrapper(values_);
+        }
+        
+        constexpr auto values() && {
+            return container_wrapper(std::move(values_));
+        }
+        
+        constexpr auto pairs() const & {
+            return vector2d_detail::pairs(indices(), values());
+        }
+        
+        constexpr auto pairs() & {
+            return vector2d_detail::pairs(indices(), values());
+        }
+        
+        constexpr auto pairs() && {
+            return vector2d_detail::pairs(indices(), values());
+        }
+        
+        template <typename T1, typename T2>
+        friend constexpr bool operator==(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs);
+        
     private:
         Coord<int> size_;
         std::vector<T> values_;
@@ -75,21 +106,6 @@ namespace ufo {
     template <typename T1, typename T2>
     constexpr bool operator!=(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs) {
         return !(lhs == rhs);
-    }
-    
-    template <typename T>
-    constexpr bool contains(const Vector2D<T> &vector, const Coord<int> &index) {
-        return contains(vector.size(), index);
-    }
-    
-    template <typename T>
-    auto indexed_range(const Vector2D<T> &vector) {
-        return vector2d_detail::indexed_range(vector);
-    }
-    
-    template <typename T>
-    auto indexed_range(Vector2D<T> &vector) {
-        return vector2d_detail::indexed_range(vector);
     }
 }
 

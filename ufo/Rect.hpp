@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "Coord.hpp"
-#include "range/irange.hpp"
+#include "sequence/range.hpp"
 
 namespace ufo {
     template <typename T>
@@ -24,7 +24,24 @@ namespace ufo {
         }
         
         constexpr auto opposite_origin() const noexcept {
-            return coord(origin_.x() + size_.x(), origin_.y() + size_.y());
+            return coord(origin().x() + size().x(), origin().y() + size().y());
+        }
+        
+        template <typename CoordT>
+        constexpr bool contains(const Coord<CoordT> &coord) noexcept {
+            return coord.x() >= origin().x() && coord.y() >= origin().y() && coord.x() < opposite_origin().x() && coord.y() < opposite_origin().y();
+        }
+        
+        constexpr auto range() noexcept {
+            return range(origin(), origin() + size());
+        }
+        
+        constexpr auto x_range() noexcept {
+            return range(origin().x(), origin().x() + size().x());
+        }
+        
+        constexpr auto y_range() noexcept {
+            return range(origin().y(), origin().y() + size().y());
         }
         
     private:
@@ -40,26 +57,6 @@ namespace ufo {
     template <typename LHS, typename RHS>
     constexpr bool operator!=(const Rect<LHS> &lhs, const Rect<RHS> &rhs) noexcept {
         return !(lhs == rhs);
-    }
-    
-    template <typename RectT, typename PointT>
-    constexpr bool contains(const Rect<RectT> &rect, const Coord<PointT> &point) noexcept {
-        return point.x() >= rect.origin().x() && point.y() >= rect.origin().y() && point.x() < rect.opposite_origin().x() && point.y() < rect.opposite_origin().y();
-    }
-    
-    template <typename T>
-    auto range(const Rect<T> &rect) noexcept {
-        return range(rect.origin(), rect.origin() + rect.size());
-    }
-    
-    template <typename T>
-    constexpr auto x_range(const Rect<T> &rect) noexcept {
-        return irange(rect.origin().x(), rect.origin().x() + rect.size().x());
-    }
-    
-    template <typename T>
-    constexpr auto y_range(const Rect<T> &rect) noexcept {
-        return irange(rect.origin().y(), rect.origin().y() + rect.size().y());
     }
     
     template <typename T>

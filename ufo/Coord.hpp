@@ -4,8 +4,8 @@
 #include <cmath>
 #include <functional>
 #include <iostream>
-#include "range/irange.hpp"
-#include "range/transformed.hpp"
+#include "sequence/range.hpp"
+#include "sequence/mapcat.hpp"
 #include "hash.hpp"
 #include "placeholder.hpp"
 
@@ -124,17 +124,17 @@ namespace ufo {
     constexpr auto operator/(const Coord<LHS> &lhs, const RHS &rhs) noexcept {
         return transform_coord(_ / rhs, lhs);
     }
-
-    template<typename T>
-    constexpr auto range(const Coord<T> &last) noexcept {
-        return irange(last.area()) | transformed([last](const auto &n) constexpr noexcept {
-            return coord(T(n % last.x()), T(std::floor(n / last.x())));
-        });
-    }
-
+    
     template<typename T>
     constexpr auto range(const Coord<T> &first, const Coord<T> &last) noexcept {
-        return range(last - first) | transformed(_ + first);
+        return range(first.y(), last.y()) | mapcat([first_x = first.x(), last_x = last.x()](auto &&y) {
+            return range(first_x, last_x) | map([y = std::forward<decltype(y)>(y)](auto &&x) {return coord(std::forward<decltype(x)>(x), y);});
+        });
+    }
+    
+    template <typename T>
+    constexpr auto range(const Coord<T> &last) noexcept {
+        return range(coord(T {},  {}), last);
     }
 
     template<typename T>

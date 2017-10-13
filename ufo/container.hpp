@@ -1,5 +1,5 @@
-#ifndef ufo_range
-#define ufo_range
+#ifndef ufo_container
+#define ufo_container
 
 #include <algorithm>
 #include "iterator.hpp"

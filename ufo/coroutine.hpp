@@ -1,10 +1,11 @@
 #ifndef ufo_coroutine
 #define ufo_coroutine
 
-#include <deque>
+#include <forward_list>
 #include "option.hpp"
 #include "type_traits.hpp"
 #include "scope_exit.hpp"
+#include "container.hpp"
 
 namespace ufo {
     template <typename>
@@ -143,11 +144,10 @@ namespace ufo {
             std::unique_ptr<Impl> impl_;
         };
         
-    private:
         template <typename ... Fs>
         static auto make_parts(Fs ... fs) {
-            std::deque<Part> parts {};
-            (..., parts.emplace_back(std::move(fs)));
+            std::forward_list<Part> parts {};
+            push_front_all(parts, Part(std::move(fs)) ...);
             return parts;
         }
         
@@ -181,7 +181,7 @@ namespace ufo {
         }
         
     private:
-        std::deque<Part> parts_;
+        std::forward_list<Part> parts_;
     };
 }
 

@@ -5,6 +5,16 @@
 #include "option.hpp"
 
 namespace ufo {
+    template <typename Container>
+    constexpr void push_front_all(Container &container) {
+    }
+    
+    template <typename Container, typename T, typename ... Rest>
+    constexpr void push_front_all(Container &container, T &&first, Rest && ... rest) {
+        push_front_all(container, std::forward<Rest>(rest) ...);
+        container.push_front(std::forward<T>(first));
+    }
+    
     template <typename Container, typename F>
     void remove(Container &container, F &&predicate) {
         container.erase(std::remove_if(adl_begin(container), adl_end(container), std::forward<F>(predicate)), adl_end(container));

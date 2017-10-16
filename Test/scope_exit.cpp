@@ -7,7 +7,7 @@ namespace {
     TEST(ScopeExitTest, Destructor) {
         int n = 10;
         {
-            auto add = scope_exit([&n]() mutable {
+            auto add = scope_exit([&n]() mutable noexcept {
                 ++n;
             });
             ASSERT_EQ(10, n);

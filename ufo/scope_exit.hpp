@@ -22,6 +22,8 @@ namespace ufo {
         
     private:
         T f_;
+        
+        static_assert(noexcept(f_()));
     };
     
     template <typename T>

@@ -31,12 +31,12 @@ namespace ufo {
                 
                 virtual R operator()(Args && ...) = 0;
                 
-                bool is_finished() const {
+                bool is_finished() const noexcept {
                     return finished_;
                 }
                 
             protected:
-                void finish() {
+                void finish() noexcept {
                     finished_ = true;
                 }
                 
@@ -53,7 +53,7 @@ namespace ufo {
                 virtual ~Normal() = default;
                 
                 virtual R operator()(Args && ... args) override {
-                    auto finish = scope_exit([this]() {
+                    auto finish = scope_exit([this]() noexcept {
                         this->finish();
                     });
                     return f_(std::forward<Args>(args) ...);
@@ -76,7 +76,7 @@ namespace ufo {
                         coro_ = f_(args ...);
                         called_ = true;
                     }
-                    auto finish = scope_exit([this]() {
+                    auto finish = scope_exit([this]() noexcept {
                         if (this->coro_->is_finished()) this->finish();
                     });
                     return (*coro_)(std::forward<Args>(args) ...);
@@ -96,7 +96,7 @@ namespace ufo {
                 virtual ~Delegate() = default;
                 
                 virtual R operator()(Args && ... args) override {
-                    auto finish = scope_exit([this]() {
+                    auto finish = scope_exit([this]() noexcept {
                         if (this->coro_.is_finished()) this->finish();
                     });
                     return coro_(std::forward<Args>(args) ...);
@@ -110,11 +110,11 @@ namespace ufo {
             Part(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {
             }
             
-            template <typename F, enable_if_t<std::is_convertible_v<std::result_of_t<F(Args ...)>, R>> = nullptr>
+            template <typename F, enable_if_t<!std::is_same_v<Part, std::decay_t<F>> && std::is_convertible_v<std::result_of_t<F(Args ...)>, R>> = nullptr>
             explicit Part(F f) : impl_(std::make_unique<Normal<F>>(std::move(f))) {
             }
             
-            template <typename F, enable_if_t<std::is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
+            template <typename F, enable_if_t<!std::is_same_v<Part, std::decay_t<F>> && std::is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
             explicit Part(F f) : impl_(std::make_unique<Nested<F>>(std::move(f))) {
             }
             
@@ -131,7 +131,7 @@ namespace ufo {
             
             Part &operator=(Part &&) = default;
             
-            R call(Args ... args) {
+            R operator()(Args ... args) {
                 return (*impl_)(std::forward<Args>(args) ...);
             }
             
@@ -143,16 +143,20 @@ namespace ufo {
             std::unique_ptr<Impl> impl_;
         };
         
+    private:
+        template <typename ... Fs>
+        static auto make_parts(Fs ... fs) {
+            std::deque<Part> parts {};
+            (..., parts.emplace_back(std::move(fs)));
+            return parts;
+        }
+        
     public:
         coroutine() : parts_ {} {
         }
         
         template <typename F, typename ... Fs>
-        explicit coroutine(F f, Fs ... fs) : coroutine(std::move(fs) ...) {
-            parts_.push_front(Part(std::move(f)));
-        }
-        
-        explicit coroutine(std::deque<Part> parts) : parts_(std::move(parts)) {
+        explicit coroutine(F f, Fs ... fs) : parts_(make_parts(std::move(f), std::move(fs) ...)) {
         }
         
         ~coroutine() = default;
@@ -166,13 +170,13 @@ namespace ufo {
         coroutine &operator=(coroutine &&) = default;
         
         R operator()(Args ... args) {
-            auto pop_finished = scope_exit([this]() {
+            auto pop_finished = scope_exit([this]() noexcept {
                 if (this->parts_.front().is_finished()) this->parts_.pop_front();
             });
-            return parts_.front().call(std::forward<Args>(args) ...);
+            return parts_.front()(std::forward<Args>(args) ...);
         }
         
-        bool is_finished() const {
+        bool is_finished() const noexcept {
             return parts_.empty();
         }
         

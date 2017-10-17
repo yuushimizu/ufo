@@ -3,7 +3,6 @@
 
 #include "sequence.hpp"
 #include "sequence_operator.hpp"
-#include "../option.hpp"
 
 namespace ufo {
     template <typename Sequence>

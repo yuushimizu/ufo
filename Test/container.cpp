@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "ufo/container.hpp"
 #include "ufo/placeholder.hpp"
+#include <list>
 #include <vector>
 #include <map>
 #include "TD.hpp"
@@ -8,6 +9,18 @@
 using namespace ufo;
 
 namespace {
+    TEST(ContainerTest, PushFrontAll) {
+        std::list<int> l {1, 2, 3};
+        push_front_all(l, 5, 6, 7);
+        ASSERT_EQ(l, (std::list<int> {5, 6, 7, 1, 2, 3}));
+    }
+    
+    TEST(ContainerTest, PushFronAllNoElement) {
+        std::list<int> l {4, 5};
+        push_front_all(l);
+        ASSERT_EQ(l, (std::list<int> {4, 5}));
+    }
+    
     TEST(ContainerTest, Remove) {
         std::vector<int> v {1, 2, 3, 4, 5};
         remove(v, _ == 3);

@@ -173,4 +173,22 @@ namespace {
         ASSERT_EQ(3, coro());
         ASSERT_TRUE(coro.is_finished());
     }
+    
+    coroutine<int()> make_inf_coro(int n) {
+        return coroutine<int()> {
+            [n]() {
+                return n;
+            },
+            [n]() {
+                return make_inf_coro(n + 1);
+            }
+        };
+    }
+    
+    TEST(CoroutineTest, InfiniteRecursion) {
+        auto coro = make_inf_coro(0);
+        for (int i = 0 ; i < 2048; ++i) coro();
+        ASSERT_FALSE(coro.is_finished());
+        ASSERT_EQ(2048, coro());
+    }
 }

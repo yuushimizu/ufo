@@ -14,6 +14,8 @@ namespace ufo {
     template <typename R, typename ... Args>
     class coroutine<R(Args ...)> final {
     private:
+        class Part;
+        
         class Part final {
         private:
             class Impl {
@@ -30,19 +32,7 @@ namespace ufo {
                 
                 Impl &operator=(Impl &&) = delete;
                 
-                virtual R operator()(Args && ...) = 0;
-                
-                bool is_finished() const noexcept {
-                    return finished_;
-                }
-                
-            protected:
-                void finish() noexcept {
-                    finished_ = true;
-                }
-                
-            private:
-                bool finished_ = false;
+                virtual R call_and_merge_to(coroutine &parent, Args && ...) = 0;
             };
             
             template <typename F>
@@ -53,10 +43,7 @@ namespace ufo {
                 
                 virtual ~Normal() = default;
                 
-                virtual R operator()(Args && ... args) override {
-                    auto finish = scope_exit([this]() noexcept {
-                        this->finish();
-                    });
+                virtual R call_and_merge_to(coroutine &, Args && ... args) override {
                     return f_(std::forward<Args>(args) ...);
                 }
                 
@@ -72,21 +59,12 @@ namespace ufo {
                 
                 virtual ~Nested() = default;
                 
-                virtual R operator()(Args && ... args) override {
-                    if (!called_) {
-                        coro_ = f_(args ...);
-                        called_ = true;
-                    }
-                    auto finish = scope_exit([this]() noexcept {
-                        if (this->coro_->is_finished()) this->finish();
-                    });
-                    return (*coro_)(std::forward<Args>(args) ...);
+                virtual R call_and_merge_to(coroutine &parent, Args && ... args) override {
+                    return f_(args ...).call_and_merge_to(parent, std::forward<Args>(args) ...);
                 }
                 
             private:
                 F f_;
-                option<coroutine<R(Args ...)>> coro_ = nullopt;
-                bool called_ = false;
             };
             
             class Delegate : public Impl {
@@ -96,11 +74,8 @@ namespace ufo {
                 
                 virtual ~Delegate() = default;
                 
-                virtual R operator()(Args && ... args) override {
-                    auto finish = scope_exit([this]() noexcept {
-                        if (this->coro_.is_finished()) this->finish();
-                    });
-                    return coro_(std::forward<Args>(args) ...);
+                virtual R call_and_merge_to(coroutine &parent, Args && ... args) override {
+                    return std::move(coro_).call_and_merge_to(parent, std::forward<Args>(args) ...);
                 }
                 
             private:
@@ -132,12 +107,8 @@ namespace ufo {
             
             Part &operator=(Part &&) = default;
             
-            R operator()(Args ... args) {
-                return (*impl_)(std::forward<Args>(args) ...);
-            }
-            
-            bool is_finished() const {
-                return impl_->is_finished();
+            R call_and_merge_to(coroutine &parent, Args && ... args) {
+                return (*impl_).call_and_merge_to(parent, std::forward<Args>(args) ...);
             }
             
         private:
@@ -149,6 +120,11 @@ namespace ufo {
             std::forward_list<Part> parts {};
             push_front_all(parts, Part(std::move(fs)) ...);
             return parts;
+        }
+        
+        R call_and_merge_to(coroutine &parent, Args && ... args) && {
+            parent.parts_.splice_after(parent.parts_.before_begin(), std::move(parts_));
+            return parent(std::forward<Args>(args) ...);
         }
         
     public:
@@ -170,10 +146,9 @@ namespace ufo {
         coroutine &operator=(coroutine &&) = default;
         
         R operator()(Args ... args) {
-            auto pop_finished = scope_exit([this]() noexcept {
-                if (this->parts_.front().is_finished()) this->parts_.pop_front();
-            });
-            return parts_.front()(std::forward<Args>(args) ...);
+            auto part = std::move(parts_.front());
+            parts_.pop_front();
+            return part.call_and_merge_to(*this, std::forward<Args>(args) ...);
         }
         
         bool is_finished() const noexcept {

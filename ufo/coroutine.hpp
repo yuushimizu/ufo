@@ -125,19 +125,25 @@ namespace ufo {
         }
         
     public:
-        template <typename ... PartArgs>
-        explicit coroutine(PartArgs && ... part_args) : parts_(make_parts(std::forward<PartArgs>(part_args) ...)) {
+        constexpr coroutine() noexcept = default;
+        
+        template <typename T, enable_if_t<!std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        explicit coroutine(T &&arg) : parts_(make_parts(std::forward<T>(arg))) {
+        }
+        
+        template <typename First, typename Second, typename ... PartArgs>
+        explicit coroutine(First &&first, Second &&second, PartArgs && ... part_args) : parts_(make_parts(std::forward<First>(first), std::forward<Second>(second), std::forward<PartArgs>(part_args) ...)) {
         }
         
         ~coroutine() = default;
         
         coroutine(const coroutine &) = delete;
         
-        coroutine(coroutine &&) = default;
+        coroutine(coroutine &&) noexcept = default;
         
         coroutine &operator=(const coroutine &) = delete;
         
-        coroutine &operator=(coroutine &&) = default;
+        coroutine &operator=(coroutine &&) noexcept = default;
         
         R operator()(Args ... args) {
             auto part = std::move(parts_.front());

@@ -191,4 +191,9 @@ namespace {
         ASSERT_FALSE(coro.is_finished());
         ASSERT_EQ(2048, coro());
     }
+    
+    TEST(CoroutineTest, Empty) {
+        auto coro = coroutine<int()> {};
+        ASSERT_TRUE(coro.is_finished());
+    }
 }

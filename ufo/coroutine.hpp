@@ -67,21 +67,6 @@ namespace ufo {
                 F f_;
             };
             
-            class Delegate : public Impl {
-            public:
-                Delegate(coroutine<R(Args ...)> coro) : coro_(std::move(coro)) {
-                }
-                
-                virtual ~Delegate() = default;
-                
-                virtual R call_and_merge_to(coroutine &parent, Args && ... args) override {
-                    return std::move(coro_).call_and_merge_to(parent, std::forward<Args>(args) ...);
-                }
-                
-            private:
-                coroutine<R(Args ...)> coro_;
-            };
-            
         public:
             Part(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {
             }
@@ -92,9 +77,6 @@ namespace ufo {
             
             template <typename F, enable_if_t<!std::is_same_v<Part, std::decay_t<F>> && std::is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
             explicit Part(F f) : impl_(std::make_unique<Nested<F>>(std::move(f))) {
-            }
-            
-            explicit Part(coroutine<R(Args ...)> coro) : impl_(std::make_unique<Delegate>(std::move(coro))) {
             }
             
             ~Part() = default;
@@ -115,10 +97,25 @@ namespace ufo {
             std::unique_ptr<Impl> impl_;
         };
         
-        template <typename ... Fs>
-        static auto make_parts(Fs ... fs) {
+        static auto add_parts(std::forward_list<Part> &parts) {
+        }
+        
+        template <typename T, typename ... Rest, enable_if_t<!std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        static auto add_parts(std::forward_list<Part> &parts, T &&arg, Rest && ... rest) {
+            add_parts(parts, std::forward<Rest>(rest) ...);
+            parts.push_front(Part(std::forward<T>(arg)));
+        }
+        
+        template <typename T, typename ... Rest, enable_if_t<std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        static auto add_parts(std::forward_list<Part> &parts, T other, Rest && ... rest) {
+            add_parts(parts, std::forward<Rest>(rest) ...);
+            parts.splice_after(parts.before_begin(), std::move(other.parts_));
+        }
+        
+        template <typename ... PartArgs>
+        static auto make_parts(PartArgs && ... part_args) {
             std::forward_list<Part> parts {};
-            push_front_all(parts, Part(std::move(fs)) ...);
+            add_parts(parts, std::forward<PartArgs>(part_args) ...);
             return parts;
         }
         
@@ -128,11 +125,8 @@ namespace ufo {
         }
         
     public:
-        coroutine() : parts_ {} {
-        }
-        
-        template <typename F, typename ... Fs>
-        explicit coroutine(F f, Fs ... fs) : parts_(make_parts(std::move(f), std::move(fs) ...)) {
+        template <typename ... PartArgs>
+        explicit coroutine(PartArgs && ... part_args) : parts_(make_parts(std::forward<PartArgs>(part_args) ...)) {
         }
         
         ~coroutine() = default;

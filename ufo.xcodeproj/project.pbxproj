@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA22336A1F9F4BC900F8E3B6 /* find.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA2233681F9F4BC900F8E3B6 /* find.cpp */; };
 		CA2EBBBA1F960BC50025B493 /* skip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA2EBBB91F960BC50025B493 /* skip.cpp */; };
 		CA2EBBBD1F960E6F0025B493 /* nth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA2EBBBC1F960E6F0025B493 /* nth.cpp */; };
 		CA3ED3431F5FE43500DA2EF1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3ED3421F5FE43500DA2EF1 /* main.cpp */; };
@@ -105,6 +106,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CA22335E1F9F4A9100F8E3B6 /* find.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = find.hpp; path = sequence/find.hpp; sourceTree = "<group>"; };
+		CA2233681F9F4BC900F8E3B6 /* find.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = find.cpp; path = sequence/find.cpp; sourceTree = "<group>"; };
 		CA2EBBAF1F96096D0025B493 /* skip.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = skip.hpp; path = sequence/skip.hpp; sourceTree = "<group>"; };
 		CA2EBBB91F960BC50025B493 /* skip.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = skip.cpp; path = sequence/skip.cpp; sourceTree = "<group>"; };
 		CA2EBBBB1F960DAE0025B493 /* nth.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = nth.hpp; path = sequence/nth.hpp; sourceTree = "<group>"; };
@@ -300,6 +303,7 @@
 				CA73074C1F95EABC00C4BBAD /* first.hpp */,
 				CA2EBBAF1F96096D0025B493 /* skip.hpp */,
 				CA2EBBBB1F960DAE0025B493 /* nth.hpp */,
+				CA22335E1F9F4A9100F8E3B6 /* find.hpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";
@@ -328,6 +332,7 @@
 				CA7307561F95EC9800C4BBAD /* first.cpp */,
 				CA2EBBB91F960BC50025B493 /* skip.cpp */,
 				CA2EBBBC1F960E6F0025B493 /* nth.cpp */,
+				CA2233681F9F4BC900F8E3B6 /* find.cpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";
@@ -504,6 +509,7 @@
 				CA7306A91F84ECF300C4BBAD /* filter.cpp in Sources */,
 				CA7306A51F84ECE900C4BBAD /* as_vector.cpp in Sources */,
 				CA7306E01F8CDF1800C4BBAD /* empty.cpp in Sources */,
+				CA22336A1F9F4BC900F8E3B6 /* find.cpp in Sources */,
 				CA7306AA1F84ECF500C4BBAD /* foreach.cpp in Sources */,
 				CA2EBBBA1F960BC50025B493 /* skip.cpp in Sources */,
 				CA2EBBBD1F960E6F0025B493 /* nth.cpp in Sources */,

@@ -35,16 +35,10 @@ namespace ufo {
         
         constexpr option(option &&) noexcept = default;
         
-        template <typename U>
-        constexpr option(const option<U> &other) : option(*other) {
+        constexpr option(const T &value) : optional_(value) {
         }
         
-        template <typename U>
-        constexpr option(option<U> &&other) noexcept : option(std::move(*other)) {
-        }
-        
-        template <typename U = T>
-        constexpr option(U &&value) : optional_(std::forward<U>(value)) {
+        constexpr option(T &&value) : optional_(std::move(value)) {
         }
         
         constexpr option &operator=(nullopt_t) noexcept {

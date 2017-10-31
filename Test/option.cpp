@@ -111,4 +111,22 @@ namespace {
         static_assert(std::is_same_v<option<int &>, decltype(r)>);
         ASSERT_EQ(&v[0], &*r);
     }
+    
+    TEST(OptionTest, OptionOfOptionFalse) {
+        option<option<int>> o {};
+        ASSERT_FALSE(o);
+    }
+    
+    TEST(OptionTest, OptionOfOptionTrueFalse) {
+        option<option<int>> o(option<int> {});
+        ASSERT_TRUE(o);
+        ASSERT_FALSE(*o);
+    }
+    
+    TEST(OptionTest, OptionOfOptionTrueTrue) {
+        option<option<int>> o(5);
+        ASSERT_TRUE(o);
+        ASSERT_TRUE(*o);
+        ASSERT_EQ(5, **o);
+    }
 }

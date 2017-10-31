@@ -28,7 +28,7 @@ namespace ufo {
     
     template <typename Map, typename Key>
     constexpr auto get(Map &&map, const Key &key) -> option<std::remove_reference_t<decltype(map.at(key))>> {
-        if (map.find(key) == adl_end(map)) return nullptr;
+        if (map.find(key) == adl_end(map)) return nullopt;
         return std::move(map.at(key));
     }
 }

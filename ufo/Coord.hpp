@@ -72,7 +72,7 @@ namespace ufo {
 
     template<typename T>
     constexpr Coord<T> coord(T x, T y) noexcept {
-        return Coord<T>(std::move(x), std::move(y));
+        return {std::move(x), std::move(y)};
     }
 
     template<typename F, typename ... Ts>

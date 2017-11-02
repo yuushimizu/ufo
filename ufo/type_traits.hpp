@@ -14,7 +14,7 @@ namespace ufo {
     struct is_instantiation_of<Template, Template<Args ...>> : std::true_type {};
     
     template <template <typename ...> class Template, typename T>
-    constexpr bool is_instantiation_of_v = is_instantiation_of<Template, T>::value;
+    constexpr const bool is_instantiation_of_v = is_instantiation_of<Template, T>::value;
     
     template <typename T>
     struct template_deduce {
@@ -33,7 +33,21 @@ namespace ufo {
     
     template <typename T>
     using template_deduce_t = typename template_deduce<T>::type;
-
+    
+    template <typename From, typename To>
+    struct is_convertible : std::is_convertible<From, To> {};
+    
+    template <typename From>
+    struct is_convertible<From, void> : std::is_void<From> {};
+    
+    template <typename To>
+    struct is_convertible<void, To> : std::is_void<To> {};
+    
+    template <>
+    struct is_convertible<void, void> : std::true_type {};
+    
+    template <typename From, typename To>
+    constexpr const bool is_convertible_v = is_convertible<From, To>::value;
 }
 
 #endif

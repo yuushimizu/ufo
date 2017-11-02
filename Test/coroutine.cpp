@@ -196,4 +196,20 @@ namespace {
         auto coro = coroutine<int()> {};
         ASSERT_TRUE(coro.is_finished());
     }
+    
+    coroutine<int()> make_coro_without_typename() {
+        return {
+            []() {return 10;},
+            []() {return 20;}
+        };
+    }
+    
+    TEST(CoroutineTest, ReturnWithoutTypename) {
+        auto coro = make_coro_without_typename();
+        ASSERT_FALSE(coro.is_finished());
+        ASSERT_EQ(10, coro());
+        ASSERT_FALSE(coro.is_finished());
+        ASSERT_EQ(20, coro());
+        ASSERT_TRUE(coro.is_finished());
+    }
 }

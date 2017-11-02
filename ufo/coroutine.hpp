@@ -68,14 +68,11 @@ namespace ufo {
             };
             
         public:
-            Part(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {
-            }
-            
-            template <typename F, enable_if_t<!std::is_same_v<Part, std::decay_t<F>> && std::is_convertible_v<std::result_of_t<F(Args ...)>, R>> = nullptr>
+            template <typename F, enable_if_t<is_convertible_v<std::result_of_t<F(Args ...)>, R>> = nullptr>
             explicit Part(F f) : impl_(std::make_unique<Normal<F>>(std::move(f))) {
             }
             
-            template <typename F, enable_if_t<!std::is_same_v<Part, std::decay_t<F>> && std::is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
+            template <typename F, enable_if_t<is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
             explicit Part(F f) : impl_(std::make_unique<Nested<F>>(std::move(f))) {
             }
             
@@ -96,6 +93,9 @@ namespace ufo {
         private:
             std::unique_ptr<Impl> impl_;
         };
+        
+        template <typename T>
+        constexpr static const bool is_part_source_v = std::is_constructible_v<Part, T> || std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>;
         
         static auto add_parts(std::forward_list<Part> &parts) {
         }
@@ -127,12 +127,12 @@ namespace ufo {
     public:
         constexpr coroutine() noexcept = default;
         
-        template <typename T, enable_if_t<!std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
-        explicit coroutine(T &&arg) : parts_(make_parts(std::forward<T>(arg))) {
+        template <typename T, enable_if_t<is_part_source_v<T> && !std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        coroutine(T &&arg) : parts_(make_parts(std::forward<T>(arg))) {
         }
         
-        template <typename First, typename Second, typename ... PartArgs>
-        explicit coroutine(First &&first, Second &&second, PartArgs && ... part_args) : parts_(make_parts(std::forward<First>(first), std::forward<Second>(second), std::forward<PartArgs>(part_args) ...)) {
+        template <typename First, typename Second, typename ... PartArgs, enable_if_t<is_part_source_v<First> && is_part_source_v<Second> && (... && is_part_source_v<PartArgs>)> = nullptr>
+        coroutine(First &&first, Second &&second, PartArgs && ... part_args) : parts_(make_parts(std::forward<First>(first), std::forward<Second>(second), std::forward<PartArgs>(part_args) ...)) {
         }
         
         ~coroutine() = default;

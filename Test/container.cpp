@@ -33,6 +33,12 @@ namespace {
         ASSERT_EQ((std::vector<int> {1, 2, 3, 4}), v);
     }
     
+    TEST(ContainerTest, Sort) {
+        std::vector<int> v {4, 8, 1, 2, 0, 5, 3};
+        sort(v, [](auto n, auto m) {return n > m;});
+        ASSERT_EQ((std::vector<int> {8, 5, 4, 3, 2, 1, 0}), v);
+    }
+    
     TEST(ContainerTest, Get) {
         std::map<int, std::string> m {{2, "two"}, {4, "four"}, {5, "five"}};
         auto r = get(m, 4);

@@ -20,6 +20,11 @@ namespace ufo {
         container.erase(std::remove_if(adl_begin(container), adl_end(container), std::forward<F>(predicate)), adl_end(container));
     }
     
+    template <typename Container, typename F>
+    void sort(Container &container, F &&compare) {
+        std::sort(adl_begin(container), adl_end(container), std::forward<F>(compare));
+    }
+    
     template <typename Map, typename Key>
     constexpr auto get(Map &map, const Key &key) -> option<decltype(map.at(key))> {
         if (map.find(key) == adl_end(map)) return nullopt;

@@ -14,7 +14,7 @@ namespace ufo {
     };
     
     template <typename T>
-    constexpr const auto empty = Empty<T> {};
+    constexpr inline const auto empty = Empty<T> {};
 }
 
 #endif

@@ -21,13 +21,13 @@ namespace ufo {
     template <typename T>
     class Vector2D final {
     public:
-        constexpr Vector2D(Coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
+        constexpr explicit Vector2D(Coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
         }
         
         constexpr explicit Vector2D(Coord<int> size) : size_(std::move(size)), values_(size_.area()) {
         }
         
-        constexpr Vector2D() : size_ {}, values_ {} {
+        constexpr explicit Vector2D() : size_ {}, values_ {} {
         }
         
         constexpr auto size() const {

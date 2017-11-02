@@ -13,7 +13,7 @@ namespace ufo {
         std::tuple<FixedArgs ...> fixed_args_;
         
     public:
-        constexpr SequenceOperator(F f, std::tuple<FixedArgs ...> fixed_args) noexcept : f_(std::move(f)), fixed_args_(std::move(fixed_args)) {
+        constexpr explicit SequenceOperator(F f, std::tuple<FixedArgs ...> fixed_args) noexcept : f_(std::move(f)), fixed_args_(std::move(fixed_args)) {
         }
         
         template <typename ... Sequences>

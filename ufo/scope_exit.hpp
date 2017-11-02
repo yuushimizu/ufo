@@ -5,7 +5,7 @@ namespace ufo {
     template <typename T>
     class ScopeExit {
     public:
-        ScopeExit(T f) : f_(std::move(f)) {
+        explicit ScopeExit(T f) : f_(std::move(f)) {
         }
         
         ~ScopeExit() {

@@ -4,7 +4,7 @@
 #include "sequence_operator.hpp"
 
 namespace ufo {
-    constexpr const auto first = sequence_operator([](auto &&sequence) {
+    constexpr inline const auto first = sequence_operator([](auto &&sequence) {
         return std::forward<decltype(sequence)>(sequence).next();
     });
 }

@@ -16,16 +16,16 @@ namespace ufo {
         bool front_is_empty_ = false;
         
     public:
-        constexpr Concatenated(const Front &front, const Back &back) : front_(front), back_(back) {
+        constexpr explicit Concatenated(const Front &front, const Back &back) : front_(front), back_(back) {
         }
         
-        constexpr Concatenated(const Front &front, Back &&back) : front_(front), back_(std::move(back)) {
+        constexpr explicit Concatenated(const Front &front, Back &&back) : front_(front), back_(std::move(back)) {
         }
         
-        constexpr Concatenated(Front &&front, const Back &back) : front_(std::move(front)), back_(back) {
+        constexpr explicit Concatenated(Front &&front, const Back &back) : front_(std::move(front)), back_(back) {
         }
         
-        constexpr Concatenated(Front &&front, Back &&back) noexcept : front_(std::move(front)), back_(std::move(back)) {
+        constexpr explicit Concatenated(Front &&front, Back &&back) noexcept : front_(std::move(front)), back_(std::move(back)) {
         }
         
         constexpr auto next() -> sequence_option_t<Front> {

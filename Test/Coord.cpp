@@ -208,12 +208,12 @@ namespace {
         ASSERT_FALSE(r.next());
     }
     
-    TEST(CoordTest, COORD_ZERO) {
-        ASSERT_EQ(coord(0, 0), COORD_ZERO<int>);
+    TEST(CoordTest, Zero) {
+        ASSERT_EQ(coord(0, 0), Coord<int>::zero());
     }
     
-    TEST(CoordTest, COORD_ONE) {
-        ASSERT_EQ(coord(1, 1), COORD_ONE<int>);
+    TEST(CoordTest, One) {
+        ASSERT_EQ(coord(1, 1), Coord<int>::one());
     }
     
     TEST(CoordTest, Output) {

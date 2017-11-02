@@ -15,7 +15,7 @@ namespace ufo {
         decltype(adl_begin(container_)) iterator_;
         
     public:
-        constexpr ContainerWrapper(Container &&container) noexcept : container_(std::move(container)), iterator_(adl_begin(container_)) {
+        constexpr explicit ContainerWrapper(Container &&container) noexcept : container_(std::move(container)), iterator_(adl_begin(container_)) {
         }
         
         ~ContainerWrapper() = default;
@@ -56,7 +56,7 @@ namespace ufo {
         decltype(adl_begin(container_.get())) iterator_;
         
     public:
-        constexpr ContainerWrapper(Container &container) noexcept : container_(container), iterator_(adl_begin(container)) {
+        constexpr explicit ContainerWrapper(Container &container) noexcept : container_(container), iterator_(adl_begin(container)) {
         }
         
         constexpr auto next() noexcept -> option<decltype(*iterator_)> {

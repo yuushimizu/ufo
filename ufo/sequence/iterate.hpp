@@ -13,7 +13,7 @@ namespace ufo {
         T current_;
         
     public:
-        constexpr Iterate(F f, T initial_value) noexcept : f_(std::move(f)), current_(std::move(initial_value)) {
+        constexpr explicit Iterate(F f, T initial_value) noexcept : f_(std::move(f)), current_(std::move(initial_value)) {
         }
         
         ~Iterate() = default;

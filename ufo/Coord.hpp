@@ -25,7 +25,7 @@ namespace ufo {
         constexpr Coord(T x, T y) noexcept : x_(std::move(x)), y_(std::move(y)) {
         }
 
-        constexpr Coord() noexcept : Coord(T {}, T {}) {
+        constexpr explicit Coord() noexcept : Coord(T {}, T {}) {
         }
         
         constexpr T x() const noexcept {
@@ -63,6 +63,14 @@ namespace ufo {
         template <typename Other>
         constexpr auto divide(const Coord<Other> &other) const noexcept {
             return transform_coord(std::divides<> {}, *this, other);
+        }
+        
+        constexpr static auto zero() {
+            return Coord {};
+        }
+        
+        constexpr static auto one() {
+            return Coord(1, 1);
         }
         
     private:
@@ -136,12 +144,6 @@ namespace ufo {
     constexpr auto range(const Coord<T> &last) noexcept {
         return range(coord(T {},  {}), last);
     }
-
-    template<typename T>
-    constexpr auto COORD_ZERO = Coord<T>(T {}, T{});
-
-    template<typename T>
-    constexpr auto COORD_ONE = Coord<T>(1, 1);
 
     template<typename T>
     constexpr auto &operator<<(std::ostream &o, const Coord<T> &coord) {

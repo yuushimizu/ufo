@@ -12,10 +12,10 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr Taken(int rest, const Sequence &sequence) : rest_(rest), sequence_(sequence) {
+        constexpr explicit Taken(int rest, const Sequence &sequence) : rest_(rest), sequence_(sequence) {
         }
         
-        constexpr Taken(int rest, Sequence &&sequence) noexcept : rest_(rest), sequence_(std::move(sequence)) {
+        constexpr explicit Taken(int rest, Sequence &&sequence) noexcept : rest_(rest), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> sequence_option_t<Sequence> {

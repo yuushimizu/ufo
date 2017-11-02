@@ -12,7 +12,7 @@ namespace ufo {
         constexpr Rect(Coord<T> origin, Coord<T> size) noexcept : origin_(std::move(origin)), size_(std::move(size)) {
         }
         
-        constexpr Rect() noexcept : origin_ {}, size_ {} {
+        constexpr explicit Rect() noexcept : origin_ {}, size_ {} {
         }
         
         Coord<T> origin() const {

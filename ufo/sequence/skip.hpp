@@ -12,10 +12,10 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr Skipped(int n, const Sequence &sequence) : rest_(n), sequence_(sequence) {
+        constexpr explicit Skipped(int n, const Sequence &sequence) : rest_(n), sequence_(sequence) {
         }
         
-        constexpr Skipped(int n, Sequence &&sequence) noexcept : rest_(n), sequence_(std::move(sequence)) {
+        constexpr explicit Skipped(int n, Sequence &&sequence) noexcept : rest_(n), sequence_(std::move(sequence)) {
         }
         
         constexpr auto next() -> sequence_option_t<Sequence> {

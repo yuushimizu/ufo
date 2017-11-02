@@ -17,7 +17,7 @@ namespace ufo {
         
     public:
         template <typename ... Seqs>
-        constexpr Mapped(F f, Seqs && ... sequences) : f_(std::move(f)), sequences_ {std::forward<Seqs>(sequences) ...} {
+        constexpr explicit Mapped(F f, Seqs && ... sequences) : f_(std::move(f)), sequences_ {std::forward<Seqs>(sequences) ...} {
         }
         
         constexpr auto next() {

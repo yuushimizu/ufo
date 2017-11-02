@@ -20,7 +20,7 @@ namespace ufo {
         private:
             class Impl {
             public:
-                Impl() = default;
+                explicit Impl() = default;
                 
                 virtual ~Impl() = default;
                 
@@ -38,7 +38,7 @@ namespace ufo {
             template <typename F>
             class Normal : public Impl {
             public:
-                Normal(F f) : f_(std::move(f)) {
+                explicit Normal(F f) : f_(std::move(f)) {
                 }
                 
                 virtual ~Normal() = default;
@@ -54,7 +54,7 @@ namespace ufo {
             template <typename F>
             class Nested : public Impl {
             public:
-                Nested(F f) : f_(std::move(f)) {
+                explicit Nested(F f) : f_(std::move(f)) {
                 }
                 
                 virtual ~Nested() = default;

@@ -23,7 +23,7 @@ namespace ufo {
         std::experimental::optional<T> optional_;
         
     public:
-        constexpr option() noexcept : optional_ {} {
+        constexpr explicit option() noexcept : optional_ {} {
         }
         
         ~option() noexcept = default;
@@ -155,7 +155,7 @@ namespace ufo {
         T *pointer_;
         
     public:
-        constexpr option() noexcept : pointer_(nullptr) {
+        constexpr explicit option() noexcept : pointer_(nullptr) {
         }
         
         ~option() noexcept = default;

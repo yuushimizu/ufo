@@ -12,7 +12,7 @@ namespace ufo {
         Sequence sequence_;
         
     public:
-        constexpr AsContainer(Sequence &&sequence) noexcept : sequence_(std::forward<Sequence>(sequence)) {
+        explicit constexpr AsContainer(Sequence &&sequence) noexcept : sequence_(std::forward<Sequence>(sequence)) {
         }
         
         template <typename Container>
@@ -25,7 +25,7 @@ namespace ufo {
         }
     };
     
-    constexpr const auto as_container = sequence_operator([](auto &&sequence) constexpr noexcept {
+    constexpr inline const auto as_container = sequence_operator([](auto &&sequence) constexpr noexcept {
         return AsContainer<template_deduce_t<decltype(sequence)>>(std::forward<decltype(sequence)>(sequence));
     });
 }

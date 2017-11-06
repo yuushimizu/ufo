@@ -23,6 +23,8 @@ namespace ufo {
         std::experimental::optional<T> optional_;
         
     public:
+        using value_type = T;
+        
         constexpr explicit option() noexcept : optional_ {} {
         }
         
@@ -155,6 +157,8 @@ namespace ufo {
         T *pointer_;
         
     public:
+        using value_type = T &;
+        
         constexpr explicit option() noexcept : pointer_(nullptr) {
         }
         

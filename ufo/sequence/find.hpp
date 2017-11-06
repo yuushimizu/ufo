@@ -8,9 +8,7 @@
 namespace ufo {
     template <typename F>
     constexpr auto find(F &&f) {
-        return sequence_operator([](auto &&f, auto &&sequence) {
-            return std::forward<decltype(sequence)>(sequence) | filter(std::forward<decltype(f)>(f)) | first;
-        }, std::forward<F>(f));
+        return filter(std::forward<F>(f)) | first;
     }
 }
 

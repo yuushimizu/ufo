@@ -7,9 +7,7 @@
 
 namespace ufo {
     constexpr auto nth(int n) {
-        return sequence_operator([n](auto &&sequence) {
-            return std::forward<decltype(sequence)>(sequence) | skip(n) | first;
-        });
+        return skip(n) | first;
     }
 }
 

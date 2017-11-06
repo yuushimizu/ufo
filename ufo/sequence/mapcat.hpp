@@ -8,9 +8,7 @@
 namespace ufo {
     template <typename F>
     constexpr auto mapcat(F &&f) {
-        return sequence_operator([](auto &&f, auto &&sequence) {
-            return std::forward<decltype(sequence)>(sequence) | map(std::forward<decltype(f)>(f)) | flatten;
-        }, std::forward<F>(f));
+        return map(std::forward<F>(f)) | flatten;
     }
 }
 

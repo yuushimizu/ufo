@@ -14,7 +14,7 @@ namespace ufo {
         }
     }
     
-    constexpr inline const auto flatten = sequence_operator([](auto &&sequence) {
+    constexpr inline const auto flatten = sequence_operator([](auto &&sequence) constexpr {
         using inner_option = decltype(flatten_detail::next_inner(std::forward<decltype(sequence)>(sequence)));
         return sequence_wrapper([current = inner_option {}](auto &sequence) constexpr mutable -> decltype(std::declval<inner_option>()->next()) {
             if (!current) current = flatten_detail::next_inner(sequence);

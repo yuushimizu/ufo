@@ -52,21 +52,13 @@ namespace ufo {
         
         constexpr option &operator=(option &&other) noexcept(std::is_nothrow_move_assignable_v<std::experimental::optional<T>>) = default;
         
-        template <typename U>
-        constexpr option &operator=(const option<U> &other) {
-            *this = *other;
+        constexpr option &operator=(const T &other) {
+            *this = other;
             return *this;
         }
         
-        template <typename U>
-        constexpr option &operator=(option<U> &&other) noexcept {
-            *this = std::move(*other);
-            return *this;
-        }
-        
-        template <typename U = T>
-        constexpr option &operator=(U &&value) {
-            optional_ = std::forward<U>(value);
+        constexpr option &operator=(T &&value) {
+            optional_ = std::move(value);
             return *this;
         }
         

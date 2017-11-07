@@ -19,7 +19,6 @@ namespace {
     }
     
     TEST(MaxByTest, CopiedLValueNotChanged) {
-        std::vector<int> v {10, 20, 30};
         auto cw = container_wrapper(std::vector<int> {19, 22, 35});
         auto r = cw | max_by([](int n) {return n % 10;});
         ASSERT_EQ(19, *r);

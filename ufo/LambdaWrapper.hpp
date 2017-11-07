@@ -1,5 +1,5 @@
-#ifndef ufo_lambda_wrapper
-#define ufo_lambda_wrapper
+#ifndef ufo_LambdaWrapper
+#define ufo_LambdaWrapper
 
 #include "option.hpp"
 

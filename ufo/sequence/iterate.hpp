@@ -3,7 +3,7 @@
 
 #include "sequence.hpp"
 #include "../option.hpp"
-#include "../lambda_wrapper.hpp"
+#include "../LambdaWrapper.hpp"
 
 namespace ufo {
     template <typename F, typename T>
@@ -15,16 +15,6 @@ namespace ufo {
     public:
         constexpr explicit Iterate(F f, T initial_value) noexcept : f_(std::move(f)), current_(std::move(initial_value)) {
         }
-        
-        ~Iterate() = default;
-        
-        Iterate(const Iterate &) = default;
-        
-        Iterate(Iterate &&) noexcept = default;
-        
-        Iterate &operator=(const Iterate &) = default;
-        
-        Iterate &operator=(Iterate &&) noexcept = default;
         
         constexpr option<T> next() {
             auto value = current_;

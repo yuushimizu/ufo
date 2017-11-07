@@ -3,7 +3,7 @@
 
 #include "sequence.hpp"
 #include "sequence_operator.hpp"
-#include "../lambda_wrapper.hpp"
+#include "../LambdaWrapper.hpp"
 
 namespace ufo {
     template <typename F, typename Sequence>

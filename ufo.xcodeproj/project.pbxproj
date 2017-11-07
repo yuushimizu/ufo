@@ -171,6 +171,7 @@
 		CA8268F31FB21F0C00F28260 /* repeatedly.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = repeatedly.cpp; path = sequence/repeatedly.cpp; sourceTree = "<group>"; };
 		CA8268F51FB2251700F28260 /* find_best.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = find_best.hpp; path = sequence/find_best.hpp; sourceTree = "<group>"; };
 		CA8268F91FB23C5600F28260 /* find_best.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = find_best.cpp; path = sequence/find_best.cpp; sourceTree = "<group>"; };
+		CA8269041FB2441500F28260 /* find_best_by.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = find_best_by.hpp; path = sequence/find_best_by.hpp; sourceTree = "<group>"; };
 		CAC0C0D21F72557100A22185 /* coroutine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = coroutine.cpp; sourceTree = "<group>"; };
 		CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scope_exit.cpp; sourceTree = "<group>"; };
 		CAF018A91F7A8D7B00E301CE /* container.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = container.cpp; sourceTree = "<group>"; };
@@ -318,6 +319,7 @@
 				CA8268DC1FB173DE00F28260 /* sequence_wrapper.hpp */,
 				CA8268E91FB21E3F00F28260 /* repeatedly.hpp */,
 				CA8268F51FB2251700F28260 /* find_best.hpp */,
+				CA8269041FB2441500F28260 /* find_best_by.hpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";

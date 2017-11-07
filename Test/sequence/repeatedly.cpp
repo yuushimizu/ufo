@@ -9,7 +9,7 @@ using namespace ufo;
 namespace {
     TEST(RepeatedlyTest, Repeatedly) {
         auto r = repeatedly([x = 0]() mutable {
-            return make_option(x++);
+            return x++;
         });
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
         ASSERT_EQ(0, *r.next());
@@ -19,7 +19,7 @@ namespace {
     }
     
     TEST(RepeatedlyTest, FunctionNotCopied) {
-        auto r = repeatedly(test::delete_function_copy([]() {return make_option(42);}));
+        auto r = repeatedly(test::delete_function_copy([]() {return 42;}));
         ASSERT_EQ(42, *r.next());
         ASSERT_EQ(42, *r.next());
         ASSERT_EQ(42, *r.next());

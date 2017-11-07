@@ -16,7 +16,7 @@ namespace ufo {
         }
         
         constexpr auto next() {
-            return f_();
+            return make_option(f_());
         }
     };
     

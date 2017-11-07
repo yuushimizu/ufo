@@ -2,44 +2,29 @@
 #define ufo_sequence_flatten
 
 #include <type_traits>
-#include "sequence.hpp"
+#include "sequence_wrapper.hpp"
 #include "sequence_operator.hpp"
 #include "container_wrapper.hpp"
-#include "../option.hpp"
 
 namespace ufo {
-    template <typename Sequence>
-    class Flattened : public sequence {
-    private:
-        Sequence sequence_;
-        
-        constexpr static auto next_inner(Sequence &sequence) {
-            return sequence.next().map([](auto &&inner) -> decltype(auto) {return container_wrapper(std::forward<decltype(inner)>(inner));});
+    namespace flatten_detail {
+        template <typename Sequence>
+        constexpr auto next_inner(Sequence &&sequence) {
+            return std::forward<Sequence>(sequence).next().map([](auto &&inner) -> decltype(auto) {return container_wrapper(std::forward<decltype(inner)>(inner));});
         }
-        
-        decltype(next_inner(std::declval<Sequence &>())) current_ {};
-        
-    public:
-        constexpr explicit Flattened(const Sequence &sequence) : sequence_(sequence) {
-        }
-        
-        constexpr explicit Flattened(Sequence &&sequence) noexcept : sequence_(std::move(sequence)) {
-        }
-        
-        constexpr auto next() -> decltype(current_->next()) {
-            if (!current_) current_ = next_inner(sequence_);
-            while (current_) {
-                if (auto value = current_->next()) return value;
-                current_ = next_inner(sequence_);
-            }
-            return nullopt;
-        }
-    };
+    }
     
     constexpr inline const auto flatten = sequence_operator([](auto &&sequence) {
-        return Flattened<std::decay_t<decltype(sequence)>>(std::forward<decltype(sequence)>(sequence));
+        using inner_option = decltype(flatten_detail::next_inner(std::forward<decltype(sequence)>(sequence)));
+        return sequence_wrapper([current = inner_option {}](auto &sequence) constexpr mutable -> decltype(std::declval<inner_option>()->next()) {
+            if (!current) current = flatten_detail::next_inner(sequence);
+            while (current) {
+                if (auto value = current->next()) return value;
+                current = flatten_detail::next_inner(sequence);
+            }
+            return nullopt;
+        }, std::forward<decltype(sequence)>(sequence));
     });
-
 }
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef ufo_sequence_take_while
 #define ufo_sequence_take_while
 
+#include "sequence_wrapper.hpp"
 #include "sequence.hpp"
 #include "sequence_operator.hpp"
 #include "../LambdaWrapper.hpp"

@@ -49,4 +49,30 @@ namespace {
         static_assert(std::is_same_v<std::unique_ptr<int>, decltype(r)>);
         ASSERT_EQ(130, *r);
     }
+    
+    TEST(ReduceTest, PreventSelfMoveResult) {
+        struct A {
+            int value = 10;
+            
+            A() noexcept = default;
+            
+            ~A() = default;
+            
+            A(const A &) = delete;
+            
+            A(A &&other) noexcept : value(other.value) {
+                other.value = 0;
+            }
+            
+            A &operator=(const A &) = delete;
+            
+            A &operator=(A &&other) noexcept {
+                value = other.value;
+                other.value = 0;
+                return *this;
+            }
+        };
+        auto r = std::vector<int> {1, 2, 3} | reduce([](A &&a, int) {return std::move(a);}, A {});
+        ASSERT_EQ(10, r.value);
+    }
 }

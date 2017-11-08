@@ -135,8 +135,8 @@ namespace ufo {
     
     template<typename T>
     constexpr auto range(const Coord<T> &first, const Coord<T> &last) noexcept {
-        return range(first.y(), last.y()) | mapcat([first_x = first.x(), last_x = last.x()](auto &&y) {
-            return range(first_x, last_x) | map([y = std::forward<decltype(y)>(y)](auto &&x) {return coord(std::forward<decltype(x)>(x), y);});
+        return range(first.y(), last.y()) | mapcat([x_range = range(first.x(), last.x())](auto y) {
+            return x_range | map([y = std::move(y)](auto x) {return coord(std::move(x), y);});
         });
     }
     

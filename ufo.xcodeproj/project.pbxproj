@@ -40,6 +40,8 @@
 		CA8268FA1FB23C5600F28260 /* find_best.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8268F91FB23C5600F28260 /* find_best.cpp */; };
 		CA82690A1FB29AD300F28260 /* find_best_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269091FB29AD300F28260 /* find_best_by.cpp */; };
 		CA8269161FB31EBD00F28260 /* min_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269151FB31EBD00F28260 /* min_by.cpp */; };
+		CA82691A1FB320B500F28260 /* max.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269191FB320B500F28260 /* max.cpp */; };
+		CA82691C1FB3211500F28260 /* min.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA82691B1FB3211500F28260 /* min.cpp */; };
 		CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC0C0D21F72557100A22185 /* coroutine.cpp */; };
 		CAF018A81F7A7F4D00E301CE /* scope_exit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */; };
 		CAF018AA1F7A8D7B00E301CE /* container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF018A91F7A8D7B00E301CE /* container.cpp */; };
@@ -177,6 +179,10 @@
 		CA8269091FB29AD300F28260 /* find_best_by.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = find_best_by.cpp; path = sequence/find_best_by.cpp; sourceTree = "<group>"; };
 		CA8269141FB2A99500F28260 /* min_by.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = min_by.hpp; path = sequence/min_by.hpp; sourceTree = "<group>"; };
 		CA8269151FB31EBD00F28260 /* min_by.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = min_by.cpp; path = sequence/min_by.cpp; sourceTree = "<group>"; };
+		CA8269171FB31F4900F28260 /* max.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = max.hpp; path = sequence/max.hpp; sourceTree = "<group>"; };
+		CA8269181FB31FC500F28260 /* min.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = min.hpp; path = sequence/min.hpp; sourceTree = "<group>"; };
+		CA8269191FB320B500F28260 /* max.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = max.cpp; path = sequence/max.cpp; sourceTree = "<group>"; };
+		CA82691B1FB3211500F28260 /* min.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = min.cpp; path = sequence/min.cpp; sourceTree = "<group>"; };
 		CAC0C0D21F72557100A22185 /* coroutine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = coroutine.cpp; sourceTree = "<group>"; };
 		CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = scope_exit.cpp; sourceTree = "<group>"; };
 		CAF018A91F7A8D7B00E301CE /* container.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = container.cpp; sourceTree = "<group>"; };
@@ -326,6 +332,8 @@
 				CA8268F51FB2251700F28260 /* find_best.hpp */,
 				CA8269041FB2441500F28260 /* find_best_by.hpp */,
 				CA8269141FB2A99500F28260 /* min_by.hpp */,
+				CA8269171FB31F4900F28260 /* max.hpp */,
+				CA8269181FB31FC500F28260 /* min.hpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";
@@ -360,6 +368,8 @@
 				CA8268F91FB23C5600F28260 /* find_best.cpp */,
 				CA8269091FB29AD300F28260 /* find_best_by.cpp */,
 				CA8269151FB31EBD00F28260 /* min_by.cpp */,
+				CA8269191FB320B500F28260 /* max.cpp */,
+				CA82691B1FB3211500F28260 /* min.cpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";
@@ -524,6 +534,7 @@
 				CA7307571F95EC9800C4BBAD /* first.cpp in Sources */,
 				CAF018C21F7E664000E301CE /* option.cpp in Sources */,
 				CAF018AA1F7A8D7B00E301CE /* container.cpp in Sources */,
+				CA82691C1FB3211500F28260 /* min.cpp in Sources */,
 				CA7306E31F8D0C6F00C4BBAD /* flatten.cpp in Sources */,
 				CA7306EC1F8DCC2900C4BBAD /* LambdaWrapper.cpp in Sources */,
 				CA7306DD1F8CD9A300C4BBAD /* concat.cpp in Sources */,
@@ -539,6 +550,7 @@
 				CA8268F41FB21F0C00F28260 /* repeatedly.cpp in Sources */,
 				CA7306A51F84ECE900C4BBAD /* as_vector.cpp in Sources */,
 				CA7306E01F8CDF1800C4BBAD /* empty.cpp in Sources */,
+				CA82691A1FB320B500F28260 /* max.cpp in Sources */,
 				CA22336A1F9F4BC900F8E3B6 /* find.cpp in Sources */,
 				CA7306AA1F84ECF500C4BBAD /* foreach.cpp in Sources */,
 				CA2EBBBA1F960BC50025B493 /* skip.cpp in Sources */,

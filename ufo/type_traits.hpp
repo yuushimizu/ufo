@@ -16,24 +16,6 @@ namespace ufo {
     template <template <typename ...> class Template, typename T>
     constexpr const bool is_instantiation_of_v = is_instantiation_of<Template, T>::value;
     
-    template <typename T>
-    struct template_deduce {
-        using type = T;
-    };
-    
-    template <typename T>
-    struct template_deduce<T &&> {
-        using type = T;
-    };
-    
-    template <typename T>
-    struct template_deduce<T &> {
-        using type = T &;
-    };
-    
-    template <typename T>
-    using template_deduce_t = typename template_deduce<T>::type;
-    
     template <typename From, typename To>
     struct is_convertible : std::is_convertible<From, To> {};
     

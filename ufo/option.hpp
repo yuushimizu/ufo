@@ -52,8 +52,8 @@ namespace ufo {
         
         constexpr option &operator=(option &&other) noexcept(std::is_nothrow_move_assignable_v<std::experimental::optional<T>>) = default;
         
-        constexpr option &operator=(const T &other) {
-            *this = other;
+        constexpr option &operator=(const T &value) {
+            optional_ = value;
             return *this;
         }
         

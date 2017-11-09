@@ -16,6 +16,7 @@
 		CA5AEDDC1F5FFB5D0095F382 /* Vector2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */; };
 		CA5AEDDE1F5FFB860095F382 /* math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDD1F5FFB860095F382 /* math.cpp */; };
 		CA5AEDE01F5FFBBF0095F382 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */; };
+		CA6195B81FB4397400AC0888 /* holder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6195B71FB4397400AC0888 /* holder.cpp */; };
 		CA7306A41F84ECE700C4BBAD /* as_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA73069F1F84ECC700C4BBAD /* as_container.cpp */; };
 		CA7306A51F84ECE900C4BBAD /* as_vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA73069B1F84ECC700C4BBAD /* as_vector.cpp */; };
 		CA7306A61F84ECEC00C4BBAD /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306A11F84ECC700C4BBAD /* container_wrapper.cpp */; };
@@ -126,6 +127,8 @@
 		CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2D.cpp; sourceTree = "<group>"; };
 		CA5AEDDD1F5FFB860095F382 /* math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = math.cpp; sourceTree = "<group>"; };
 		CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
+		CA6195AD1FB435BF00AC0888 /* holder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = holder.hpp; sourceTree = "<group>"; };
+		CA6195B71FB4397400AC0888 /* holder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = holder.cpp; sourceTree = "<group>"; };
 		CA684D151F5FE24B00F18476 /* libufo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libufo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA73068F1F84ECAF00C4BBAD /* iterate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = iterate.hpp; path = sequence/iterate.hpp; sourceTree = "<group>"; };
 		CA7306901F84ECAF00C4BBAD /* filter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = filter.hpp; path = sequence/filter.hpp; sourceTree = "<group>"; };
@@ -238,6 +241,7 @@
 				CAF018A91F7A8D7B00E301CE /* container.cpp */,
 				CAF018C01F7E664000E301CE /* option.cpp */,
 				CA7306EB1F8DCC2900C4BBAD /* LambdaWrapper.cpp */,
+				CA6195B71FB4397400AC0888 /* holder.cpp */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -296,6 +300,7 @@
 				CAF018C61F7F4E9D00E301CE /* type_traits.hpp */,
 				CAF018D41F7F4E9E00E301CE /* Vector2D.hpp */,
 				CA7306EA1F8DCA6D00C4BBAD /* LambdaWrapper.hpp */,
+				CA6195AD1FB435BF00AC0888 /* holder.hpp */,
 			);
 			path = ufo;
 			sourceTree = "<group>";
@@ -560,6 +565,7 @@
 				CA8268CD1FB0E2A100F28260 /* max_by.cpp in Sources */,
 				CA5AEDDC1F5FFB5D0095F382 /* Vector2D.cpp in Sources */,
 				CA7306F61F8F4B2300C4BBAD /* mapcat.cpp in Sources */,
+				CA6195B81FB4397400AC0888 /* holder.cpp in Sources */,
 				CA7306A61F84ECEC00C4BBAD /* container_wrapper.cpp in Sources */,
 				CA5AEDDE1F5FFB860095F382 /* math.cpp in Sources */,
 			);

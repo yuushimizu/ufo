@@ -79,7 +79,7 @@ namespace {
         ASSERT_EQ(30, values[2].value);
         ASSERT_EQ(10, values[3].value);
     }
-    
+
     TEST(FindBestByTest, SequenceNotCopied) {
         auto r = std::vector<int> {2, 3, 4} | test::delete_copy | find_best_by([](auto n) {return n;}, [](auto &x, auto &y) {return x > y;});
         ASSERT_EQ(4, *r);
@@ -88,5 +88,10 @@ namespace {
     TEST(FindBestByTest, FunctionNotCopied) {
         auto r = std::vector<int> {2, 3, 4} | find_best_by(test::delete_function_copy([](auto n) {return -n;}), test::delete_function_copy([](auto &x, auto &y) {return x > y;}));
         ASSERT_EQ(2, *r);
+    }
+    
+    TEST(FindBestByTest, RValueReferenceKey) {
+        auto r = std::vector<int> {19, 28, 37} | find_best_by([](auto &&x) -> decltype(auto) {return std::move(x);}, [](auto &x, auto &y) {return x > y;});
+        ASSERT_EQ(37, *r);
     }
 }

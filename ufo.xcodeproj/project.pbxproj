@@ -17,6 +17,8 @@
 		CA5AEDDE1F5FFB860095F382 /* math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDD1F5FFB860095F382 /* math.cpp */; };
 		CA5AEDE01F5FFBBF0095F382 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */; };
 		CA6195B81FB4397400AC0888 /* holder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6195B71FB4397400AC0888 /* holder.cpp */; };
+		CA6195BA1FBAC5AE00AC0888 /* min_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269151FB31EBD00F28260 /* min_by.cpp */; };
+		CA6195C41FBAC5B500AC0888 /* max_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8268CC1FB0E2A100F28260 /* max_by.cpp */; };
 		CA7306A41F84ECE700C4BBAD /* as_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA73069F1F84ECC700C4BBAD /* as_container.cpp */; };
 		CA7306A51F84ECE900C4BBAD /* as_vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA73069B1F84ECC700C4BBAD /* as_vector.cpp */; };
 		CA7306A61F84ECEC00C4BBAD /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306A11F84ECC700C4BBAD /* container_wrapper.cpp */; };
@@ -36,11 +38,9 @@
 		CA7306F31F8EE57400C4BBAD /* reduce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306F21F8EE57400C4BBAD /* reduce.cpp */; };
 		CA7306F61F8F4B2300C4BBAD /* mapcat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306F51F8F4B2300C4BBAD /* mapcat.cpp */; };
 		CA7307571F95EC9800C4BBAD /* first.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7307561F95EC9800C4BBAD /* first.cpp */; };
-		CA8268CD1FB0E2A100F28260 /* max_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8268CC1FB0E2A100F28260 /* max_by.cpp */; };
 		CA8268F41FB21F0C00F28260 /* repeatedly.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8268F31FB21F0C00F28260 /* repeatedly.cpp */; };
 		CA8268FA1FB23C5600F28260 /* find_best.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8268F91FB23C5600F28260 /* find_best.cpp */; };
 		CA82690A1FB29AD300F28260 /* find_best_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269091FB29AD300F28260 /* find_best_by.cpp */; };
-		CA8269161FB31EBD00F28260 /* min_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269151FB31EBD00F28260 /* min_by.cpp */; };
 		CA82691A1FB320B500F28260 /* max.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269191FB320B500F28260 /* max.cpp */; };
 		CA82691C1FB3211500F28260 /* min.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA82691B1FB3211500F28260 /* min.cpp */; };
 		CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC0C0D21F72557100A22185 /* coroutine.cpp */; };
@@ -534,7 +534,6 @@
 				CA7306AB1F84ECF600C4BBAD /* iterate.cpp in Sources */,
 				CA7306E61F8D202B00C4BBAD /* range.cpp in Sources */,
 				CA7306AC1F84ECF900C4BBAD /* take.cpp in Sources */,
-				CA8269161FB31EBD00F28260 /* min_by.cpp in Sources */,
 				CAC0C0D31F72557100A22185 /* coroutine.cpp in Sources */,
 				CA7307571F95EC9800C4BBAD /* first.cpp in Sources */,
 				CAF018C21F7E664000E301CE /* option.cpp in Sources */,
@@ -542,6 +541,7 @@
 				CA82691C1FB3211500F28260 /* min.cpp in Sources */,
 				CA7306E31F8D0C6F00C4BBAD /* flatten.cpp in Sources */,
 				CA7306EC1F8DCC2900C4BBAD /* LambdaWrapper.cpp in Sources */,
+				CA6195C41FBAC5B500AC0888 /* max_by.cpp in Sources */,
 				CA7306DD1F8CD9A300C4BBAD /* concat.cpp in Sources */,
 				CA7306F01F8E746C00C4BBAD /* map_indexed.cpp in Sources */,
 				CAF018A81F7A7F4D00E301CE /* scope_exit.cpp in Sources */,
@@ -551,6 +551,7 @@
 				CA5AEDD81F5FF74C0095F382 /* Coord.cpp in Sources */,
 				CA7306A81F84ECF000C4BBAD /* counting.cpp in Sources */,
 				CA7306A91F84ECF300C4BBAD /* filter.cpp in Sources */,
+				CA6195BA1FBAC5AE00AC0888 /* min_by.cpp in Sources */,
 				CA8268FA1FB23C5600F28260 /* find_best.cpp in Sources */,
 				CA8268F41FB21F0C00F28260 /* repeatedly.cpp in Sources */,
 				CA7306A51F84ECE900C4BBAD /* as_vector.cpp in Sources */,
@@ -562,7 +563,6 @@
 				CA2EBBBD1F960E6F0025B493 /* nth.cpp in Sources */,
 				CA7306A41F84ECE700C4BBAD /* as_container.cpp in Sources */,
 				CA82690A1FB29AD300F28260 /* find_best_by.cpp in Sources */,
-				CA8268CD1FB0E2A100F28260 /* max_by.cpp in Sources */,
 				CA5AEDDC1F5FFB5D0095F382 /* Vector2D.cpp in Sources */,
 				CA7306F61F8F4B2300C4BBAD /* mapcat.cpp in Sources */,
 				CA6195B81FB4397400AC0888 /* holder.cpp in Sources */,

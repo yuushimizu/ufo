@@ -75,4 +75,9 @@ namespace {
         auto r = std::vector<int> {1, 2, 3} | reduce([](A &&a, int) {return std::move(a);}, A {});
         ASSERT_EQ(10, r.value);
     }
+    
+    TEST(ReduceTest, ReturnRValueReference) {
+        auto r = std::vector<int> {1, 2, 3} | reduce([](int &&a, int) -> decltype(auto) {return std::move(a);}, 100);
+        ASSERT_EQ(100, r);
+    }
 }

@@ -7,7 +7,7 @@
 
 namespace ufo {
     constexpr auto nth(int n) {
-        return skip(n) | first;
+        return skip(n) | first();
     }
 }
 

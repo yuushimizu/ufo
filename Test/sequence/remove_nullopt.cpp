@@ -10,7 +10,7 @@ namespace {
     TEST(RemoveNulloptTest, FromLValue) {
         std::vector<option<int>> v {3, nullopt, 4, nullopt, 5};
         auto cw = container_wrapper(v);
-        auto r = cw | remove_nullopt;
+        auto r = cw | remove_nullopt();
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&*v[0], &*r.next());
         ASSERT_EQ(&*v[2], &*r.next());
@@ -20,7 +20,7 @@ namespace {
     
     TEST(RemoveNulloptTest, CopiedLValueNotChanged) {
         auto cw = container_wrapper(std::vector<option<int>> {2, nullopt, 3});
-        auto r = cw | remove_nullopt;
+        auto r = cw | remove_nullopt();
         ASSERT_EQ(2, *r.next());
         ASSERT_EQ(3, *r.next());
         ASSERT_FALSE(r.next());
@@ -31,19 +31,19 @@ namespace {
     }
     
     TEST(RemoveNulloptTest, FromRValue) {
-        auto r = std::vector<option<int>> {2, nullopt, 1} | remove_nullopt;
+        auto r = std::vector<option<int>> {2, nullopt, 1} | remove_nullopt();
         ASSERT_EQ(2, *r.next());
         ASSERT_EQ(1, *r.next());
         ASSERT_FALSE(r.next());
     }
 
     TEST(RemoveNulloptTest, Empty) {
-        auto r = std::vector<option<int>> {} | remove_nullopt;
+        auto r = std::vector<option<int>> {} | remove_nullopt();
         ASSERT_FALSE(r.next());
     }
 
     TEST(RemoveNulloptTest, SequenceNotCopied) {
-        auto r = std::vector<option<int>> {1, 2} | test::delete_copy | remove_nullopt;
+        auto r = std::vector<option<int>> {1, 2} | test::delete_copy | remove_nullopt();
         ASSERT_EQ(1, *r.next());
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());

@@ -8,7 +8,7 @@
 namespace ufo {
     template <typename F>
     constexpr auto find(F &&f) {
-        return filter(std::forward<F>(f)) | first;
+        return filter(std::forward<F>(f)) | first();
     }
 }
 

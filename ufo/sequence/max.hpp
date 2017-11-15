@@ -5,7 +5,9 @@
 #include "find_best.hpp"
 
 namespace ufo {
-    constexpr const auto max = find_best(std::greater<> {});
+    constexpr auto max() noexcept {
+        return find_best(std::greater<> {});
+    }
 }
 
 #endif

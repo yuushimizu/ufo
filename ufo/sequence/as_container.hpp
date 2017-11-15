@@ -33,9 +33,11 @@ namespace ufo {
         return AsContainer<Sequence>(std::forward<Sequence>(sequence));
     }
     
-    constexpr inline const auto as_container = sequence_operator([](auto &&sequence) constexpr noexcept {
-        return make_as_container(std::forward<decltype(sequence)>(sequence));
-    });
+    constexpr auto as_container() noexcept {
+        return sequence_operator([](auto &&sequence) constexpr noexcept {
+            return make_as_container(std::forward<decltype(sequence)>(sequence));
+        });
+    }
 }
 
 #endif

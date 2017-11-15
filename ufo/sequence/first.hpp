@@ -4,9 +4,11 @@
 #include "sequence_operator.hpp"
 
 namespace ufo {
-    constexpr inline const auto first = sequence_operator([](auto &&sequence) {
-        return std::forward<decltype(sequence)>(sequence).next();
-    });
+    constexpr auto first() noexcept {
+        return sequence_operator([](auto &&sequence) {
+            return std::forward<decltype(sequence)>(sequence).next();
+        });
+    }
 }
 
 #endif

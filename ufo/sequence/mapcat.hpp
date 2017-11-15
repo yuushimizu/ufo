@@ -8,7 +8,7 @@
 namespace ufo {
     template <typename F>
     constexpr auto mapcat(F &&f) {
-        return map(std::forward<F>(f)) | flatten;
+        return map(std::forward<F>(f)) | flatten();
     }
 }
 

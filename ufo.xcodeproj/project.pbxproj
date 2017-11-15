@@ -19,6 +19,7 @@
 		CA6195B81FB4397400AC0888 /* holder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6195B71FB4397400AC0888 /* holder.cpp */; };
 		CA6195BA1FBAC5AE00AC0888 /* min_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8269151FB31EBD00F28260 /* min_by.cpp */; };
 		CA6195C41FBAC5B500AC0888 /* max_by.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8268CC1FB0E2A100F28260 /* max_by.cpp */; };
+		CA6195C81FBAD23E00AC0888 /* remove_nullopt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6195C71FBAD23E00AC0888 /* remove_nullopt.cpp */; };
 		CA7306A41F84ECE700C4BBAD /* as_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA73069F1F84ECC700C4BBAD /* as_container.cpp */; };
 		CA7306A51F84ECE900C4BBAD /* as_vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA73069B1F84ECC700C4BBAD /* as_vector.cpp */; };
 		CA7306A61F84ECEC00C4BBAD /* container_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306A11F84ECC700C4BBAD /* container_wrapper.cpp */; };
@@ -129,6 +130,8 @@
 		CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
 		CA6195AD1FB435BF00AC0888 /* holder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = holder.hpp; sourceTree = "<group>"; };
 		CA6195B71FB4397400AC0888 /* holder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = holder.cpp; sourceTree = "<group>"; };
+		CA6195C61FBAD18200AC0888 /* remove_nullopt.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = remove_nullopt.hpp; path = sequence/remove_nullopt.hpp; sourceTree = "<group>"; };
+		CA6195C71FBAD23E00AC0888 /* remove_nullopt.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = remove_nullopt.cpp; path = sequence/remove_nullopt.cpp; sourceTree = "<group>"; };
 		CA684D151F5FE24B00F18476 /* libufo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libufo.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA73068F1F84ECAF00C4BBAD /* iterate.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = iterate.hpp; path = sequence/iterate.hpp; sourceTree = "<group>"; };
 		CA7306901F84ECAF00C4BBAD /* filter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = filter.hpp; path = sequence/filter.hpp; sourceTree = "<group>"; };
@@ -339,6 +342,7 @@
 				CA8269141FB2A99500F28260 /* min_by.hpp */,
 				CA8269171FB31F4900F28260 /* max.hpp */,
 				CA8269181FB31FC500F28260 /* min.hpp */,
+				CA6195C61FBAD18200AC0888 /* remove_nullopt.hpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";
@@ -375,6 +379,7 @@
 				CA8269151FB31EBD00F28260 /* min_by.cpp */,
 				CA8269191FB320B500F28260 /* max.cpp */,
 				CA82691B1FB3211500F28260 /* min.cpp */,
+				CA6195C71FBAD23E00AC0888 /* remove_nullopt.cpp */,
 			);
 			name = sequence;
 			sourceTree = "<group>";
@@ -546,6 +551,7 @@
 				CA7306F01F8E746C00C4BBAD /* map_indexed.cpp in Sources */,
 				CAF018A81F7A7F4D00E301CE /* scope_exit.cpp in Sources */,
 				CA7306E91F8D2EE000C4BBAD /* take_while.cpp in Sources */,
+				CA6195C81FBAD23E00AC0888 /* remove_nullopt.cpp in Sources */,
 				CA7306B91F84F2CE00C4BBAD /* map.cpp in Sources */,
 				CA7306F31F8EE57400C4BBAD /* reduce.cpp in Sources */,
 				CA5AEDD81F5FF74C0095F382 /* Coord.cpp in Sources */,

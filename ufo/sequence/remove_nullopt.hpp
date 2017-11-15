@@ -8,9 +8,7 @@
 
 namespace ufo {
     constexpr auto remove_nullopt() noexcept {
-        return sequence_operator([](auto &&sequence) {
-            return std::forward<decltype(sequence)>(sequence) | filter([](const auto &o) {return static_cast<bool>(o);}) | map([](auto &&o) -> decltype(auto) {return *std::forward<decltype(o)>(o);});
-        });
+        return filter([](const auto &o) {return static_cast<bool>(o);}) | map([](auto &&o) -> decltype(auto) {return *std::forward<decltype(o)>(o);});
     }
 }
 

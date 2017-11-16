@@ -3,7 +3,7 @@
 
 #include <functional>
 #include <experimental/optional>
-#include <type_traits>
+#include "type_traits.hpp"
 
 namespace ufo {
     using std::experimental::nullopt_t;
@@ -95,22 +95,40 @@ namespace ufo {
             return std::move(*optional_);
         }
         
-        template <typename F>
+        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
         constexpr auto map(F &&f) const & -> decltype(make_option(std::forward<F>(f)(*optional_))) {
             if (!*this) return nullopt;
             return make_option(std::forward<F>(f)(*optional_));
         }
         
-        template <typename F>
+        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
         constexpr auto map(F &&f) & -> decltype(make_option(std::forward<F>(f)(*optional_))) {
             if (!*this) return nullopt;
             return make_option(std::forward<F>(f)(*optional_));
         }
         
-        template <typename F>
+        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
         constexpr auto map(F &&f) && -> decltype(make_option(std::forward<F>(f)(std::move(*optional_)))) {
             if (!*this) return nullopt;
             return make_option(std::forward<F>(f)(std::move(*optional_)));
+        }
+        
+        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
+        constexpr auto map(F f) const & -> decltype(make_option(((*optional_).*f)())) {
+            if (!*this) return nullopt;
+            return make_option(((*optional_).*f)());
+        }
+        
+        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
+        constexpr auto map(F f) & -> decltype(make_option(((*optional_).*f)())) {
+            if (!*this) return nullopt;
+            return make_option(((*optional_).*f)());
+        }
+        
+        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
+        constexpr auto map(F f) && -> decltype(make_option((std::move(*optional_).*f)())) {
+            if (!*this) return nullopt;
+            return make_option((std::move(*optional_).*f)());
         }
         
         template <typename LHS, typename RHS>
@@ -211,10 +229,16 @@ namespace ufo {
             return *pointer_;
         }
         
-        template <typename F>
+        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
         constexpr auto map(F &&f) const & -> decltype(make_option(std::forward<F>(f)(*pointer_))) {
             if (!*this) return nullopt;
             return make_option(std::forward<F>(f)(*pointer_));
+        }
+        
+        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
+        constexpr auto map(F f) const & -> decltype(make_option((pointer_->*f)())) {
+            if (!*this) return nullopt;
+            return make_option((pointer_->*f)());
         }
         
         template <typename LHS, typename RHS>

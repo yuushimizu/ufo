@@ -241,8 +241,8 @@ namespace ufo {
             return make_option((pointer_->*f)());
         }
         
-        constexpr option<std::decay_t<T>> deref() const noexcept {
-            return this->map([](auto &x) -> T {return x;});
+        constexpr auto deref() const noexcept {
+            return this->map([](auto &x) -> std::decay_t<T> {return x;});
         }
         
         template <typename LHS, typename RHS>

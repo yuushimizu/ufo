@@ -131,6 +131,18 @@ namespace ufo {
             return make_option((std::move(*optional_).*f)());
         }
         
+        template <typename U>
+        constexpr T unwrap_or(U &&value) const & {
+            if (!*this) return std::forward<U>(value);
+            return **this;
+        }
+        
+        template <typename U>
+        constexpr T unwrap_or(U &&value) && {
+            if (!*this) return std::forward<U>(value);
+            return *std::move(*this);
+        }
+        
         template <typename LHS, typename RHS>
         friend constexpr bool operator==(const option<LHS> &, const option<RHS> &) noexcept;
         
@@ -239,6 +251,12 @@ namespace ufo {
         constexpr auto map(F f) const & -> decltype(make_option((pointer_->*f)())) {
             if (!*this) return nullopt;
             return make_option((pointer_->*f)());
+        }
+        
+        template <typename U>
+        constexpr T &unwrap_or(U &value) const & {
+            if (!*this) return value;
+            return **this;
         }
         
         constexpr auto deref() const noexcept {

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "ufo/option.hpp"
+#include <memory>
 
 using namespace ufo;
 
@@ -204,6 +205,47 @@ namespace {
     
     TEST(OptionTest, RefMapMemberFunctionRValueNullopt) {
         ASSERT_EQ(nullopt, option<TestMF &> {}.map(&TestMF::l));
+    }
+    
+    TEST(OptionTest, UnwrapOrLValue) {
+        option<int> o(123);
+        decltype(auto) r = o.unwrap_or(10);
+        static_assert(std::is_same_v<int, decltype(r)>);
+        ASSERT_EQ(123, r);
+    }
+    
+    TEST(OptionTest, UnwrapOrLValueNullopt) {
+        option<int> o {};
+        decltype(auto) r = o.unwrap_or(10);
+        ASSERT_EQ(10, r);
+    }
+    
+    TEST(OptionTest, UnwrapOrRValue) {
+        decltype(auto) r = option<std::unique_ptr<int>>(std::make_unique<int>(5)).unwrap_or(std::make_unique<int>(84));
+        static_assert(std::is_same_v<std::unique_ptr<int>, decltype(r)>);
+        ASSERT_EQ(5, *r);
+    }
+    
+    TEST(OptionTest, UnwrapOrRValueNullopt) {
+        decltype(auto) r = option<std::unique_ptr<int>> {}.unwrap_or(std::make_unique<int>(84));
+        static_assert(std::is_same_v<std::unique_ptr<int>, decltype(r)>);
+        ASSERT_EQ(84, *r);
+    }
+    
+    TEST(OptionTest, UnwrapOrRef) {
+        int x = 10;
+        option<int &> o(x);
+        int y = 5;
+        decltype(auto) r = o.unwrap_or(y);
+        static_assert(std::is_same_v<int &, decltype(r)>);
+        ASSERT_EQ(&x, &r);
+    }
+    
+    TEST(OptionTest, UnwrapOrRefNullopt) {
+        option<int &> o {};
+        int y = 42;
+        int &r = o.unwrap_or(y);
+        ASSERT_EQ(&y, &r);
     }
     
     TEST(OptionTest, Deref) {

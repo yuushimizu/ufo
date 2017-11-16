@@ -206,6 +206,20 @@ namespace {
         ASSERT_EQ(nullopt, option<TestMF &> {}.map(&TestMF::l));
     }
     
+    TEST(OptionTest, Deref) {
+        int x = 123;
+        option<int &> o(x);
+        decltype(auto) r = o.deref();
+        static_assert(std::is_same_v<option<int>, decltype(r)>);
+        ASSERT_EQ(123, *r);
+        ASSERT_NE(&x, &*r);
+    }
+    
+    TEST(OptionTest, DerefNullopt) {
+        option<int &> o {};
+        ASSERT_EQ(nullopt, o.deref());
+    }
+    
     TEST(OptionTest, OptionOfOptionFalse) {
         option<option<int>> o {};
         ASSERT_FALSE(o);

@@ -241,6 +241,10 @@ namespace ufo {
             return make_option((pointer_->*f)());
         }
         
+        constexpr option<T> deref() const noexcept {
+            return this->map([](auto &x) -> T {return x;});
+        }
+        
         template <typename LHS, typename RHS>
         friend constexpr bool operator==(const option<LHS &> &lhs, const option<RHS &> &rhs) noexcept;
         

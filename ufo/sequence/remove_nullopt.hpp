@@ -5,10 +5,11 @@
 #include "filter.hpp"
 #include "map.hpp"
 #include "../option.hpp"
+#include "../placeholder.hpp"
 
 namespace ufo {
     constexpr auto remove_nullopt() noexcept {
-        return filter([](const auto &o) {return static_cast<bool>(o);}) | map([](auto &&o) -> decltype(auto) {return *std::forward<decltype(o)>(o);});
+        return filter([](const auto &o) {return static_cast<bool>(o);}) | map(*_);
     }
 }
 

@@ -10,7 +10,7 @@ namespace ufo {
     namespace flatten_detail {
         template <typename Sequence>
         constexpr auto next_inner(Sequence &&sequence) {
-            return std::forward<Sequence>(sequence).next().map([](auto &&inner) -> decltype(auto) {return container_wrapper(std::forward<decltype(inner)>(inner));});
+            return std::forward<Sequence>(sequence).next().map([](auto &&inner) {return container_wrapper(std::forward<decltype(inner)>(inner));});
         }
     }
     

@@ -241,7 +241,7 @@ namespace ufo {
             return make_option((pointer_->*f)());
         }
         
-        constexpr option<T> deref() const noexcept {
+        constexpr option<std::decay_t<T>> deref() const noexcept {
             return this->map([](auto &x) -> T {return x;});
         }
         

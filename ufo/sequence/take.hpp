@@ -10,12 +10,9 @@ namespace ufo {
         return sequence_operator([n](auto &&sequence) constexpr {
             return sequence_wrapper([n](auto &sequence) constexpr mutable -> sequence_option_t<decltype(sequence)> {
                 if (n <= 0) return nullopt;
-                if (auto value = sequence.next()) {
-                    --n;
-                    return value;
-                } else {
-                    return nullopt;
-                }
+                auto value = sequence.next();
+                if (value) --n;
+                return value;
             }, std::forward<decltype(sequence)>(sequence));
         });
     }

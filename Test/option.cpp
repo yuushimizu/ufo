@@ -33,10 +33,10 @@ namespace {
     
     TEST(OptionTest, ValueMapLValue) {
         option<int> o(10);
-        decltype(auto) r = o.map([](int &n) {return n * 2;});
-        static_assert(std::is_same_v<option<int>, decltype(r)>);
+        decltype(auto) r = o.map([](int &n) {return n * 2.2;});
+        static_assert(std::is_same_v<option<double>, decltype(r)>);
         ASSERT_EQ(10, *o);
-        ASSERT_EQ(20, *r);
+        ASSERT_DOUBLE_EQ(22, *r);
     }
     
     TEST(OptionTest, ValueMapLValueNullopt) {
@@ -113,98 +113,120 @@ namespace {
         ASSERT_EQ(&v[0], &*r);
     }
     
-    struct TestMF {
-        int value;
-        
-        TestMF(int value) : value(value) {
-        }
-        
-        int l() & {
-            return value * 2;
-        }
-        
-        int lc() const & {
-            return value * 3;
-        }
-        
-        int r() && {
-            return value * 4;
-        }
-    };
-    
-    TEST(OptionTest, ValueMapMemberFunctionLValue) {
-        option<TestMF> o(10);
-        decltype(auto) r = o.map(&TestMF::l);
-        static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(10, o->value);
-        ASSERT_EQ(20, *r);
+    TEST(OptionTest, ValueMapMemberFunction) {
+        struct Foo {
+            int value() {
+                return 123;
+            }
+        };
+        decltype(auto) r = option<Foo>(Foo {}).map(&Foo::value);
+        ASSERT_EQ(123, *r);
+    }
+    TEST(OptionTest, RefMapMemberFunction) {
+        struct Foo {
+            int value() {
+                return 123;
+            }
+        };
+        Foo foo {};
+        decltype(auto) r = option<Foo &>(foo).map(&Foo::value);
+        ASSERT_EQ(123, *r);
     }
     
-     TEST(OptionTest, ValueMapMemberFunctionLValueNullopt) {
-         option<TestMF> o {};
-         ASSERT_EQ(nullopt, o.map(&TestMF::l));
-     }
-
-    TEST(OptionTest, ValueMapMemberFunctionConstLValue) {
-        const option<TestMF> o(5);
-        decltype(auto) r = o.map(&TestMF::lc);
-        static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(5, o->value);
-        ASSERT_EQ(15, *r);
-    }
-    
-    TEST(OptionTest, ValueMapMemberFunctionConstLValueNullopt) {
-        const option<TestMF> o {};
-        ASSERT_EQ(nullopt, o.map(&TestMF::lc));
-    }
-    
-    TEST(OptionTest, ValueMapMemberFunctionRValue) {
-        decltype(auto) r = option<TestMF>(7).map(&TestMF::r);
-        static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(28, *r);
+    TEST(OptionTest, ValueAndThenLValue) {
+        option<int> o(10);
+        decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2.2);});
+        static_assert(std::is_same_v<option<double>, decltype(r)>);
+        ASSERT_EQ(10, *o);
+        ASSERT_DOUBLE_EQ(22, *r);
     }
      
-    TEST(OptionTest, ValueMapMemberFunctionRValueNullopt) {
-        ASSERT_EQ(nullopt, option<TestMF> {}.map(&TestMF::r));
+    TEST(OptionTest, ValueAndThenLValueNullopt) {
+        option<int> o {};
+        ASSERT_EQ(nullopt, o.and_then([](int &n) {return make_option(n * 2);}));
     }
-
-     TEST(OptionTest, RefMapMemberFunctionLValue) {
-         TestMF x(10);
-         option<TestMF &> o(x);
-         decltype(auto) r = o.map(&TestMF::l);
-         static_assert(std::is_same_v<option<int>, decltype(r)>);
-         ASSERT_EQ(10, o->value);
-         ASSERT_EQ(20, *r);
-     }
-     
-    TEST(OptionTest, RefMapMemberFunctionLValueNullopt) {
-        option<TestMF &> o {};
-        ASSERT_EQ(nullopt, o.map(&TestMF::l));
-    }
-
-    TEST(OptionTest, RefMapMemberFunctionConstLValue) {
-        TestMF x(5);
-        const option<TestMF &> o(x);
-        decltype(auto) r = o.map(&TestMF::l);
+    
+    TEST(OptionTest, ValueAndThenConstLValue) {
+        const option<int> o(5);
+        decltype(auto) r = o.and_then([](const int &n) {return make_option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(5, o->value);
+        ASSERT_EQ(5, *o);
         ASSERT_EQ(10, *r);
     }
      
-    TEST(OptionTest, RefMapMemberFunctionConstLValueNullopt) {
-        const option<TestMF &> o {};
-        ASSERT_EQ(nullopt, o.map(&TestMF::l));
+    TEST(OptionTest, ValueAndThenConstLValueNullopt) {
+        const option<int> o {};
+        ASSERT_EQ(nullopt, o.and_then([](const int &n) {return make_option(n * 2);}));
     }
 
-    TEST(OptionTest, RefMapMemberFunctionRValue) {
-        TestMF x(7);
-        decltype(auto) r = option<TestMF &>(x).map(&TestMF::l);
+    TEST(OptionTest, ValueAndThenRValue) {
+        decltype(auto) r = option<int>(7).and_then([](int &&n) {return make_option(n * 3);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(14, *r);
+        ASSERT_EQ(21, *r);
     }
     
-    TEST(OptionTest, RefMapMemberFunctionRValueNullopt) {
-        ASSERT_EQ(nullopt, option<TestMF &> {}.map(&TestMF::l));
+    TEST(OptionTest, ValueAndThenRValueNullopt) {
+        ASSERT_EQ(nullopt, option<int> {}.map([](int &&n) {return make_option(n * 3);}));
+    }
+    
+    TEST(OptionTest, RefAndThenLValue) {
+        int x = 10;
+        option<int &> o(x);
+        decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2);});
+        static_assert(std::is_same_v<option<int>, decltype(r)>);
+        ASSERT_EQ(10, *o);
+        ASSERT_EQ(20, *r);
+    }
+    
+    TEST(OptionTest, RefAndThenLValueNullopt) {
+        option<int &> o {};
+        ASSERT_EQ(nullopt, o.and_then([](int &n) {return make_option(n * 2);}));
+    }
+
+    TEST(OptionTest, RefAndThenConstLValue) {
+        int x = 5;
+        const option<int &> o(x);
+        decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2);});
+        static_assert(std::is_same_v<option<int>, decltype(r)>);
+        ASSERT_EQ(5, *o);
+        ASSERT_EQ(10, *r);
+    }
+    
+    TEST(OptionTest, RefAndThenConstLValueNullopt) {
+        const option<int &> o {};
+        ASSERT_EQ(nullopt, o.map([](int &n) {return make_option(n * 2);}));
+    }
+    
+    TEST(OptionTest, RefAndThenRValue) {
+        int x = 7;
+        decltype(auto) r = option<int &>(x).and_then([](int &n) {return make_option(n * 3);});
+        static_assert(std::is_same_v<option<int>, decltype(r)>);
+        ASSERT_EQ(21, *r);
+    }
+    
+    TEST(OptionTest, RefAndThenRValueNullopt) {
+        ASSERT_EQ(nullopt, option<int &> {}.and_then([](int &n) {return make_option(n * 3);}));
+    }
+    
+    TEST(OptionTest, ValueAndThenMemberFunction) {
+        struct Foo {
+            auto value() {
+                return make_option(123);
+            }
+        };
+        decltype(auto) r = option<Foo>(Foo {}).and_then(&Foo::value);
+        ASSERT_EQ(123, *r);
+    }
+    
+    TEST(OptionTest, RefAndThenMemberFunction) {
+        struct Foo {
+            auto value() {
+                return make_option(123);
+            }
+        };
+        Foo foo {};
+        decltype(auto) r = option<Foo &>(foo).and_then(&Foo::value);
+        ASSERT_EQ(123, *r);
     }
     
     TEST(OptionTest, UnwrapOrLValue) {

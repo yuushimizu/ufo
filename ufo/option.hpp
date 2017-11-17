@@ -95,40 +95,40 @@ namespace ufo {
             return std::move(*optional_);
         }
         
-        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F &&f) const & -> decltype(make_option(std::forward<F>(f)(*optional_))) {
+        template <typename F>
+        constexpr auto map(F &&f) const & -> decltype(make_option(std::invoke(std::forward<F>(f), *optional_))) {
             if (!*this) return nullopt;
-            return make_option(std::forward<F>(f)(*optional_));
+            return make_option(std::invoke(std::forward<F>(f), *optional_));
         }
         
-        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F &&f) & -> decltype(make_option(std::forward<F>(f)(*optional_))) {
+        template <typename F>
+        constexpr auto map(F &&f) & -> decltype(make_option(std::invoke(std::forward<F>(f), *optional_))) {
             if (!*this) return nullopt;
-            return make_option(std::forward<F>(f)(*optional_));
+            return make_option(std::invoke(std::forward<F>(f), *optional_));
         }
         
-        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F &&f) && -> decltype(make_option(std::forward<F>(f)(std::move(*optional_)))) {
+        template <typename F>
+        constexpr auto map(F &&f) && -> decltype(make_option(std::invoke(std::forward<F>(f), std::move(*optional_)))) {
             if (!*this) return nullopt;
-            return make_option(std::forward<F>(f)(std::move(*optional_)));
+            return make_option(std::invoke(std::forward<F>(f), std::move(*optional_)));
         }
         
-        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F f) const & -> decltype(make_option(((*optional_).*f)())) {
+        template <typename F>
+        constexpr auto and_then(F &&f) const & -> decltype(std::invoke(std::forward<F>(f), *optional_)) {
             if (!*this) return nullopt;
-            return make_option(((*optional_).*f)());
+            return std::invoke(std::forward<F>(f), *optional_);
         }
         
-        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F f) & -> decltype(make_option(((*optional_).*f)())) {
+        template <typename F>
+        constexpr auto and_then(F &&f) & -> decltype(std::invoke(std::forward<F>(f), *optional_)) {
             if (!*this) return nullopt;
-            return make_option(((*optional_).*f)());
+            return std::invoke(std::forward<F>(f), *optional_);
         }
         
-        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F f) && -> decltype(make_option((std::move(*optional_).*f)())) {
+        template <typename F>
+        constexpr auto and_then(F &&f) && -> decltype(std::invoke(std::forward<F>(f), std::move(*optional_))) {
             if (!*this) return nullopt;
-            return make_option((std::move(*optional_).*f)());
+            return std::invoke(std::forward<F>(f), std::move(*optional_));
         }
         
         template <typename U>
@@ -241,16 +241,16 @@ namespace ufo {
             return *pointer_;
         }
         
-        template <typename F, enable_if_t<!std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F &&f) const & -> decltype(make_option(std::forward<F>(f)(*pointer_))) {
+        template <typename F>
+        constexpr auto map(F &&f) const & -> decltype(make_option(std::invoke(std::forward<F>(f), *pointer_))) {
             if (!*this) return nullopt;
-            return make_option(std::forward<F>(f)(*pointer_));
+            return make_option(std::invoke(std::forward<F>(f), *pointer_));
         }
         
-        template <typename F, enable_if_t<std::is_member_function_pointer_v<F>> = nullptr>
-        constexpr auto map(F f) const & -> decltype(make_option((pointer_->*f)())) {
+        template <typename F>
+        constexpr auto and_then(F &&f) const & -> decltype(std::invoke(std::forward<F>(f), *pointer_)) {
             if (!*this) return nullopt;
-            return make_option((pointer_->*f)());
+            return std::invoke(std::forward<F>(f), *pointer_);
         }
         
         template <typename U>

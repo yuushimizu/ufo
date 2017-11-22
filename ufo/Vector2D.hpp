@@ -12,9 +12,9 @@ namespace ufo {
     namespace vector2d_detail {
         template <typename Indices, typename Values>
         constexpr auto pairs(Indices &&indices, Values &&values) {
-            return map([](auto &&index, auto &&value) {return std::make_tuple(std::forward<decltype(index)>(index), std::forward<decltype(value)>(value));},
-                       std::forward<Indices>(indices),
-                       std::forward<Values>(values));
+            return map([](auto &&index, auto &&value) {
+                return std::tuple<Coord<int>, sequence_element_t<Values>>(std::forward<decltype(index)>(index), std::forward<decltype(value)>(value));
+            }, std::forward<Indices>(indices), std::forward<Values>(values));
         }
     }
     
@@ -87,7 +87,7 @@ namespace ufo {
         }
         
         constexpr auto pairs() && {
-            return vector2d_detail::pairs(indices(), values());
+            return vector2d_detail::pairs(indices(), container_wrapper(std::move(values_)));
         }
         
         template <typename T1, typename T2>

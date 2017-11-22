@@ -55,5 +55,23 @@ namespace {
         }));
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
+    
+    TEST(ForeachTest, MemberFunction) {
+        struct Foo {
+            int value;
+            
+            Foo(int value) : value(value) {
+            }
+            
+            void do_doubling() {
+                value *= 2;
+            }
+        };
+        std::vector<Foo> v {1, 3, 5};
+        v | foreach(&Foo::do_doubling);
+        ASSERT_EQ(2, v[0].value);
+        ASSERT_EQ(6, v[1].value);
+        ASSERT_EQ(10, v[2].value);
+    }
 }
 

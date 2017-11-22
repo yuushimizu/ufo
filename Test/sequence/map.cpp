@@ -91,4 +91,22 @@ namespace {
         ASSERT_EQ(26, *r.next());
         ASSERT_FALSE(r.next());
     }
+    
+    TEST(MapTest, MemberFunction) {
+        struct Foo {
+            int value_;
+            
+            Foo(int value) : value_(value) {
+            }
+            
+            int value() const {
+                return value_;
+            }
+        };
+        auto r = std::vector<Foo> {Foo(5), Foo(8), Foo(3)} | map(&Foo::value);
+        ASSERT_EQ(5, *r.next());
+        ASSERT_EQ(8, *r.next());
+        ASSERT_EQ(3, *r.next());
+        ASSERT_FALSE(r.next());
+    }
 }

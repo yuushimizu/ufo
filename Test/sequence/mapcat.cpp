@@ -74,4 +74,24 @@ namespace {
         ASSERT_EQ(1, **r.next());
         ASSERT_FALSE(r.next());
     }
+    
+    TEST(MapcatTest, MemberFunction) {
+        struct Foo {
+            int value;
+            
+            Foo(int value) : value(value) {
+            }
+            
+            auto seq() const {
+                return range(value);
+            }
+        };
+        auto r = std::vector<Foo> {2, 3} | mapcat(&Foo::seq);
+        ASSERT_EQ(0, *r.next());
+        ASSERT_EQ(1, *r.next());
+        ASSERT_EQ(0, *r.next());
+        ASSERT_EQ(1, *r.next());
+        ASSERT_EQ(2, *r.next());
+        ASSERT_FALSE(r.next());
+    }
 }

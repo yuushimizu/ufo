@@ -61,4 +61,21 @@ namespace {
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }
+    
+    TEST(FilterTest, MemberFunction) {
+        struct Foo {
+            int value;
+            
+            Foo(int value) : value(value) {
+            }
+            
+            bool is_even() const {
+                return value % 2 == 0;
+            }
+        };
+        auto r = std::vector<Foo> {5, 8, 3, 4} | filter(&Foo::is_even);
+        ASSERT_EQ(8, r.next()->value);
+        ASSERT_EQ(4, r.next()->value);
+        ASSERT_FALSE(r.next());
+    }
 }

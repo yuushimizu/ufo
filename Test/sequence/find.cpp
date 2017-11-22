@@ -52,5 +52,20 @@ namespace {
         auto r = std::vector<int> {2, 3, 4} | find(test::delete_function_copy(_ == 4));
         ASSERT_EQ(4, *r);
     }
+    
+    TEST(FindTest, MemberFunction) {
+        struct Foo {
+            int value;
+            
+            Foo(int value) : value(value) {
+            }
+            
+            bool is_even() const {
+                return value % 2 == 0;
+            }
+        };
+        auto r = std::vector<Foo> {5, 8, 2} | find(&Foo::is_even);
+        ASSERT_EQ(8, r->value);
+    }
 }
 

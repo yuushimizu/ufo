@@ -24,4 +24,21 @@ namespace {
         ASSERT_EQ(2, *r.next());
         ASSERT_EQ(4, *r.next());
     }
+    
+    TEST(IterateTest, MemberFunction) {
+        struct Foo {
+            int value;
+            
+            Foo(int value) : value(value) {
+            }
+            
+            Foo doubled() const {
+                return Foo(value * 2);
+            }
+        };
+        auto r = iterate(&Foo::doubled, Foo(3));
+        ASSERT_EQ(3, r.next()->value);
+        ASSERT_EQ(6, r.next()->value);
+        ASSERT_EQ(12, r.next()->value);
+    }
 }

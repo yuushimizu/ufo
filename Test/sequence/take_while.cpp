@@ -62,5 +62,22 @@ namespace {
         ASSERT_EQ(1, *r.next());
         ASSERT_FALSE(r.next());
     }
+    
+    TEST(TakeWhileTest, MemberFunction) {
+        struct Foo {
+            int value;
+            
+            Foo(int value) : value(value) {
+            }
+            
+            bool is_odd() const {
+                return value % 2 != 0;
+            }
+        };
+        auto r = std::vector<Foo> {7, 5, 6, 1, 3} | take_while(&Foo::is_odd);
+        ASSERT_EQ(7, r.next()->value);
+        ASSERT_EQ(5, r.next()->value);
+        ASSERT_FALSE(r.next());
+    }
 }
 

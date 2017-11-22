@@ -97,4 +97,19 @@ namespace {
         auto r = std::vector<int> {2, 3, 4} | max_by(test::delete_function_copy(-_));
         ASSERT_EQ(2, *r);
     }
+    
+    TEST(MaxByTest, MemberFunction) {
+        struct Foo {
+            int value_;
+            
+            Foo(int value) : value_(value) {
+            }
+            
+            int value() const {
+                return value_;
+            }
+        };
+        auto r = std::vector<Foo> {2, 8, 6} | max_by(&Foo::value);
+        ASSERT_EQ(8, r->value());
+    }
 }

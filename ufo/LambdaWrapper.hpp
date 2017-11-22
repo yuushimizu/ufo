@@ -1,6 +1,7 @@
 #ifndef ufo_LambdaWrapper
 #define ufo_LambdaWrapper
 
+#include <functional>
 #include "option.hpp"
 
 namespace ufo {
@@ -33,18 +34,18 @@ namespace ufo {
         }
         
         template <typename ... Args>
-        constexpr decltype(auto) operator()(Args && ... args) const & noexcept(noexcept((*f_)(std::forward<Args>(args) ...))) {
-            return (*f_)(std::forward<Args>(args) ...);
+        constexpr decltype(auto) operator()(Args && ... args) const & noexcept(noexcept(std::invoke(*f_, std::forward<Args>(args) ...))) {
+            return std::invoke(*f_, std::forward<Args>(args) ...);
         }
         
         template <typename ... Args>
-        constexpr decltype(auto) operator()(Args && ... args) & noexcept(noexcept((*f_)(std::forward<Args>(args) ...))) {
-            return (*f_)(std::forward<Args>(args) ...);
+        constexpr decltype(auto) operator()(Args && ... args) & noexcept(noexcept(std::invoke(*f_, std::forward<Args>(args) ...))) {
+            return std::invoke(*f_, std::forward<Args>(args) ...);
         }
         
         template <typename ... Args>
-        constexpr decltype(auto) operator()(Args && ... args) && noexcept(noexcept(std::move(*f_)(std::forward<Args>(args) ...))) {
-            return std::move(*f_)(std::forward<Args>(args) ...);
+        constexpr decltype(auto) operator()(Args && ... args) && noexcept(noexcept(std::invoke(std::move(*f_), std::forward<Args>(args) ...))) {
+            return std::invoke(std::move(*f_), std::forward<Args>(args) ...);
         }
     };
     

@@ -97,4 +97,19 @@ namespace {
         auto r = std::vector<int> {2, 3, 4} | min_by(test::delete_function_copy(-_));
         ASSERT_EQ(4, *r);
     }
+    
+    TEST(MinByTest, MemberFunction) {
+        struct Foo {
+            int value_;
+            
+            Foo(int value) : value_(value) {
+            }
+            
+            int value() const {
+                return value_;
+            }
+        };
+        auto r = std::vector<Foo> {8, 4, 1} | min_by(&Foo::value);
+        ASSERT_EQ(1, r->value());
+    }
 }

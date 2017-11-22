@@ -1,6 +1,7 @@
 #ifndef ufo_sequence_take_while
 #define ufo_sequence_take_while
 
+#include <functional>
 #include "sequence_operator.hpp"
 #include "sequence_wrapper.hpp"
 
@@ -11,7 +12,7 @@ namespace ufo {
             return sequence_wrapper([f = std::move(f), finished = false](auto &sequence) constexpr mutable -> sequence_option_t<decltype(sequence)> {
                 if (finished) return nullopt;
                 if (auto value = sequence.next()) {
-                    if (f(*value)) return value;
+                    if (std::invoke(f, *value)) return value;
                 }
                 finished = true;
                 return nullopt;

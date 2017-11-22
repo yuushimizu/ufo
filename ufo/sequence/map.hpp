@@ -2,6 +2,7 @@
 #define ufo_sequence_map
 
 #include <tuple>
+#include <functional>
 #include "sequence_operator.hpp"
 #include "sequence_wrapper.hpp"
 #include "../option.hpp"
@@ -12,8 +13,8 @@ namespace ufo {
         return sequence_operator([](auto f, auto && ... sequences) constexpr {
             return sequence_wrapper([f = std::move(f)](auto & ... sequences) constexpr {
                 return ([&f](auto && ... results) constexpr {
-                    using result_option = decltype(make_option(f(*std::forward<decltype(results)>(results) ...)));
-                    if ((... && static_cast<bool>(results))) return make_option(f(*std::forward<decltype(results)>(results) ...));
+                    using result_option = decltype(make_option(std::invoke(f, *std::forward<decltype(results)>(results) ...)));
+                    if ((... && static_cast<bool>(results))) return make_option(std::invoke(f, *std::forward<decltype(results)>(results) ...));
                     return result_option {};
                 })(sequences.next() ...);
             }, std::forward<decltype(sequences)>(sequences) ...);

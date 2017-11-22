@@ -80,4 +80,19 @@ namespace {
         auto r = std::vector<int> {1, 2, 3} | reduce([](int &&a, int) -> decltype(auto) {return std::move(a);}, 100);
         ASSERT_EQ(100, r);
     }
+    
+    TEST(ReduceTest, MemberFunction) {
+        struct Acc {
+            int value;
+            
+            Acc(int value) : value(value) {
+            }
+            
+            Acc add(int amount) const {
+                return Acc(value + amount);
+            }
+        };
+        auto r = std::vector<int> {8, 2, 4} | reduce(&Acc::add, Acc(0));
+        ASSERT_EQ(14, r.value);
+    }
 }

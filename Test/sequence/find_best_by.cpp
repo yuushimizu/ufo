@@ -94,4 +94,19 @@ namespace {
         auto r = std::vector<int> {19, 28, 37} | find_best_by([](auto &&x) -> decltype(auto) {return std::move(x);}, [](auto &x, auto &y) {return x > y;});
         ASSERT_EQ(37, *r);
     }
+    
+    TEST(FindBestByTest, MemberFunction) {
+        struct Foo {
+            int value_;
+            
+            Foo(int value) : value_(value) {
+            }
+            
+            int value() const {
+                return value_;
+            }
+        };
+        auto r = std::vector<Foo> {4, 8 , 2} | find_best_by(&Foo::value, [](auto x, auto y) {return x > y;});
+        ASSERT_EQ(8, r->value());
+    }
 }

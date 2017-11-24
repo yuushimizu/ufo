@@ -33,15 +33,15 @@ namespace ufo {
         }
         
         constexpr auto range() noexcept {
-            return range(origin(), origin() + size());
+            return ufo::range(origin(), origin() + size());
         }
         
         constexpr auto x_range() noexcept {
-            return range(origin().x(), origin().x() + size().x());
+            return ufo::range(origin().x(), origin().x() + size().x());
         }
         
         constexpr auto y_range() noexcept {
-            return range(origin().y(), origin().y() + size().y());
+            return ufo::range(origin().y(), origin().y() + size().y());
         }
         
     private:

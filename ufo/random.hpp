@@ -68,7 +68,7 @@ namespace ufo {
     
     template <typename Engine>
     Coord<int> random_int_coord(Engine &engine, const Rect<int> &rect) {
-        return random_int_coord(engine, rect.origin(), rect.origin() + rect.size() - COORD_ONE<int>);
+        return random_int_coord(engine, rect.origin(), rect.origin() + rect.size() - Coord<int>::one());
     }
     
     template <typename Engine>

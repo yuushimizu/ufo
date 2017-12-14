@@ -257,17 +257,15 @@ namespace {
     TEST(OptionTest, UnwrapOrRef) {
         int x = 10;
         option<int &> o(x);
-        int y = 5;
-        decltype(auto) r = o.unwrap_or(y);
-        static_assert(std::is_same_v<int &, decltype(r)>);
-        ASSERT_EQ(&x, &r);
+        decltype(auto) r = o.unwrap_or(5);
+        static_assert(std::is_same_v<int, decltype(r)>);
+        ASSERT_EQ(x, r);
     }
     
     TEST(OptionTest, UnwrapOrRefNullopt) {
         option<int &> o {};
-        int y = 42;
-        int &r = o.unwrap_or(y);
-        ASSERT_EQ(&y, &r);
+        int r = o.unwrap_or(42);
+        ASSERT_EQ(42, r);
     }
     
     TEST(OptionTest, Deref) {

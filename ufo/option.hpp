@@ -15,8 +15,90 @@ namespace ufo {
     template <typename T>
     constexpr option<T> make_option(T &&value) noexcept;
     
+    template <typename Derived>
+    class option_trait {
+    protected:
+        constexpr option_trait() noexcept = default;
+        
+    private:
+        constexpr Derived *derived() {
+            return static_cast<Derived *>(this);
+        }
+        
+        constexpr const Derived *derived() const {
+            return static_cast<const Derived *>(this);
+        }
+        
+        template <typename Self, typename F>
+        static constexpr auto map_(Self &&self, F &&f) {
+            using result = decltype(make_option(std::invoke(std::forward<F>(f), *std::forward<Self>(self))));
+            if (!self) return result {};
+            return make_option(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));
+        }
+        
+        template <typename Self, typename F>
+        static constexpr auto and_then_(Self &&self, F &&f) {
+            using result = decltype(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));
+            if (!self) return result {};
+            return std::invoke(std::forward<F>(f), *std::forward<Self>(self));
+        }
+        
+        template <typename Self, typename U>
+        static constexpr auto unwrap_or_(Self &&self, U &&value) {
+            using result = std::decay_t<decltype(*std::forward<Self>(self))>;
+            if (!self) return static_cast<result>(std::forward<U>(value));
+            return *std::forward<Self>(self);
+        }
+        
+    public:
+        template <typename F>
+        constexpr auto map(F &&f) const & {
+            return map_(*derived(), std::forward<F>(f));
+        }
+        
+        template <typename F>
+        constexpr auto map(F &&f) & {
+            return map_(*derived(), std::forward<F>(f));
+        }
+        
+        template <typename F>
+        constexpr auto map(F &&f) && {
+            return map_(std::move(*derived()), std::forward<F>(f));
+        }
+        
+        template <typename F>
+        constexpr auto and_then(F &&f) const & {
+            return and_then_(*derived(), std::forward<F>(f));
+        }
+        
+        template <typename F>
+        constexpr auto and_then(F &&f) & {
+            return and_then_(*derived(), std::forward<F>(f));
+        }
+        
+        template <typename F>
+        constexpr auto and_then(F &&f) && {
+            return and_then_(std::move(*derived()), std::forward<F>(f));
+        }
+        
+        template <typename U>
+        constexpr auto unwrap_or(U &&value) const & {
+            return unwrap_or_(*derived(), std::forward<U>(value));
+        }
+        
+        template <typename U>
+        constexpr auto unwrap_or(U &&value) & {
+            return unwrap_or_(*derived(), std::forward<U>(value));
+        }
+        
+        template <typename U>
+        constexpr auto unwrap_or(U &&value) && {
+            return unwrap_or_(std::move(*derived()), std::forward<U>(value));
+        }
+    };
+    
     template <typename T>
-    class option {
+    class option : public option_trait<option<T>> {
         static_assert(std::is_nothrow_move_constructible_v<T>);
         
     private:
@@ -95,54 +177,6 @@ namespace ufo {
             return std::move(*optional_);
         }
         
-        template <typename F>
-        constexpr auto map(F &&f) const & -> decltype(make_option(std::invoke(std::forward<F>(f), *optional_))) {
-            if (!*this) return nullopt;
-            return make_option(std::invoke(std::forward<F>(f), *optional_));
-        }
-        
-        template <typename F>
-        constexpr auto map(F &&f) & -> decltype(make_option(std::invoke(std::forward<F>(f), *optional_))) {
-            if (!*this) return nullopt;
-            return make_option(std::invoke(std::forward<F>(f), *optional_));
-        }
-        
-        template <typename F>
-        constexpr auto map(F &&f) && -> decltype(make_option(std::invoke(std::forward<F>(f), std::move(*optional_)))) {
-            if (!*this) return nullopt;
-            return make_option(std::invoke(std::forward<F>(f), std::move(*optional_)));
-        }
-        
-        template <typename F>
-        constexpr auto and_then(F &&f) const & -> decltype(std::invoke(std::forward<F>(f), *optional_)) {
-            if (!*this) return nullopt;
-            return std::invoke(std::forward<F>(f), *optional_);
-        }
-        
-        template <typename F>
-        constexpr auto and_then(F &&f) & -> decltype(std::invoke(std::forward<F>(f), *optional_)) {
-            if (!*this) return nullopt;
-            return std::invoke(std::forward<F>(f), *optional_);
-        }
-        
-        template <typename F>
-        constexpr auto and_then(F &&f) && -> decltype(std::invoke(std::forward<F>(f), std::move(*optional_))) {
-            if (!*this) return nullopt;
-            return std::invoke(std::forward<F>(f), std::move(*optional_));
-        }
-        
-        template <typename U>
-        constexpr T unwrap_or(U &&value) const & {
-            if (!*this) return std::forward<U>(value);
-            return **this;
-        }
-        
-        template <typename U>
-        constexpr T unwrap_or(U &&value) && {
-            if (!*this) return std::forward<U>(value);
-            return *std::move(*this);
-        }
-        
         template <typename LHS, typename RHS>
         friend constexpr bool operator==(const option<LHS> &, const option<RHS> &) noexcept;
         
@@ -174,7 +208,7 @@ namespace ufo {
     }
     
     template <typename T>
-    class option<T &> {
+    class option<T &> : public option_trait<option<T &>> {
     private:
         T *pointer_;
         
@@ -239,24 +273,6 @@ namespace ufo {
         
         constexpr T &operator*() const noexcept {
             return *pointer_;
-        }
-        
-        template <typename F>
-        constexpr auto map(F &&f) const & -> decltype(make_option(std::invoke(std::forward<F>(f), *pointer_))) {
-            if (!*this) return nullopt;
-            return make_option(std::invoke(std::forward<F>(f), *pointer_));
-        }
-        
-        template <typename F>
-        constexpr auto and_then(F &&f) const & -> decltype(std::invoke(std::forward<F>(f), *pointer_)) {
-            if (!*this) return nullopt;
-            return std::invoke(std::forward<F>(f), *pointer_);
-        }
-        
-        template <typename U>
-        constexpr T &unwrap_or(U &value) const & {
-            if (!*this) return value;
-            return **this;
         }
         
         constexpr auto deref() const noexcept {

@@ -1,6 +1,7 @@
 #ifndef ufo_container
 #define ufo_container
 
+#include <algorithm>
 #include "iterator.hpp"
 #include "option.hpp"
 
@@ -23,6 +24,11 @@ namespace ufo {
     template <typename Container, typename F>
     void sort(Container &container, F &&compare) {
         std::sort(adl_begin(container), adl_end(container), std::forward<F>(compare));
+    }
+    
+    template <typename Container, typename F>
+    void stable_sort(Container &container, F &&compare) {
+        std::stable_sort(adl_begin(container), adl_end(container), std::forward<F>(compare));
     }
     
     template <typename Map, typename Key>

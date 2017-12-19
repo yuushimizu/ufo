@@ -39,6 +39,12 @@ namespace {
         ASSERT_EQ((std::vector<int> {8, 5, 4, 3, 2, 1, 0}), v);
     }
     
+    TEST(ContainerTest, StableSort) {
+        std::vector<int> v {-1, 4, -3, 2, 1, -4, 5, -5, 3, -2};
+        stable_sort(v, [](auto n, auto m) {return std::abs(n) < std::abs(m);});
+        ASSERT_EQ((std::vector<int> {-1, 1, 2, -2, -3, 3, 4, -4, 5, -5}), v);
+    }
+    
     TEST(ContainerTest, Get) {
         std::map<int, std::string> m {{2, "two"}, {4, "four"}, {5, "five"}};
         auto r = get(m, 4);

@@ -14,7 +14,7 @@
 		CA33AF491FC578DB00BAB51F /* doall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA33AF481FC578DB00BAB51F /* doall.cpp */; };
 		CA3ED3431F5FE43500DA2EF1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3ED3421F5FE43500DA2EF1 /* main.cpp */; };
 		CA5AEDD61F5FF1220095F382 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5AEDC91F5FF1050095F382 /* gtest.framework */; };
-		CA5AEDD81F5FF74C0095F382 /* Coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDD71F5FF74C0095F382 /* Coord.cpp */; };
+		CA5AEDD81F5FF74C0095F382 /* coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDD71F5FF74C0095F382 /* coord.cpp */; };
 		CA5AEDDC1F5FFB5D0095F382 /* Vector2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */; };
 		CA5AEDDE1F5FFB860095F382 /* math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDD1F5FFB860095F382 /* math.cpp */; };
 		CA5AEDE01F5FFBBF0095F382 /* memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */; };
@@ -130,7 +130,7 @@
 		CA3ED3401F5FE43500DA2EF1 /* Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Test; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3ED3421F5FE43500DA2EF1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CA5AEDBC1F5FF1050095F382 /* gtest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtest.xcodeproj; path = extsrc/googletest/googletest/xcode/gtest.xcodeproj; sourceTree = "<group>"; };
-		CA5AEDD71F5FF74C0095F382 /* Coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coord.cpp; sourceTree = "<group>"; };
+		CA5AEDD71F5FF74C0095F382 /* coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coord.cpp; sourceTree = "<group>"; };
 		CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector2D.cpp; sourceTree = "<group>"; };
 		CA5AEDDD1F5FFB860095F382 /* math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = math.cpp; sourceTree = "<group>"; };
 		CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory.cpp; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		CAF018CB1F7F4E9E00E301CE /* hash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hash.hpp; sourceTree = "<group>"; };
 		CAF018CC1F7F4E9E00E301CE /* placeholder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = placeholder.hpp; sourceTree = "<group>"; };
 		CAF018CD1F7F4E9E00E301CE /* scope_exit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = scope_exit.hpp; sourceTree = "<group>"; };
-		CAF018CE1F7F4E9E00E301CE /* Coord.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Coord.hpp; sourceTree = "<group>"; };
+		CAF018CE1F7F4E9E00E301CE /* coord.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = coord.hpp; sourceTree = "<group>"; };
 		CAF018CF1F7F4E9E00E301CE /* string.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string.hpp; sourceTree = "<group>"; };
 		CAF018D01F7F4E9E00E301CE /* option.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = option.hpp; sourceTree = "<group>"; };
 		CAF018D11F7F4E9E00E301CE /* memory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = memory.hpp; sourceTree = "<group>"; };
@@ -241,7 +241,7 @@
 			children = (
 				CAF019051F7F555800E301CE /* sequence */,
 				CA3ED3421F5FE43500DA2EF1 /* main.cpp */,
-				CA5AEDD71F5FF74C0095F382 /* Coord.cpp */,
+				CA5AEDD71F5FF74C0095F382 /* coord.cpp */,
 				CA5AEDDB1F5FFB5D0095F382 /* Vector2D.cpp */,
 				CA5AEDDD1F5FFB860095F382 /* math.cpp */,
 				CA5AEDDF1F5FFBBF0095F382 /* memory.cpp */,
@@ -292,7 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				CAF019031F7F4EFE00E301CE /* sequence */,
-				CAF018CE1F7F4E9E00E301CE /* Coord.hpp */,
+				CAF018CE1F7F4E9E00E301CE /* coord.hpp */,
 				CAF018C41F7F4E9D00E301CE /* coroutine.hpp */,
 				CAF018CB1F7F4E9E00E301CE /* hash.hpp */,
 				CAF018C51F7F4E9D00E301CE /* iterator.hpp */,
@@ -565,7 +565,7 @@
 				CA6195C81FBAD23E00AC0888 /* remove_nullopt.cpp in Sources */,
 				CA7306B91F84F2CE00C4BBAD /* map.cpp in Sources */,
 				CA7306F31F8EE57400C4BBAD /* reduce.cpp in Sources */,
-				CA5AEDD81F5FF74C0095F382 /* Coord.cpp in Sources */,
+				CA5AEDD81F5FF74C0095F382 /* coord.cpp in Sources */,
 				CA7306A81F84ECF000C4BBAD /* counting.cpp in Sources */,
 				CA7306A91F84ECF300C4BBAD /* filter.cpp in Sources */,
 				CA6195BA1FBAC5AE00AC0888 /* min_by.cpp in Sources */,
@@ -695,6 +695,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -743,6 +744,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};

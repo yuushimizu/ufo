@@ -2,7 +2,7 @@
 #define ufo_Vector2D
 
 #include <vector>
-#include "Coord.hpp"
+#include "coord.hpp"
 #include "iterator.hpp"
 #include "sequence/range.hpp"
 #include "sequence/container_wrapper.hpp"
@@ -13,7 +13,7 @@ namespace ufo {
         template <typename Indices, typename Values>
         constexpr auto pairs(Indices &&indices, Values &&values) {
             return map([](auto &&index, auto &&value) {
-                return std::tuple<Coord<int>, sequence_element_t<Values>>(std::forward<decltype(index)>(index), std::forward<decltype(value)>(value));
+                return std::tuple<coord<int>, sequence_element_t<Values>>(std::forward<decltype(index)>(index), std::forward<decltype(value)>(value));
             }, std::forward<Indices>(indices), std::forward<Values>(values));
         }
     }
@@ -21,10 +21,10 @@ namespace ufo {
     template <typename T>
     class Vector2D final {
     public:
-        constexpr explicit Vector2D(Coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
+        constexpr explicit Vector2D(coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
         }
         
-        constexpr explicit Vector2D(Coord<int> size) : size_(std::move(size)), values_(size_.area()) {
+        constexpr explicit Vector2D(coord<int> size) : size_(std::move(size)), values_(size_.area()) {
         }
         
         constexpr explicit Vector2D() : size_ {}, values_ {} {
@@ -34,15 +34,15 @@ namespace ufo {
             return size_;
         }
         
-        constexpr const T &operator[](const Coord<int> &index) const& {
+        constexpr const T &operator[](const coord<int> &index) const& {
             return values_[index.y() * size_.x() + index.x()];
         }
         
-        constexpr T &operator[](const Coord<int> &index) & {
+        constexpr T &operator[](const coord<int> &index) & {
             return values_[index.y() * size_.x() + index.x()];
         }
         
-        constexpr T operator[](const Coord<int> &index) && {
+        constexpr T operator[](const coord<int> &index) && {
             return std::move(values_[index.y() * size_.x() + index.x()]);
         }
         
@@ -94,7 +94,7 @@ namespace ufo {
         friend constexpr bool operator==(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs);
         
     private:
-        Coord<int> size_;
+        coord<int> size_;
         std::vector<T> values_;
     };
     

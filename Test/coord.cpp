@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/Coord.hpp"
+#include "ufo/coord.hpp"
 #include <type_traits>
 #include <functional>
 #include <sstream>
@@ -9,41 +9,41 @@ using namespace ufo;
 
 namespace {
     TEST(CoordTest, DefaultConstructor) {
-        Coord<int> c {};
+        auto c = coord<int> {};
         ASSERT_EQ(0, c.x());
         ASSERT_EQ(0, c.y());
     }
     
     TEST(CoodTest, XYConstructor) {
-        Coord<int> c(12, 43);
+        auto c = coord(12, 43);
         ASSERT_EQ(12, c.x());
         ASSERT_EQ(43, c.y());
     }
     
     TEST(CoordTest, CopyConstructor) {
-        Coord<int> c1(5, 8);
-        Coord<int> c2(c1);
+        auto c1 = coord(5, 8);
+        auto c2 = coord(c1);
         ASSERT_EQ(5, c2.x());
         ASSERT_EQ(8, c2.y());
     }
     
     TEST(CoordTest, MoveConstructor) {
-        Coord<int> c(Coord<int>(90, 88));
+        auto c = coord(coord(90, 88));
         ASSERT_EQ(90, c.x());
         ASSERT_EQ(88, c.y());
     }
     
     TEST(CoordTest, CopyAssign) {
-        Coord<int> c1(77, 88);
-        Coord<int> c2 {};
+        auto c1 = coord(77, 88);
+        auto c2 = coord<int> {};
         c2 = c1;
         ASSERT_EQ(77, c2.x());
         ASSERT_EQ(88, c2.y());
     }
     
     TEST(CoordTest, MoveAssign) {
-        Coord<int> c {};
-        c = Coord<int>(42, 24);
+        auto c = coord<int> {};
+        c = coord(42, 24);
         ASSERT_EQ(42, c.x());
         ASSERT_EQ(24, c.y());
     }
@@ -100,7 +100,7 @@ namespace {
         auto c = coord(3.4, 5.6);
         ASSERT_DOUBLE_EQ(3.4, c.x());
         ASSERT_DOUBLE_EQ(5.6, c.y());
-        ASSERT_TRUE((std::is_same_v<Coord<double>, decltype(c)>));
+        ASSERT_TRUE((std::is_same_v<coord<double>, decltype(c)>));
     }
     
     TEST(CoordTest, TransformCoord) {
@@ -177,7 +177,7 @@ namespace {
     
     TEST(CoordTest, Range) {
         auto r = range(coord(3, 4), coord(8, 7));
-        static_assert(std::is_same_v<option<Coord<int>>, decltype(r.next())>);
+        static_assert(std::is_same_v<option<coord<int>>, decltype(r.next())>);
         ASSERT_EQ(coord(3, 4), *r.next());
         ASSERT_EQ(coord(4, 4), *r.next());
         ASSERT_EQ(coord(5, 4), *r.next());
@@ -198,7 +198,7 @@ namespace {
     
     TEST(CoordTest, RangeWithoutBegin) {
         auto r = range(coord(2, 3));
-        static_assert(std::is_same_v<option<Coord<int>>, decltype(r.next())>);
+        static_assert(std::is_same_v<option<coord<int>>, decltype(r.next())>);
         ASSERT_EQ(coord(0, 0), *r.next());
         ASSERT_EQ(coord(1, 0), *r.next());
         ASSERT_EQ(coord(0, 1), *r.next());
@@ -209,16 +209,16 @@ namespace {
     }
     
     TEST(CoordTest, Zero) {
-        ASSERT_EQ(coord(0, 0), Coord<int>::zero());
+        ASSERT_EQ(coord(0, 0), coord<int>::zero());
     }
     
     TEST(CoordTest, One) {
-        ASSERT_EQ(coord(1, 1), Coord<int>::one());
+        ASSERT_EQ(coord(1, 1), coord<int>::one());
     }
     
     TEST(CoordTest, Output) {
-        std::stringstream ss {};
-        ss << Coord<int>(1, 2);
+        auto ss = std::stringstream {};
+        ss << coord<int>(1, 2);
         ASSERT_EQ("(1, 2)", ss.str());
     }
 }

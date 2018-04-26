@@ -2,24 +2,24 @@
 #define ufo_Rect
 
 #include <iostream>
-#include "Coord.hpp"
+#include "coord.hpp"
 #include "sequence/range.hpp"
 
 namespace ufo {
     template <typename T>
     class Rect final {
     public:
-        constexpr Rect(Coord<T> origin, Coord<T> size) noexcept : origin_(std::move(origin)), size_(std::move(size)) {
+        constexpr Rect(coord<T> origin, coord<T> size) noexcept : origin_(std::move(origin)), size_(std::move(size)) {
         }
         
         constexpr explicit Rect() noexcept : origin_ {}, size_ {} {
         }
         
-        Coord<T> origin() const {
+        coord<T> origin() const {
             return origin_;
         }
         
-        Coord<T> size() const {
+        coord<T> size() const {
             return size_;
         }
         
@@ -28,7 +28,7 @@ namespace ufo {
         }
         
         template <typename CoordT>
-        constexpr bool contains(const Coord<CoordT> &coord) noexcept {
+        constexpr bool contains(const coord<CoordT> &coord) noexcept {
             return coord.x() >= origin().x() && coord.y() >= origin().y() && coord.x() < opposite_origin().x() && coord.y() < opposite_origin().y();
         }
         
@@ -45,8 +45,8 @@ namespace ufo {
         }
         
     private:
-        Coord<T> origin_;
-        Coord<T> size_;
+        coord<T> origin_;
+        coord<T> size_;
     };
     
     template <typename LHS, typename RHS>

@@ -3,7 +3,7 @@
 
 #include <utility>
 #include <random>
-#include "Coord.hpp"
+#include "coord.hpp"
 #include "Rect.hpp"
 
 namespace ufo {
@@ -43,36 +43,36 @@ namespace ufo {
     }
     
     template <typename Engine>
-    Coord<int> random_int_coord(Engine &engine, const Coord<int> &min, const Coord<int> &max) {
+    coord<int> random_int_coord(Engine &engine, const coord<int> &min, const coord<int> &max) {
         return transform_coord([&engine](int min, int max) {
             return random_int(engine, min, max);
         }, min, max);
     }
     
     template <typename Engine>
-    Coord<int> random_int_coord(Engine &engine, const Coord<int> &max) {
-        return random_int_coord(engine, Coord<int> {}, max);
+    coord<int> random_int_coord(Engine &engine, const coord<int> &max) {
+        return random_int_coord(engine, coord<int> {}, max);
     }
     
     template <typename Engine>
-    Coord<double> random_double_coord(Engine &engine, const Coord<double> &min, const Coord<double> &max) {
+    coord<double> random_double_coord(Engine &engine, const coord<double> &min, const coord<double> &max) {
         return transform_coord([&engine](double min, double max) {
             return random_real(engine, min, max);
         }, min, max);
     }
     
     template <typename Engine>
-    Coord<double> random_double_coord(Engine &engine, const Coord<double> &max) {
-        return random_double_coord(engine, Coord<double> {}, max);
+    coord<double> random_double_coord(Engine &engine, const coord<double> &max) {
+        return random_double_coord(engine, coord<double> {}, max);
     }
     
     template <typename Engine>
-    Coord<int> random_int_coord(Engine &engine, const Rect<int> &rect) {
-        return random_int_coord(engine, rect.origin(), rect.origin() + rect.size() - Coord<int>::one());
+    coord<int> random_int_coord(Engine &engine, const Rect<int> &rect) {
+        return random_int_coord(engine, rect.origin(), rect.origin() + rect.size() - coord<int>::one());
     }
     
     template <typename Engine>
-    Coord<double> random_double_coord(Engine &engine, const Rect<double> &rect) {
+    coord<double> random_double_coord(Engine &engine, const Rect<double> &rect) {
         return random_double_coord(engine, rect.origin(), rect.origin() + rect.size());
     }
 }

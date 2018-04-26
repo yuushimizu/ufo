@@ -1,5 +1,5 @@
-#ifndef ufo_Coord
-#define ufo_Coord
+#ifndef ufo_coord
+#define ufo_coord
 
 #include <cmath>
 #include <functional>

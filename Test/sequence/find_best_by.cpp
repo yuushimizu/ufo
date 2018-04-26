@@ -10,7 +10,7 @@ using namespace ufo;
 
 namespace {
     TEST(FindBestByTest, LValue) {
-        std::vector<int> v {13, 48, 91, 26, 59, 33};
+        auto v = std::vector<int> {13, 48, 91, 26, 59, 33};
         auto cw = container_wrapper(v);
         decltype(auto) r = cw | find_best_by(_ % 10, [](int n, int m) {return n > m;});
         static_assert(std::is_same_v<option<int &>, decltype(r)>);
@@ -67,7 +67,7 @@ namespace {
                 return *this;
             }
         };
-        std::vector<Uncopyable> values {};
+        auto values = std::vector<Uncopyable> {};
         values.emplace_back(20);
         values.emplace_back(40);
         values.emplace_back(30);

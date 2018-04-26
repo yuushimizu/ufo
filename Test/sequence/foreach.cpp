@@ -9,8 +9,8 @@ using namespace ufo;
 
 namespace {
     TEST(ForeachTest, LValue) {
-        std::vector<int> v {10, 20, 30};
-        std::vector<std::reference_wrapper<int>> r {};
+        auto v = std::vector<int> {10, 20, 30};
+        auto r = std::vector<std::reference_wrapper<int>> {};
         v | foreach([&r](int &n) {
             r.push_back(n);
         });
@@ -21,7 +21,7 @@ namespace {
     }
     
     TEST(ForeachTest, RValue) {
-        std::vector<int> r {};
+        auto r = std::vector<int> {};
         std::vector<int> {10, 20, 30} | foreach([&r](int n) {
             r.push_back(n);
         });
@@ -29,7 +29,7 @@ namespace {
     }
     
     TEST(ForeachTest, Twice) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         std::vector<int> r {};
         v | foreach([&r](int n) {
             r.push_back(n);
@@ -41,7 +41,7 @@ namespace {
     }
     
     TEST(ForeachTest, SequenceNotCopied) {
-        std::vector<int> r {};
+        auto r = std::vector<int> {};
         std::vector<int> {10, 20, 30} | test::delete_copy | foreach([&r](int n) {
             r.push_back(n);
         });
@@ -49,7 +49,7 @@ namespace {
     }
     
     TEST(ForeachTest, FunctionNotCopied) {
-        std::vector<int> r {};
+        auto r = std::vector<int> {};
         std::vector<int> {10, 20, 30} | foreach(test::delete_function_copy([&r](auto n) {
             r.push_back(n);
         }));
@@ -67,7 +67,7 @@ namespace {
                 value *= 2;
             }
         };
-        std::vector<Foo> v {1, 3, 5};
+        auto v = std::vector<Foo> {1, 3, 5};
         v | foreach(&Foo::do_doubling);
         ASSERT_EQ(2, v[0].value);
         ASSERT_EQ(6, v[1].value);

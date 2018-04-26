@@ -21,7 +21,7 @@ namespace {
     
     TEST(OwnerBeforeCompareTest, Set) {
         auto shared = std::make_shared<int>(10);
-        std::set<std::shared_ptr<int>, owner_before_compare> s {};
+        auto s = std::set<std::shared_ptr<int>, owner_before_compare> {};
         s.insert(shared);
         ASSERT_EQ(1, s.count(shared));
     }

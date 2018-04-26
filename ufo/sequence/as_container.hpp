@@ -20,7 +20,7 @@ namespace ufo {
         
         template <typename Container>
         operator Container() && {
-            Container result {};
+            auto result = Container {};
             std::forward<Sequence>(sequence_) | foreach([&result](auto &&v) {
                 result.push_back(std::forward<decltype(v)>(v));
             });

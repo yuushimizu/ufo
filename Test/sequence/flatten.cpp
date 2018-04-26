@@ -9,7 +9,7 @@ using namespace ufo;
 
 namespace {
     TEST(FlattenTest, FromLValue) {
-        std::vector<std::vector<int>> v {{10, 20}, {30, 40, 50}, {60}};
+        auto v = std::vector<std::vector<int>> {{10, 20}, {30, 40, 50}, {60}};
         auto cw = container_wrapper(v);
         auto r = cw | flatten();
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);

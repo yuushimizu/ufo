@@ -5,7 +5,7 @@ using namespace ufo;
 
 namespace {
     TEST(HolderTest, Value) {
-        holder<int> h = 123;
+        auto h = holder<int>(123);
         static_assert(std::is_same_v<int &, decltype(h.get())>);
         static_assert(std::is_same_v<const int &, decltype(std::as_const(h).get())>);
         static_assert(std::is_same_v<int, decltype(std::move(h).get())>);
@@ -14,7 +14,7 @@ namespace {
     
     TEST(HolderTest, LValueReference) {
         int n = 100;
-        holder<int &> h(n);
+        auto h = holder<int &>(n);
         static_assert(std::is_same_v<int &, decltype(h.get())>);
         static_assert(std::is_same_v<int &, decltype(std::as_const(h).get())>);
         static_assert(std::is_same_v<int &, decltype(std::move(h).get())>);
@@ -23,7 +23,7 @@ namespace {
     
     TEST(HolderTest, ConstLValueReference) {
         const int n = 42;
-        holder<const int &> h(n);
+        auto h = holder<const int &>(n);
         static_assert(std::is_same_v<const int &, decltype(h.get())>);
         static_assert(std::is_same_v<const int &, decltype(std::as_const(h).get())>);
         static_assert(std::is_same_v<const int &, decltype(std::move(h).get())>);
@@ -31,7 +31,7 @@ namespace {
     }
     
     TEST(HolderTest, RValueReference) {
-        holder<int &&> h(50);
+        auto h = holder<int &&>(50);
         static_assert(std::is_same_v<int &, decltype(h.get())>);
         static_assert(std::is_same_v<const int &, decltype(std::as_const(h).get())>);
         static_assert(std::is_same_v<int, decltype(std::move(h).get())>);

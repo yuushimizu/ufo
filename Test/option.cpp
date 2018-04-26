@@ -7,7 +7,7 @@ using namespace ufo;
 namespace {
     TEST(OptionTest, Value) {
         int x = 12;
-        option<int> o(x);
+        auto o = option<int>(x);
         static_assert(std::is_same_v<int &, decltype(*o)>);
         ASSERT_TRUE(o);
         ASSERT_NE(&x, &*o);
@@ -18,7 +18,7 @@ namespace {
     
     TEST(OptionTest, Ref) {
         int x = 10;
-        option<int &> o(x);
+        auto o = option<int &>(x);
         static_assert(std::is_same_v<int &, decltype(*o)>);
         ASSERT_TRUE(o);
         ASSERT_EQ(&x, &*o);
@@ -26,13 +26,13 @@ namespace {
     
     TEST(OptionTest, ConstRef) {
         const int x = 10;
-        option<const int &> o(x);
+        auto o = option<const int &>(x);
         static_assert(std::is_same_v<const int &, decltype(*o)>);
         ASSERT_EQ(&x, &*o);
     }
     
     TEST(OptionTest, ValueMapLValue) {
-        option<int> o(10);
+        auto o = option<int>(10);
         decltype(auto) r = o.map([](int &n) {return n * 2.2;});
         static_assert(std::is_same_v<option<double>, decltype(r)>);
         ASSERT_EQ(10, *o);
@@ -40,12 +40,12 @@ namespace {
     }
     
     TEST(OptionTest, ValueMapLValueNullopt) {
-        option<int> o {};
+        auto o = option<int> {};
         ASSERT_EQ(nullopt, o.map([](int &n) {return n * 2;}));
     }
     
     TEST(OptionTest, ValueMapConstLValue) {
-        const option<int> o(5);
+        const auto o = option<int>(5);
         decltype(auto) r = o.map([](const int &n) {return n * 2;});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(5, *o);
@@ -53,7 +53,7 @@ namespace {
     }
     
     TEST(OptionTest, ValueMapConstLValueNullopt) {
-        const option<int> o {};
+        const auto o = option<int> {};
         ASSERT_EQ(nullopt, o.map([](const int &n) {return n * 2;}));
     }
     
@@ -69,7 +69,7 @@ namespace {
     
     TEST(OptionTest, RefMapLValue) {
         int x = 10;
-        option<int &> o(x);
+        auto o = option<int &>(x);
         decltype(auto) r = o.map([](int &n) {return n * 2;});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(10, *o);
@@ -77,13 +77,13 @@ namespace {
     }
     
     TEST(OptionTest, RefMapLValueNullopt) {
-        option<int &> o {};
+        auto o = option<int &> {};
         ASSERT_EQ(nullopt, o.map([](int &n) {return n * 2;}));
     }
     
     TEST(OptionTest, RefMapConstLValue) {
         int x = 5;
-        const option<int &> o(x);
+        const auto o = option<int &>(x);
         decltype(auto) r = o.map([](int &n) {return n * 2;});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(5, *o);
@@ -91,7 +91,7 @@ namespace {
     }
     
     TEST(OptionTest, RefMapConstLValueNullopt) {
-        const option<int &> o {};
+        const auto o = option<int &> {};
         ASSERT_EQ(nullopt, o.map([](int &n) {return n * 2;}));
     }
     
@@ -107,7 +107,7 @@ namespace {
     }
     
     TEST(OptionTest, MapReturnRef) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         decltype(auto) r = option<int>(0).map([&v](int i) -> decltype(auto) {return v[i];});
         static_assert(std::is_same_v<option<int &>, decltype(r)>);
         ASSERT_EQ(&v[0], &*r);
@@ -128,13 +128,13 @@ namespace {
                 return 123;
             }
         };
-        Foo foo {};
+        auto foo = Foo {};
         decltype(auto) r = option<Foo &>(foo).map(&Foo::value);
         ASSERT_EQ(123, *r);
     }
     
     TEST(OptionTest, ValueAndThenLValue) {
-        option<int> o(10);
+        auto o = option<int>(10);
         decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2.2);});
         static_assert(std::is_same_v<option<double>, decltype(r)>);
         ASSERT_EQ(10, *o);
@@ -142,12 +142,12 @@ namespace {
     }
      
     TEST(OptionTest, ValueAndThenLValueNullopt) {
-        option<int> o {};
+        auto o = option<int> {};
         ASSERT_EQ(nullopt, o.and_then([](int &n) {return make_option(n * 2);}));
     }
     
     TEST(OptionTest, ValueAndThenConstLValue) {
-        const option<int> o(5);
+        const auto o = option<int>(5);
         decltype(auto) r = o.and_then([](const int &n) {return make_option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(5, *o);
@@ -155,7 +155,7 @@ namespace {
     }
      
     TEST(OptionTest, ValueAndThenConstLValueNullopt) {
-        const option<int> o {};
+        const auto o = option<int> {};
         ASSERT_EQ(nullopt, o.and_then([](const int &n) {return make_option(n * 2);}));
     }
 
@@ -171,7 +171,7 @@ namespace {
     
     TEST(OptionTest, RefAndThenLValue) {
         int x = 10;
-        option<int &> o(x);
+        auto o = option<int &>(x);
         decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(10, *o);
@@ -179,13 +179,13 @@ namespace {
     }
     
     TEST(OptionTest, RefAndThenLValueNullopt) {
-        option<int &> o {};
+        auto o = option<int &> {};
         ASSERT_EQ(nullopt, o.and_then([](int &n) {return make_option(n * 2);}));
     }
 
     TEST(OptionTest, RefAndThenConstLValue) {
         int x = 5;
-        const option<int &> o(x);
+        const auto o = option<int &>(x);
         decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(5, *o);
@@ -193,7 +193,7 @@ namespace {
     }
     
     TEST(OptionTest, RefAndThenConstLValueNullopt) {
-        const option<int &> o {};
+        const auto o = option<int &> {};
         ASSERT_EQ(nullopt, o.map([](int &n) {return make_option(n * 2);}));
     }
     
@@ -224,20 +224,20 @@ namespace {
                 return make_option(123);
             }
         };
-        Foo foo {};
+        auto foo = Foo {};
         decltype(auto) r = option<Foo &>(foo).and_then(&Foo::value);
         ASSERT_EQ(123, *r);
     }
     
     TEST(OptionTest, UnwrapOrLValue) {
-        option<int> o(123);
+        auto o = option<int>(123);
         decltype(auto) r = o.unwrap_or(10);
         static_assert(std::is_same_v<int, decltype(r)>);
         ASSERT_EQ(123, r);
     }
     
     TEST(OptionTest, UnwrapOrLValueNullopt) {
-        option<int> o {};
+        auto o = option<int> {};
         decltype(auto) r = o.unwrap_or(10);
         ASSERT_EQ(10, r);
     }
@@ -256,21 +256,21 @@ namespace {
     
     TEST(OptionTest, UnwrapOrRef) {
         int x = 10;
-        option<int &> o(x);
+        auto o = option<int &>(x);
         decltype(auto) r = o.unwrap_or(5);
         static_assert(std::is_same_v<int, decltype(r)>);
         ASSERT_EQ(x, r);
     }
     
     TEST(OptionTest, UnwrapOrRefNullopt) {
-        option<int &> o {};
+        auto o = option<int &> {};
         int r = o.unwrap_or(42);
         ASSERT_EQ(42, r);
     }
     
     TEST(OptionTest, Deref) {
         int x = 123;
-        option<int &> o(x);
+        auto o = option<int &>(x);
         decltype(auto) r = o.deref();
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(123, *r);
@@ -278,13 +278,13 @@ namespace {
     }
     
     TEST(OptionTest, DerefNullopt) {
-        option<int &> o {};
+        auto o = option<int &> {};
         ASSERT_EQ(nullopt, o.deref());
     }
     
     TEST(OptionTest, DerefConst) {
         const int x = 42;
-        option<const int &> o(x);
+        auto o = option<const int &>(x);
         decltype(auto) r = o.deref();
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(42, *r);
@@ -292,18 +292,18 @@ namespace {
     }
     
     TEST(OptionTest, OptionOfOptionFalse) {
-        option<option<int>> o {};
+        auto o = option<option<int>> {};
         ASSERT_FALSE(o);
     }
     
     TEST(OptionTest, OptionOfOptionTrueFalse) {
-        option<option<int>> o(option<int> {});
+        auto o = option<option<int>>(option<int> {});
         ASSERT_TRUE(o);
         ASSERT_FALSE(*o);
     }
     
     TEST(OptionTest, OptionOfOptionTrueTrue) {
-        option<option<int>> o(5);
+        auto o = option<option<int>>(5);
         ASSERT_TRUE(o);
         ASSERT_TRUE(*o);
         ASSERT_EQ(5, **o);

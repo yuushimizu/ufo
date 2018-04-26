@@ -8,7 +8,7 @@ using namespace ufo;
 
 namespace {
     TEST(ContainerWrapperTest, ConstLValue) {
-        const std::vector<int> v {10, 20, 30};
+        const auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(v);
         static_assert(std::is_same_v<ContainerWrapper<const std::vector<int> &>, decltype(cw)>);
         static_assert(std::is_same_v<option<const int &>, decltype(cw.next())>);
@@ -19,7 +19,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, LValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(v);
         static_assert(std::is_same_v<ContainerWrapper<std::vector<int> &>, decltype(cw)>);
         static_assert(std::is_same_v<option<int &>, decltype(cw.next())>);
@@ -40,13 +40,13 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, EmptyConstLValue) {
-        const std::vector<int> v {};
+        const auto v = std::vector<int> {};
         auto cw = container_wrapper(v);
         ASSERT_FALSE(cw.next());
     }
     
     TEST(ContainerWrapperTest, EmptyLValue) {
-        std::vector<int> v {};
+        auto v = std::vector<int> {};
         auto cw = container_wrapper(v);
         ASSERT_FALSE(cw.next());
     }
@@ -57,7 +57,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, CopyConstLValue) {
-        const std::vector<int> v {10, 20, 30};
+        const auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = cw1;
         ASSERT_EQ(&v[0], &*cw1.next());
@@ -68,7 +68,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, CopyLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = cw1;
         ASSERT_EQ(&v[0], &*cw1.next());
@@ -89,7 +89,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveConstLValue) {
-        const std::vector<int> v {10, 20, 30};
+        const auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = std::move(cw1);
         ASSERT_EQ(&v[0], &*cw2.next());
@@ -99,7 +99,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
         auto cw2 = std::move(cw1);
         ASSERT_EQ(&v[0], &*cw2.next());
@@ -118,9 +118,9 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, CopyAssignConstLValue) {
-        const std::vector<int> v {10, 20, 30};
+        const auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
-        const std::vector<int> v2 {1, 2, 3};
+        const auto v2 = std::vector<int> {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = cw1;
         ASSERT_EQ(&v[0], &*cw1.next());
@@ -131,9 +131,9 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, CopyAssignLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
-        std::vector<int> v2 {1, 2, 3};
+        auto v2 = std::vector<int> {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = cw1;
         ASSERT_EQ(&v[0], &*cw1.next());
@@ -155,9 +155,9 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveAssignConstLValue) {
-        const std::vector<int> v {10, 20, 30};
+        const auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
-        const std::vector<int> v2 {1, 2, 3};
+        const auto v2 = std::vector<int> {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = std::move(cw1);
         ASSERT_EQ(&v[0], &*cw2.next());
@@ -167,9 +167,9 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveAssignLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw1 = container_wrapper(v);
-        std::vector<int> v2 {1, 2, 3};
+        auto v2 = std::vector<int> {1, 2, 3};
         auto cw2 = container_wrapper(v2);
         cw2 = std::move(cw1);
         ASSERT_EQ(&v[0], &*cw2.next());
@@ -189,7 +189,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveArrayConstLValue) {
-        const std::array<int, 3> a {10, 20, 30};
+        const auto a = std::array<int, 3> {10, 20, 30};
         auto cw1 = container_wrapper(a);
         auto cw2 = std::move(cw1);
         ASSERT_EQ(&a[0], &*cw2.next());
@@ -199,7 +199,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveArrayLValue) {
-        std::array<int, 3> a {10, 20, 30};
+        auto a = std::array<int, 3> {10, 20, 30};
         auto cw1 = container_wrapper(a);
         auto cw2 = std::move(cw1);
         ASSERT_EQ(&a[0], &*cw2.next());
@@ -218,9 +218,9 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveArrayAssignConstLValue) {
-        const std::array<int, 3> a {10, 20, 30};
+        const auto a = std::array<int, 3> {10, 20, 30};
         auto cw1 = container_wrapper(a);
-        const std::array<int, 3> a2 {1, 2, 3};
+        const auto a2 = std::array<int, 3> {1, 2, 3};
         auto cw2 = container_wrapper(a2);
         cw2 = std::move(cw1);
         ASSERT_EQ(&a[0], &*cw2.next());
@@ -230,9 +230,9 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, MoveAssignArrayLValue) {
-        std::array<int, 3> a {10, 20, 30};
+        auto a = std::array<int, 3> {10, 20, 30};
         auto cw1 = container_wrapper(a);
-        std::array<int, 3> a2 {1, 2, 3};
+        auto a2 = std::array<int, 3> {1, 2, 3};
         auto cw2 = container_wrapper(a2);
         cw2 = std::move(cw1);
         ASSERT_EQ(&a[0], &*cw2.next());
@@ -252,7 +252,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, NonCopyableElementsLValue) {
-        std::vector<std::unique_ptr<int>> v {};
+        auto v = std::vector<std::unique_ptr<int>> {};
         v.push_back(std::make_unique<int>(10));
         v.push_back(std::make_unique<int>(20));
         auto cw = container_wrapper(v);
@@ -261,7 +261,7 @@ namespace {
     }
     
     TEST(ContainerWrapperTest, NonCopyableElementsRValue) {
-        std::vector<std::unique_ptr<int>> v {};
+        auto v = std::vector<std::unique_ptr<int>> {};
         v.push_back(std::make_unique<int>(10));
         v.push_back(std::make_unique<int>(20));
         auto cw = container_wrapper(std::move(v));

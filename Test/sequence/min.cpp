@@ -9,7 +9,7 @@ using namespace ufo;
 
 namespace {
     TEST(MinTest, LValue) {
-        std::vector<int> v {7, 3, 1, 8, 9, 2};
+        auto v = std::vector<int> {7, 3, 1, 8, 9, 2};
         auto cw = container_wrapper(v);
         decltype(auto) r = cw | min();
         static_assert(std::is_same_v<option<int &>, decltype(r)>);

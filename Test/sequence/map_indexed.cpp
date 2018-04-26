@@ -8,7 +8,7 @@ using namespace ufo;
 
 namespace {
     TEST(MapIndexedTest, FromLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(v);
         auto r = cw | map_indexed([](std::size_t i, int &n) {return std::tuple<std::size_t, int &>(i, n);});
         static_assert(std::is_same_v<option<std::tuple<std::size_t, int &>>, decltype(r.next())>);
@@ -56,7 +56,7 @@ namespace {
     }
 
     TEST(MapIndexedTest, MapToReference) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto r = std::vector<int> {2, 1, 0} | map_indexed([&v](std::size_t i, int n) -> decltype(auto) {return v[n];});
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&v[2], &*r.next());

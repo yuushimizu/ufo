@@ -9,7 +9,7 @@ using namespace ufo;
 
 namespace {
     TEST(MapTest, FromLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(v);
         auto r = cw | map(_ * 2);
         static_assert(std::is_same_v<option<int>, decltype(r.next())>);
@@ -57,7 +57,7 @@ namespace {
     }
     
     TEST(MapTest, MapToReference) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto r = std::vector<int> {2, 1, 0} | map([&v](int index) -> decltype(auto) {return v[index];});
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);
         ASSERT_EQ(&v[2], &*r.next());
@@ -77,7 +77,7 @@ namespace {
     }
     
     TEST(MapTest, MultipleSequences) {
-        std::vector<int> v {10, 20};
+        auto v = std::vector<int> {10, 20};
         auto r = map([](int &n, double m, bool neg) {return (n * m) * (neg ? -1 : 1);}, v, std::vector<double> {0.7, 0.5}, std::vector<bool> {true, false});
         static_assert(std::is_same_v<option<double>, decltype(r.next())>);
         ASSERT_DOUBLE_EQ(-7, *r.next());

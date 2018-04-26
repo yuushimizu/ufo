@@ -9,9 +9,9 @@ using namespace ufo;
 
 namespace {
     TEST(ConcatTest, FromLValue) {
-        std::vector<int> v {10, 20};
+        auto v = std::vector<int> {10, 20};
         auto cwv = container_wrapper(v);
-        std::deque<int> d {30, 40, 50};
+        auto d = std::deque<int> {30, 40, 50};
         auto cwd = container_wrapper(d);
         auto r = concat(cwv, cwd);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);

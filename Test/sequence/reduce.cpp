@@ -10,7 +10,7 @@ using namespace ufo;
 
 namespace {
     TEST(ReduceTest, FromLValue) {
-        std::vector<int> v {1, 2, 3, 4, 5};
+        auto v = std::vector<int> {1, 2, 3, 4, 5};
         auto cw = container_wrapper(v);
         decltype(auto) r = cw | reduce([](auto acc, int &n) {return acc + n;}, 10);
         static_assert(std::is_same_v<int, decltype(r)>);

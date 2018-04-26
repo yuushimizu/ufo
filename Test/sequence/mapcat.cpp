@@ -11,7 +11,7 @@ using namespace ufo;
 
 namespace {
     TEST(MapcatTest, FromLValue) {
-        std::vector<std::vector<int>> v {{10, 20}, {30, 40}, {50}};
+        auto v = std::vector<std::vector<int>> {{10, 20}, {30, 40}, {50}};
         auto cw = container_wrapper(v);
         auto r = cw | mapcat([](auto &&x) -> decltype(auto) {return x;});
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);

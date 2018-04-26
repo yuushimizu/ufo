@@ -8,7 +8,7 @@ using namespace ufo;
 
 namespace {
     TEST(RemoveNulloptTest, FromLValue) {
-        std::vector<option<int>> v {3, nullopt, 4, nullopt, 5};
+        auto v = std::vector<option<int>> {3, nullopt, 4, nullopt, 5};
         auto cw = container_wrapper(v);
         auto r = cw | remove_nullopt();
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);

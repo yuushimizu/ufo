@@ -9,7 +9,7 @@ using namespace ufo;
 
 namespace {
     TEST(TakeWhileTest, FromLValue) {
-        std::vector<int> v {1, 7, 5, 8, 9, 3, 2};
+        auto v = std::vector<int> {1, 7, 5, 8, 9, 3, 2};
         auto cw = container_wrapper(v);
         auto r = cw | take_while(_ % 2 != 0);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);

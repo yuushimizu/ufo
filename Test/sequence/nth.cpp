@@ -8,7 +8,7 @@ using namespace ufo;
 
 namespace {
     TEST(NthTest, FromLValue) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(v);
         decltype(auto) r = cw | nth(1);
         static_assert(std::is_same_v<option<int &>, decltype(r)>);
@@ -16,7 +16,7 @@ namespace {
     }
     
     TEST(NthTest, CopiedLValueNotChanged) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(std::vector<int> {10, 20, 30});
         decltype(auto) r = cw | nth(2);
         ASSERT_EQ(30, *r);

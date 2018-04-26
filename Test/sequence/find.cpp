@@ -9,7 +9,7 @@ using namespace ufo;
 
 namespace {
     TEST(FindTest, FromLValue) {
-        std::vector<int> v {3, 5, 8, 1, 7};
+        auto v = std::vector<int> {3, 5, 8, 1, 7};
         auto cw = container_wrapper(v);
         decltype(auto) r = cw | find(_ % 2 == 0);
         static_assert(std::is_same_v<option<int &>, decltype(r)>);
@@ -17,7 +17,7 @@ namespace {
     }
 
     TEST(FindTest, CopiedLValueNotChanged) {
-        std::vector<int> v {10, 20, 30};
+        auto v = std::vector<int> {10, 20, 30};
         auto cw = container_wrapper(std::vector<int> {10, 20, 30});
         decltype(auto) r = cw | find(_ == 30);
         ASSERT_EQ(30, *r);

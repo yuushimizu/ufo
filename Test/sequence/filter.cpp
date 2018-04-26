@@ -9,7 +9,7 @@ using namespace ufo;
 
 namespace {
     TEST(FilterTest, FromLValue) {
-        std::vector<int> v {1, 2, 3, 4, 5};
+        auto v = std::vector<int> {1, 2, 3, 4, 5};
         auto cw = container_wrapper(v);
         auto r = cw | filter(_ % 2 == 0);
         static_assert(std::is_same_v<option<int &>, decltype(r.next())>);

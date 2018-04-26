@@ -8,7 +8,7 @@ using namespace ufo;
 
 namespace {
     TEST(FirstTest, FromLValue) {
-        std::vector<int> v {1, 2, 3, 4, 5};
+        auto v = std::vector<int> {1, 2, 3, 4, 5};
         auto cw = container_wrapper(v);
         decltype(auto) r = cw | first();
         static_assert(std::is_same_v<option<int &>, decltype(r)>);
@@ -31,7 +31,7 @@ namespace {
     }
     
     TEST(FirstTest, Noncopyable) {
-        std::vector<std::unique_ptr<int>> v {};
+        auto v = std::vector<std::unique_ptr<int>> {};
         v.push_back(std::make_unique<int>(12));
         v.push_back(std::make_unique<int>(34));
         static_assert(std::is_same_v<option<std::unique_ptr<int>>, decltype(std::move(v) | first())>);

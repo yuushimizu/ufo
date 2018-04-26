@@ -114,7 +114,7 @@ namespace ufo {
         
         template <typename ... PartArgs>
         static auto make_parts(PartArgs && ... part_args) {
-            std::forward_list<Part> parts {};
+            auto parts = std::forward_list<Part> {};
             add_parts(parts, std::forward<PartArgs>(part_args) ...);
             return parts;
         }

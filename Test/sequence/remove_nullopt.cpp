@@ -24,9 +24,9 @@ namespace {
         ASSERT_EQ(2, *r.next());
         ASSERT_EQ(3, *r.next());
         ASSERT_FALSE(r.next());
-        ASSERT_EQ(option<int>(2), *cw.next());
+        ASSERT_EQ(option(2), *cw.next());
         ASSERT_EQ(nullopt, *cw.next());
-        ASSERT_EQ(option<int>(3), *cw.next());
+        ASSERT_EQ(option(3), *cw.next());
         ASSERT_FALSE(r.next());
     }
     

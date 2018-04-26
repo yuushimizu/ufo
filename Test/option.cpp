@@ -135,7 +135,7 @@ namespace {
     
     TEST(OptionTest, ValueAndThenLValue) {
         auto o = option<int>(10);
-        decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2.2);});
+        decltype(auto) r = o.and_then([](int &n) {return option(n * 2.2);});
         static_assert(std::is_same_v<option<double>, decltype(r)>);
         ASSERT_EQ(10, *o);
         ASSERT_DOUBLE_EQ(22, *r);
@@ -143,12 +143,12 @@ namespace {
      
     TEST(OptionTest, ValueAndThenLValueNullopt) {
         auto o = option<int> {};
-        ASSERT_EQ(nullopt, o.and_then([](int &n) {return make_option(n * 2);}));
+        ASSERT_EQ(nullopt, o.and_then([](int &n) {return option(n * 2);}));
     }
     
     TEST(OptionTest, ValueAndThenConstLValue) {
         const auto o = option<int>(5);
-        decltype(auto) r = o.and_then([](const int &n) {return make_option(n * 2);});
+        decltype(auto) r = o.and_then([](const int &n) {return option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(5, *o);
         ASSERT_EQ(10, *r);
@@ -156,23 +156,23 @@ namespace {
      
     TEST(OptionTest, ValueAndThenConstLValueNullopt) {
         const auto o = option<int> {};
-        ASSERT_EQ(nullopt, o.and_then([](const int &n) {return make_option(n * 2);}));
+        ASSERT_EQ(nullopt, o.and_then([](const int &n) {return option(n * 2);}));
     }
 
     TEST(OptionTest, ValueAndThenRValue) {
-        decltype(auto) r = option<int>(7).and_then([](int &&n) {return make_option(n * 3);});
+        decltype(auto) r = option<int>(7).and_then([](int &&n) {return option(n * 3);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(21, *r);
     }
     
     TEST(OptionTest, ValueAndThenRValueNullopt) {
-        ASSERT_EQ(nullopt, option<int> {}.map([](int &&n) {return make_option(n * 3);}));
+        ASSERT_EQ(nullopt, option<int> {}.map([](int &&n) {return option(n * 3);}));
     }
     
     TEST(OptionTest, RefAndThenLValue) {
         int x = 10;
         auto o = option<int &>(x);
-        decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2);});
+        decltype(auto) r = o.and_then([](int &n) {return option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(10, *o);
         ASSERT_EQ(20, *r);
@@ -180,13 +180,13 @@ namespace {
     
     TEST(OptionTest, RefAndThenLValueNullopt) {
         auto o = option<int &> {};
-        ASSERT_EQ(nullopt, o.and_then([](int &n) {return make_option(n * 2);}));
+        ASSERT_EQ(nullopt, o.and_then([](int &n) {return option(n * 2);}));
     }
 
     TEST(OptionTest, RefAndThenConstLValue) {
         int x = 5;
         const auto o = option<int &>(x);
-        decltype(auto) r = o.and_then([](int &n) {return make_option(n * 2);});
+        decltype(auto) r = o.and_then([](int &n) {return option(n * 2);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(5, *o);
         ASSERT_EQ(10, *r);
@@ -194,24 +194,24 @@ namespace {
     
     TEST(OptionTest, RefAndThenConstLValueNullopt) {
         const auto o = option<int &> {};
-        ASSERT_EQ(nullopt, o.map([](int &n) {return make_option(n * 2);}));
+        ASSERT_EQ(nullopt, o.map([](int &n) {return option(n * 2);}));
     }
     
     TEST(OptionTest, RefAndThenRValue) {
         int x = 7;
-        decltype(auto) r = option<int &>(x).and_then([](int &n) {return make_option(n * 3);});
+        decltype(auto) r = option<int &>(x).and_then([](int &n) {return option(n * 3);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
         ASSERT_EQ(21, *r);
     }
     
     TEST(OptionTest, RefAndThenRValueNullopt) {
-        ASSERT_EQ(nullopt, option<int &> {}.and_then([](int &n) {return make_option(n * 3);}));
+        ASSERT_EQ(nullopt, option<int &> {}.and_then([](int &n) {return option(n * 3);}));
     }
     
     TEST(OptionTest, ValueAndThenMemberFunction) {
         struct Foo {
             auto value() {
-                return make_option(123);
+                return option(123);
             }
         };
         decltype(auto) r = option<Foo>(Foo {}).and_then(&Foo::value);
@@ -221,7 +221,7 @@ namespace {
     TEST(OptionTest, RefAndThenMemberFunction) {
         struct Foo {
             auto value() {
-                return make_option(123);
+                return option(123);
             }
         };
         auto foo = Foo {};

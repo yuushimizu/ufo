@@ -13,7 +13,7 @@ namespace ufo {
     class option;
     
     template <typename T>
-    constexpr option<T> make_option(T &&value) noexcept;
+    option(T &&) -> option<T>;
     
     template <typename Derived>
     class option_trait {
@@ -31,9 +31,9 @@ namespace ufo {
         
         template <typename Self, typename F>
         static constexpr auto map_(Self &&self, F &&f) {
-            using result = decltype(make_option(std::invoke(std::forward<F>(f), *std::forward<Self>(self))));
+            using result = decltype(option(std::invoke(std::forward<F>(f), *std::forward<Self>(self))));
             if (!self) return result {};
-            return make_option(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));
+            return result(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));
         }
         
         template <typename Self, typename F>
@@ -302,11 +302,6 @@ namespace ufo {
     template <typename T>
     constexpr bool operator==(nullopt_t, const option<T &> &option) noexcept {
         return option.pointer_ == nullptr;
-    }
-    
-    template <typename T>
-    constexpr option<T> make_option(T &&value) noexcept {
-        return std::forward<T>(value);
     }
 }
 

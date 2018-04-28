@@ -4,7 +4,7 @@
 #include <utility>
 #include <random>
 #include "coord.hpp"
-#include "Rect.hpp"
+#include "rect.hpp"
 
 namespace ufo {
     template <typename T = int, typename Engine>
@@ -67,12 +67,12 @@ namespace ufo {
     }
     
     template <typename Engine>
-    coord<int> random_int_coord(Engine &engine, const Rect<int> &rect) {
+    coord<int> random_int_coord(Engine &engine, const rect<int> &rect) {
         return random_int_coord(engine, rect.origin(), rect.origin() + rect.size() - coord<int>::one());
     }
     
     template <typename Engine>
-    coord<double> random_double_coord(Engine &engine, const Rect<double> &rect) {
+    coord<double> random_double_coord(Engine &engine, const rect<double> &rect) {
         return random_double_coord(engine, rect.origin(), rect.origin() + rect.size());
     }
 }

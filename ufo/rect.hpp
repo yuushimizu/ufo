@@ -1,5 +1,5 @@
-#ifndef ufo_Rect
-#define ufo_Rect
+#ifndef ufo_rect
+#define ufo_rect
 
 #include <iostream>
 #include "coord.hpp"
@@ -7,12 +7,12 @@
 
 namespace ufo {
     template <typename T>
-    class Rect final {
+    class rect final {
     public:
-        constexpr Rect(coord<T> origin, coord<T> size) noexcept : origin_(std::move(origin)), size_(std::move(size)) {
+        constexpr rect(coord<T> origin, coord<T> size) noexcept : origin_(std::move(origin)), size_(std::move(size)) {
         }
         
-        constexpr explicit Rect() noexcept : origin_ {}, size_ {} {
+        constexpr explicit rect() noexcept : origin_ {}, size_ {} {
         }
         
         coord<T> origin() const {
@@ -50,17 +50,17 @@ namespace ufo {
     };
     
     template <typename LHS, typename RHS>
-    constexpr bool operator==(const Rect<LHS> &lhs, const Rect<RHS> &rhs) noexcept {
+    constexpr bool operator==(const rect<LHS> &lhs, const rect<RHS> &rhs) noexcept {
         return lhs.origin() == rhs.origin() && lhs.size() == rhs.size();
     }
     
     template <typename LHS, typename RHS>
-    constexpr bool operator!=(const Rect<LHS> &lhs, const Rect<RHS> &rhs) noexcept {
+    constexpr bool operator!=(const rect<LHS> &lhs, const rect<RHS> &rhs) noexcept {
         return !(lhs == rhs);
     }
     
     template <typename T>
-    auto &operator<<(std::ostream &o, const Rect<T> &rect) {
+    auto &operator<<(std::ostream &o, const rect<T> &rect) {
         return o << "(" << rect.origin() << ", " << rect.size() << ")";
     }
 }

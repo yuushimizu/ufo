@@ -204,7 +204,7 @@
 		CAF018C61F7F4E9D00E301CE /* type_traits.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = type_traits.hpp; sourceTree = "<group>"; };
 		CAF018C71F7F4E9D00E301CE /* math.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = math.hpp; sourceTree = "<group>"; };
 		CAF018C81F7F4E9D00E301CE /* random.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = random.hpp; sourceTree = "<group>"; };
-		CAF018C91F7F4E9D00E301CE /* Rect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Rect.hpp; sourceTree = "<group>"; };
+		CAF018C91F7F4E9D00E301CE /* rect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rect.hpp; sourceTree = "<group>"; };
 		CAF018CB1F7F4E9E00E301CE /* hash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = hash.hpp; sourceTree = "<group>"; };
 		CAF018CC1F7F4E9E00E301CE /* placeholder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = placeholder.hpp; sourceTree = "<group>"; };
 		CAF018CD1F7F4E9E00E301CE /* scope_exit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = scope_exit.hpp; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 				CAF018CC1F7F4E9E00E301CE /* placeholder.hpp */,
 				CAF018C81F7F4E9D00E301CE /* random.hpp */,
 				CAF018D21F7F4E9E00E301CE /* container.hpp */,
-				CAF018C91F7F4E9D00E301CE /* Rect.hpp */,
+				CAF018C91F7F4E9D00E301CE /* rect.hpp */,
 				CAF018CD1F7F4E9E00E301CE /* scope_exit.hpp */,
 				CAF018CF1F7F4E9E00E301CE /* string.hpp */,
 				CAF018D31F7F4E9E00E301CE /* TD.hpp */,

@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/Vector2D.hpp"
+#include "ufo/vector2d.hpp"
 #include <type_traits>
 #include "ufo/coord.hpp"
 
@@ -7,7 +7,7 @@ using namespace ufo;
 
 namespace {
     TEST(Vector2DTest, PairsLValue) {
-        auto v = Vector2D<int>(coord(3, 2));
+        auto v = vector2d<int>(coord(3, 2));
         v[coord(0, 0)] = 0;
         v[coord(1, 0)] = 10;
         v[coord(2, 0)] = 20;
@@ -38,7 +38,7 @@ namespace {
     }
     
     TEST(Vector2DTest, PairsRValue) {
-        auto v = Vector2D<int>(coord(3, 2));
+        auto v = vector2d<int>(coord(3, 2));
         v[coord(0, 0)] = 0;
         v[coord(1, 0)] = 10;
         v[coord(2, 0)] = 20;

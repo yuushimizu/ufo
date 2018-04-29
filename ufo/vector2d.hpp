@@ -1,5 +1,5 @@
-#ifndef ufo_Vector2D
-#define ufo_Vector2D
+#ifndef ufo_vector2d
+#define ufo_vector2d
 
 #include <vector>
 #include "coord.hpp"
@@ -19,15 +19,15 @@ namespace ufo {
     }
     
     template <typename T>
-    class Vector2D final {
+    class vector2d final {
     public:
-        constexpr explicit Vector2D(coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
+        constexpr explicit vector2d(coord<int> size, const T &initial_value) : size_(std::move(size)), values_(size_.area(), initial_value) {
         }
         
-        constexpr explicit Vector2D(coord<int> size) : size_(std::move(size)), values_(size_.area()) {
+        constexpr explicit vector2d(coord<int> size) : size_(std::move(size)), values_(size_.area()) {
         }
         
-        constexpr explicit Vector2D() : size_ {}, values_ {} {
+        constexpr explicit vector2d() : size_ {}, values_ {} {
         }
         
         constexpr auto size() const {
@@ -91,7 +91,7 @@ namespace ufo {
         }
         
         template <typename T1, typename T2>
-        friend constexpr bool operator==(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs);
+        friend constexpr bool operator==(const vector2d<T1> &lhs, const vector2d<T2> &rhs);
         
     private:
         coord<int> size_;
@@ -99,12 +99,12 @@ namespace ufo {
     };
     
     template <typename T1, typename T2>
-    constexpr bool operator==(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs) {
+    constexpr bool operator==(const vector2d<T1> &lhs, const vector2d<T2> &rhs) {
         return lhs.values_ == rhs.values_;
     }
     
     template <typename T1, typename T2>
-    constexpr bool operator!=(const Vector2D<T1> &lhs, const Vector2D<T2> &rhs) {
+    constexpr bool operator!=(const vector2d<T1> &lhs, const vector2d<T2> &rhs) {
         return !(lhs == rhs);
     }
 }

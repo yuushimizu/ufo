@@ -3,13 +3,13 @@
 
 #include <tuple>
 #include "sequence.hpp"
-#include "../LambdaWrapper.hpp"
+#include "../lambda_wrapper.hpp"
 
 namespace ufo {
     template <typename F, typename ... Sequences>
     class SequenceWrapper : public sequence {
     private:
-        LambdaWrapper<F> f_;
+        lambda_wrapper<F> f_;
         std::tuple<Sequences ...> sequences_;
         
     public:

@@ -1,34 +1,34 @@
-#ifndef ufo_LambdaWrapper
-#define ufo_LambdaWrapper
+#ifndef ufo_lambda_wrapper
+#define ufo_lambda_wrapper
 
 #include <functional>
 #include "option.hpp"
 
 namespace ufo {
     template <typename F>
-    class LambdaWrapper {
+    class lambda_wrapper {
     private:
         option<F> f_;
         
     public:
-        constexpr LambdaWrapper(const F &f) : f_(f) {
+        constexpr lambda_wrapper(const F &f) : f_(f) {
         }
         
-        constexpr LambdaWrapper(F &&f) noexcept : f_(std::move(f)) {
+        constexpr lambda_wrapper(F &&f) noexcept : f_(std::move(f)) {
         }
         
-        ~LambdaWrapper() = default;
+        ~lambda_wrapper() = default;
         
-        constexpr LambdaWrapper(const LambdaWrapper &) = default;
+        constexpr lambda_wrapper(const lambda_wrapper &) = default;
         
-        constexpr LambdaWrapper(LambdaWrapper &&) noexcept = default;
+        constexpr lambda_wrapper(lambda_wrapper &&) noexcept = default;
         
-        LambdaWrapper &operator=(const LambdaWrapper &other) {
-            *this = LambdaWrapper(other);
+        lambda_wrapper &operator=(const lambda_wrapper &other) {
+            *this = lambda_wrapper(other);
             return *this;
         }
         
-        LambdaWrapper &operator=(LambdaWrapper &&other) noexcept {
+        lambda_wrapper &operator=(lambda_wrapper &&other) noexcept {
             f_.emplace(std::move(*other.f_));
             return *this;
         }
@@ -48,17 +48,6 @@ namespace ufo {
             return std::invoke(std::move(*f_), std::forward<Args>(args) ...);
         }
     };
-    
-    template <typename F>
-    class LambdaWrapper<F &>;
-    
-    template <typename F>
-    class LambdaWrapper<F &&>;
-    
-    template <typename F>
-    auto lambda_wrapper(F &&f) noexcept {
-        return LambdaWrapper<std::decay_t<F>>(std::forward<F>(f));
-    }
 }
 
 #endif

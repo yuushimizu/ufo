@@ -3,13 +3,13 @@
 
 #include "sequence.hpp"
 #include "../option.hpp"
-#include "../LambdaWrapper.hpp"
+#include "../lambda_wrapper.hpp"
 
 namespace ufo {
     template <typename F>
     class Repeatedly : public sequence {
     private:
-        LambdaWrapper<F> f_;
+        lambda_wrapper<F> f_;
         
     public:
         constexpr explicit Repeatedly(F f) noexcept : f_(std::move(f)) {

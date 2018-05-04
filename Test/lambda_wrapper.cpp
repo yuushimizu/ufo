@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "ufo/LambdaWrapper.hpp"
+#include "ufo/lambda_wrapper.hpp"
 #include <type_traits>
 #include <memory>
 

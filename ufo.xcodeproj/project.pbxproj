@@ -36,7 +36,7 @@
 		CA7306E31F8D0C6F00C4BBAD /* flatten.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306E21F8D0C6F00C4BBAD /* flatten.cpp */; };
 		CA7306E61F8D202B00C4BBAD /* range.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306E51F8D202B00C4BBAD /* range.cpp */; };
 		CA7306E91F8D2EE000C4BBAD /* take_while.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306E81F8D2EE000C4BBAD /* take_while.cpp */; };
-		CA7306EC1F8DCC2900C4BBAD /* LambdaWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306EB1F8DCC2900C4BBAD /* LambdaWrapper.cpp */; };
+		CA7306EC1F8DCC2900C4BBAD /* lambda_wrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306EB1F8DCC2900C4BBAD /* lambda_wrapper.cpp */; };
 		CA7306F01F8E746C00C4BBAD /* map_indexed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306EF1F8E746C00C4BBAD /* map_indexed.cpp */; };
 		CA7306F31F8EE57400C4BBAD /* reduce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306F21F8EE57400C4BBAD /* reduce.cpp */; };
 		CA7306F61F8F4B2300C4BBAD /* mapcat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7306F51F8F4B2300C4BBAD /* mapcat.cpp */; };
@@ -170,8 +170,8 @@
 		CA7306E51F8D202B00C4BBAD /* range.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = range.cpp; path = sequence/range.cpp; sourceTree = "<group>"; };
 		CA7306E71F8D212D00C4BBAD /* take_while.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = take_while.hpp; path = sequence/take_while.hpp; sourceTree = "<group>"; };
 		CA7306E81F8D2EE000C4BBAD /* take_while.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = take_while.cpp; path = sequence/take_while.cpp; sourceTree = "<group>"; };
-		CA7306EA1F8DCA6D00C4BBAD /* LambdaWrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LambdaWrapper.hpp; sourceTree = "<group>"; };
-		CA7306EB1F8DCC2900C4BBAD /* LambdaWrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LambdaWrapper.cpp; sourceTree = "<group>"; };
+		CA7306EA1F8DCA6D00C4BBAD /* lambda_wrapper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lambda_wrapper.hpp; sourceTree = "<group>"; };
+		CA7306EB1F8DCC2900C4BBAD /* lambda_wrapper.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lambda_wrapper.cpp; sourceTree = "<group>"; };
 		CA7306EE1F8E724D00C4BBAD /* map_indexed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = map_indexed.hpp; path = sequence/map_indexed.hpp; sourceTree = "<group>"; };
 		CA7306EF1F8E746C00C4BBAD /* map_indexed.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = map_indexed.cpp; path = sequence/map_indexed.cpp; sourceTree = "<group>"; };
 		CA7306F11F8E77E600C4BBAD /* reduce.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = reduce.hpp; path = sequence/reduce.hpp; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 				CAF018A71F7A7F4D00E301CE /* scope_exit.cpp */,
 				CAF018A91F7A8D7B00E301CE /* container.cpp */,
 				CAF018C01F7E664000E301CE /* option.cpp */,
-				CA7306EB1F8DCC2900C4BBAD /* LambdaWrapper.cpp */,
+				CA7306EB1F8DCC2900C4BBAD /* lambda_wrapper.cpp */,
 				CA6195B71FB4397400AC0888 /* holder.cpp */,
 			);
 			path = Test;
@@ -308,7 +308,7 @@
 				CAF018D31F7F4E9E00E301CE /* TD.hpp */,
 				CAF018C61F7F4E9D00E301CE /* type_traits.hpp */,
 				CAF018D41F7F4E9E00E301CE /* vector2d.hpp */,
-				CA7306EA1F8DCA6D00C4BBAD /* LambdaWrapper.hpp */,
+				CA7306EA1F8DCA6D00C4BBAD /* lambda_wrapper.hpp */,
 				CA6195AD1FB435BF00AC0888 /* holder.hpp */,
 			);
 			path = ufo;
@@ -556,7 +556,7 @@
 				CA82691C1FB3211500F28260 /* min.cpp in Sources */,
 				CA33AF491FC578DB00BAB51F /* doall.cpp in Sources */,
 				CA7306E31F8D0C6F00C4BBAD /* flatten.cpp in Sources */,
-				CA7306EC1F8DCC2900C4BBAD /* LambdaWrapper.cpp in Sources */,
+				CA7306EC1F8DCC2900C4BBAD /* lambda_wrapper.cpp in Sources */,
 				CA6195C41FBAC5B500AC0888 /* max_by.cpp in Sources */,
 				CA7306DD1F8CD9A300C4BBAD /* concat.cpp in Sources */,
 				CA7306F01F8E746C00C4BBAD /* map_indexed.cpp in Sources */,

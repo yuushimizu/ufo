@@ -140,7 +140,7 @@ namespace {
         ASSERT_EQ(10, *o);
         ASSERT_DOUBLE_EQ(22, *r);
     }
-     
+    
     TEST(OptionTest, ValueAndThenLValueNullopt) {
         auto o = option<int> {};
         ASSERT_EQ(nullopt, o.and_then([](int &n) {return option(n * 2);}));
@@ -153,12 +153,12 @@ namespace {
         ASSERT_EQ(5, *o);
         ASSERT_EQ(10, *r);
     }
-     
+    
     TEST(OptionTest, ValueAndThenConstLValueNullopt) {
         const auto o = option<int> {};
         ASSERT_EQ(nullopt, o.and_then([](const int &n) {return option(n * 2);}));
     }
-
+    
     TEST(OptionTest, ValueAndThenRValue) {
         decltype(auto) r = option<int>(7).and_then([](int &&n) {return option(n * 3);});
         static_assert(std::is_same_v<option<int>, decltype(r)>);
@@ -182,7 +182,7 @@ namespace {
         auto o = option<int &> {};
         ASSERT_EQ(nullopt, o.and_then([](int &n) {return option(n * 2);}));
     }
-
+    
     TEST(OptionTest, RefAndThenConstLValue) {
         int x = 5;
         const auto o = option<int &>(x);
@@ -284,5 +284,38 @@ namespace {
         ASSERT_TRUE(o);
         ASSERT_TRUE(*o);
         ASSERT_EQ(5, **o);
+    }
+    
+    TEST(OptionTest, ClassTemplateTypeDeduction) {
+        static_assert(std::is_same_v<option<int>, decltype(option(1))>);
+        int x = 12;
+        static_assert(std::is_same_v<option<int>, decltype(option(x))>);
+        const int y = 30;
+        static_assert(std::is_same_v<option<int>, decltype(option(y))>);
+        int z = 42;
+        static_assert(std::is_same_v<option<int>, decltype(option(std::move(z)))>);
+        SUCCEED();
+    }
+    
+    TEST(OptionTest, ForwardOption) {
+        static_assert(std::is_same_v<option<int>, forward_option_t<int>>);
+        auto o1 = forward_option(1);
+        static_assert(std::is_same_v<option<int>, decltype(o1)>);
+        ASSERT_EQ(1, *o1);
+        int x = 12;
+        static_assert(std::is_same_v<option<int &>, forward_option_t<int &>>);
+        auto o2 = forward_option(x);
+        static_assert(std::is_same_v<option<int &>, decltype(o2)>);
+        ASSERT_EQ(&x, &*o2);
+        const int y = 34;
+        static_assert(std::is_same_v<option<const int &>, forward_option_t<const int &>>);
+        auto o3 = forward_option(y);
+        static_assert(std::is_same_v<option<const int &>, decltype(o3)>);
+        ASSERT_EQ(&y, &*o3);
+        int z = 42;
+        static_assert(std::is_same_v<option<int>, forward_option_t<int &&>>);
+        auto o4 = forward_option(std::move(z));
+        static_assert(std::is_same_v<option<int>, decltype(o4)>);
+        ASSERT_EQ(42, *o4);
     }
 }

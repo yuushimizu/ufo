@@ -1,5 +1,5 @@
-#ifndef ufo_sequence_as_container
-#define ufo_sequence_as_container
+#ifndef ufo_sequence_to_container
+#define ufo_sequence_to_container
 
 #include "sequence_operator.hpp"
 #include "foreach.hpp"
@@ -7,15 +7,15 @@
 
 namespace ufo {
     template <typename Sequence>
-    class AsContainer {
+    class ToContainer {
     private:
         Sequence sequence_;
         
     public:
-        explicit constexpr AsContainer(const Sequence &sequence) : sequence_(sequence) {
+        explicit constexpr ToContainer(const Sequence &sequence) : sequence_(sequence) {
         }
         
-        explicit constexpr AsContainer(Sequence &&sequence) noexcept : sequence_(std::move(sequence)) {
+        explicit constexpr ToContainer(Sequence &&sequence) noexcept : sequence_(std::move(sequence)) {
         }
         
         template <typename Container>
@@ -29,13 +29,13 @@ namespace ufo {
     };
     
     template <typename Sequence>
-    constexpr auto make_as_container(Sequence &&sequence) {
-        return AsContainer<Sequence>(std::forward<Sequence>(sequence));
+    constexpr auto make_to_container(Sequence &&sequence) {
+        return ToContainer<Sequence>(std::forward<Sequence>(sequence));
     }
     
-    constexpr auto as_container() noexcept {
+    constexpr auto to_container() noexcept {
         return sequence_operator([](auto &&sequence) constexpr noexcept {
-            return make_as_container(std::forward<decltype(sequence)>(sequence));
+            return make_to_container(std::forward<decltype(sequence)>(sequence));
         });
     }
 }

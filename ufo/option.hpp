@@ -2,12 +2,12 @@
 #define ufo_option
 
 #include <functional>
-#include <experimental/optional>
+#include <optional>
 #include "type_traits.hpp"
 
 namespace ufo {
-    using std::experimental::nullopt_t;
-    using std::experimental::nullopt;
+    using std::nullopt_t;
+    using std::nullopt;
     
     template <typename T>
     class option;
@@ -105,7 +105,7 @@ namespace ufo {
         static_assert(std::is_nothrow_move_constructible_v<T>);
         
     private:
-        std::experimental::optional<T> optional_;
+        std::optional<T> optional_;
         
     public:
         using value_type = T;
@@ -135,7 +135,7 @@ namespace ufo {
         
         constexpr option &operator=(const option &other) = default;
         
-        constexpr option &operator=(option &&other) noexcept(std::is_nothrow_move_assignable_v<std::experimental::optional<T>>) = default;
+        constexpr option &operator=(option &&other) noexcept(std::is_nothrow_move_assignable_v<std::optional<T>>) = default;
         
         constexpr option &operator=(const T &value) {
             optional_ = value;

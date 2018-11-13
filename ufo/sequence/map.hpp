@@ -13,9 +13,8 @@ namespace ufo {
         return sequence_operator([](auto f, auto && ... sequences) constexpr {
             return sequence_wrapper([f = std::move(f)](auto & ... sequences) constexpr {
                 return ([&f](auto && ... results) constexpr {
-                    using result_option = decltype(forward_option(std::invoke(f, *std::forward<decltype(results)>(results) ...)));
-                    if ((... && static_cast<bool>(results))) return forward_option(std::invoke(f, *std::forward<decltype(results)>(results) ...));
-                    return result_option {};
+                    auto invoke = [&]() {return forward_option(std::invoke(f, *std::forward<decltype(results)>(results) ...));};
+                    return (... && static_cast<bool>(results)) ? invoke() : decltype(invoke()) {};
                 })(sequences.next() ...);
             }, std::forward<decltype(sequences)>(sequences) ...);
         }, std::forward<F>(f));

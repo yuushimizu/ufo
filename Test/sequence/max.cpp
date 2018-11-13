@@ -43,7 +43,7 @@ namespace {
     }
     
     TEST(MaxTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | max();
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | max();
         ASSERT_EQ(4, *r);
     }
 }

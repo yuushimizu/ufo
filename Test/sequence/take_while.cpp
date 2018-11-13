@@ -52,7 +52,7 @@ namespace {
     }
     
     TEST(TakeWhileTest, SequenceNotCopied) {
-        auto r = std::vector<int> {1, 2, 3} | test::delete_copy | take_while(_ < 2);
+        auto r = std::vector<int> {1, 2, 3} | test::delete_copy() | take_while(_ < 2);
         ASSERT_EQ(1, *r.next());
         ASSERT_FALSE(r.next());
     }

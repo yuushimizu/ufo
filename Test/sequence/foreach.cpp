@@ -42,7 +42,7 @@ namespace {
     
     TEST(ForeachTest, SequenceNotCopied) {
         auto r = std::vector<int> {};
-        std::vector<int> {10, 20, 30} | test::delete_copy | foreach([&r](int n) {
+        std::vector<int> {10, 20, 30} | test::delete_copy() | foreach([&r](int n) {
             r.push_back(n);
         });
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);

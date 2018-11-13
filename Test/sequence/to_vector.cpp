@@ -25,7 +25,7 @@ namespace {
     }
     
     TEST(ToVectorTest, SequenceNotCopied) {
-        std::vector<int> r = std::deque<int> {10, 20, 30} | test::delete_copy | to_vector();
+        std::vector<int> r = std::deque<int> {10, 20, 30} | test::delete_copy() | to_vector();
         ASSERT_EQ((std::vector<int> {10, 20, 30}), r);
     }
 }

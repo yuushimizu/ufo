@@ -37,7 +37,7 @@ namespace {
     }
     
     TEST(ReduceTest, SequenceNotCopied) {
-        ASSERT_EQ(10, (std::vector<int> {1, 2, 3, 4} | test::delete_copy | reduce(std::plus<> {}, 0)));
+        ASSERT_EQ(10, (std::vector<int> {1, 2, 3, 4} | test::delete_copy() | reduce(std::plus<> {}, 0)));
     }
     
     TEST(ReduceTest, FunctionNotCopied) {

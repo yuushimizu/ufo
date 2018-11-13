@@ -44,7 +44,7 @@ namespace {
     }
 
     TEST(FindTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | find(_ == 3);
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | find(_ == 3);
         ASSERT_EQ(3, *r);
     }
     

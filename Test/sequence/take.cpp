@@ -50,7 +50,7 @@ namespace {
     }
     
     TEST(TakeTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | take(1);
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | take(1);
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }

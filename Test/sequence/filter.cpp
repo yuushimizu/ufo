@@ -50,7 +50,7 @@ namespace {
     }
     
     TEST(FilterTest, SequenceNotCopied) {
-        auto r = std::vector<int> {5, 10, 15} | test::delete_copy | filter(_ % 2 == 1);
+        auto r = std::vector<int> {5, 10, 15} | test::delete_copy() | filter(_ % 2 == 1);
         ASSERT_EQ(5, *r.next());
         ASSERT_EQ(15, *r.next());
         ASSERT_FALSE(r.next());

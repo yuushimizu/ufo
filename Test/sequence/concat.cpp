@@ -51,7 +51,7 @@ namespace {
     
     TEST(ConcatTest, FromLValueAndRValue) {
         auto cw = container_wrapper(std::vector<int> {10});
-        auto r = concat(cw, std::vector<int> {20} | test::delete_copy);
+        auto r = concat(cw, std::vector<int> {20} | test::delete_copy());
         ASSERT_EQ(10, *r.next());
         ASSERT_EQ(20, *r.next());
         ASSERT_FALSE(r.next());
@@ -61,7 +61,7 @@ namespace {
     
     TEST(ConcatTest, FromRValueAndLValue) {
         auto cw = container_wrapper(std::vector<int> {20});
-        auto r = concat(std::vector<int> {10} | test::delete_copy, cw);
+        auto r = concat(std::vector<int> {10} | test::delete_copy(), cw);
         ASSERT_EQ(10, *r.next());
         ASSERT_EQ(20, *r.next());
         ASSERT_FALSE(r.next());
@@ -102,7 +102,7 @@ namespace {
     }
     
     TEST(ConcatTest, SequenceNotCopied) {
-        auto r = concat(std::vector<int> {10} | test::delete_copy, std::vector<int> {20} | test::delete_copy);
+        auto r = concat(std::vector<int> {10} | test::delete_copy(), std::vector<int> {20} | test::delete_copy());
         ASSERT_EQ(10, *r.next());
         ASSERT_EQ(20, *r.next());
         ASSERT_FALSE(r.next());

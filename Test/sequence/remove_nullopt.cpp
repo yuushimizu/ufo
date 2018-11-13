@@ -43,7 +43,7 @@ namespace {
     }
 
     TEST(RemoveNulloptTest, SequenceNotCopied) {
-        auto r = std::vector<option<int>> {1, 2} | test::delete_copy | remove_nullopt();
+        auto r = std::vector<option<int>> {1, 2} | test::delete_copy() | remove_nullopt();
         ASSERT_EQ(1, *r.next());
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());

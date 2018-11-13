@@ -47,7 +47,7 @@ namespace {
     }
     
     TEST(SkipTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | skip(1);
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | skip(1);
         ASSERT_EQ(3, *r.next());
         ASSERT_EQ(4, *r.next());
         ASSERT_FALSE(r.next());

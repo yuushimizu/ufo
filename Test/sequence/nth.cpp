@@ -43,7 +43,7 @@ namespace {
     }
     
     TEST(NthTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | nth(1);
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | nth(1);
         ASSERT_EQ(3, *r);
     }
 }

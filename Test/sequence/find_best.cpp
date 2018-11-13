@@ -43,7 +43,7 @@ namespace {
     }
     
     TEST(FindBestTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | find_best([](auto n, auto m) {return n > m;});
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | find_best([](auto n, auto m) {return n > m;});
         ASSERT_EQ(4, *r);
     }
     

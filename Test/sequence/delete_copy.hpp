@@ -28,9 +28,11 @@ namespace ufo::test {
         Sequence sequence_;
     };
     
-    constexpr const auto delete_copy = sequence_operator([](auto sequence) constexpr noexcept {
-        return DeleteCopy<decltype(sequence)>(std::move(sequence));
-    });
+    constexpr auto delete_copy() noexcept {
+        return sequence_operator([](auto sequence) constexpr noexcept {
+            return DeleteCopy<decltype(sequence)>(std::move(sequence));
+        });
+    }
     
     template <typename F>
     class DeleteFunctionCopy {

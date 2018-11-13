@@ -33,7 +33,7 @@ namespace {
     
     TEST(DoallTest, SequenceNotCopied) {
         int x = 0;
-        std::vector<int> {3, 5, 4, 1, 5} | test::delete_copy | take_while([&x](int n) mutable {
+        std::vector<int> {3, 5, 4, 1, 5} | test::delete_copy() | take_while([&x](int n) mutable {
             if (n % 2 == 0) return false;
             x += n;
             return true;

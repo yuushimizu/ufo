@@ -45,7 +45,7 @@ namespace {
     }
     
     TEST(MapTest, SequenceNotCopied) {
-        auto r = std::vector<int> {1} | test::delete_copy | map(_ * 2);
+        auto r = std::vector<int> {1} | test::delete_copy() | map(_ * 2);
         ASSERT_EQ(2, *r.next());
         ASSERT_FALSE(r.next());
     }

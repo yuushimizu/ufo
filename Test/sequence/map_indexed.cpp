@@ -44,7 +44,7 @@ namespace {
     }
     
     TEST(MapIndexedTest, SequenceNotCopied) {
-        auto r = std::vector<int> {1} | test::delete_copy | map_indexed([](std::size_t i, int n) {return std::make_tuple(i, n);});
+        auto r = std::vector<int> {1} | test::delete_copy() | map_indexed([](std::size_t i, int n) {return std::make_tuple(i, n);});
         ASSERT_EQ(std::make_tuple(0, 1), *r.next());
         ASSERT_FALSE(r.next());
     }

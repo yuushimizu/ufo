@@ -89,7 +89,7 @@ namespace {
     }
     
     TEST(MinByTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | min_by([](auto n) {return n;});
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | min_by([](auto n) {return n;});
         ASSERT_EQ(2, *r);
     }
     

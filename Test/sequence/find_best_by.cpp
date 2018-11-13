@@ -81,7 +81,7 @@ namespace {
     }
 
     TEST(FindBestByTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | find_best_by([](auto n) {return n;}, [](auto &x, auto &y) {return x > y;});
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | find_best_by([](auto n) {return n;}, [](auto &x, auto &y) {return x > y;});
         ASSERT_EQ(4, *r);
     }
     

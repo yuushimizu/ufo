@@ -89,7 +89,7 @@ namespace {
     }
     
     TEST(MaxByTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | max_by([](auto n) {return n;});
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | max_by([](auto n) {return n;});
         ASSERT_EQ(4, *r);
     }
     

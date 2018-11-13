@@ -43,7 +43,7 @@ namespace {
     }
     
     TEST(MinTest, SequenceNotCopied) {
-        auto r = std::vector<int> {2, 3, 4} | test::delete_copy | min();
+        auto r = std::vector<int> {2, 3, 4} | test::delete_copy() | min();
         ASSERT_EQ(2, *r);
     }
 }

@@ -51,7 +51,7 @@ namespace {
     }
     
     TEST(MapcatTest, SequenceNotCopied) {
-        auto r = std::vector<int> {1, 2} | test::delete_copy | mapcat([](auto n) {return range(n);});
+        auto r = std::vector<int> {1, 2} | test::delete_copy() | mapcat([](auto n) {return range(n);});
         ASSERT_EQ(0, *r.next());
         ASSERT_EQ(0, *r.next());
         ASSERT_EQ(1, *r.next());

@@ -27,7 +27,7 @@ namespace {
     }
     
     TEST(FirstTest, SequenceNotCopied) {
-        ASSERT_EQ(3, *(std::vector<int> {3, 4, 5} | test::delete_copy | first()));
+        ASSERT_EQ(3, *(std::vector<int> {3, 4, 5} | test::delete_copy() | first()));
     }
     
     TEST(FirstTest, Noncopyable) {

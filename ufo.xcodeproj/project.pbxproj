@@ -13,6 +13,7 @@
 		CA33AF3E1FC556A500BAB51F /* shuffle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA33AF3C1FC556A500BAB51F /* shuffle.cpp */; };
 		CA33AF491FC578DB00BAB51F /* doall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA33AF481FC578DB00BAB51F /* doall.cpp */; };
 		CA3ED3431F5FE43500DA2EF1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3ED3421F5FE43500DA2EF1 /* main.cpp */; };
+		CA557D1C219AE93300910DA2 /* deref_t.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA557D1B219AE93300910DA2 /* deref_t.cpp */; };
 		CA5AEDD61F5FF1220095F382 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5AEDC91F5FF1050095F382 /* gtest.framework */; };
 		CA5AEDD81F5FF74C0095F382 /* coord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDD71F5FF74C0095F382 /* coord.cpp */; };
 		CA5AEDDC1F5FFB5D0095F382 /* vector2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA5AEDDB1F5FFB5D0095F382 /* vector2d.cpp */; };
@@ -129,6 +130,8 @@
 		CA33AF481FC578DB00BAB51F /* doall.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = doall.cpp; path = sequence/doall.cpp; sourceTree = "<group>"; };
 		CA3ED3401F5FE43500DA2EF1 /* Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Test; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3ED3421F5FE43500DA2EF1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		CA557D18219AE91200910DA2 /* deref_t.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = deref_t.hpp; sourceTree = "<group>"; };
+		CA557D1B219AE93300910DA2 /* deref_t.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = deref_t.cpp; sourceTree = "<group>"; };
 		CA5AEDBC1F5FF1050095F382 /* gtest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtest.xcodeproj; path = extsrc/googletest/googletest/xcode/gtest.xcodeproj; sourceTree = "<group>"; };
 		CA5AEDD71F5FF74C0095F382 /* coord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coord.cpp; sourceTree = "<group>"; };
 		CA5AEDDB1F5FFB5D0095F382 /* vector2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vector2d.cpp; sourceTree = "<group>"; };
@@ -239,6 +242,7 @@
 		CA3ED3411F5FE43500DA2EF1 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				CA557D1A219AE91F00910DA2 /* type_traits */,
 				CAF019051F7F555800E301CE /* sequence */,
 				CA3ED3421F5FE43500DA2EF1 /* main.cpp */,
 				CA5AEDD71F5FF74C0095F382 /* coord.cpp */,
@@ -253,6 +257,22 @@
 				CA6195B71FB4397400AC0888 /* holder.cpp */,
 			);
 			path = Test;
+			sourceTree = "<group>";
+		};
+		CA557D17219AE91200910DA2 /* type_traits */ = {
+			isa = PBXGroup;
+			children = (
+				CA557D18219AE91200910DA2 /* deref_t.hpp */,
+			);
+			path = type_traits;
+			sourceTree = "<group>";
+		};
+		CA557D1A219AE91F00910DA2 /* type_traits */ = {
+			isa = PBXGroup;
+			children = (
+				CA557D1B219AE93300910DA2 /* deref_t.cpp */,
+			);
+			path = type_traits;
 			sourceTree = "<group>";
 		};
 		CA5AEDBD1F5FF1050095F382 /* Products */ = {
@@ -291,6 +311,7 @@
 		CAF018C31F7F4E4D00E301CE /* ufo */ = {
 			isa = PBXGroup;
 			children = (
+				CA557D17219AE91200910DA2 /* type_traits */,
 				CAF019031F7F4EFE00E301CE /* sequence */,
 				CAF018CE1F7F4E9E00E301CE /* coord.hpp */,
 				CAF018C41F7F4E9D00E301CE /* coroutine.hpp */,
@@ -582,6 +603,7 @@
 				CA82690A1FB29AD300F28260 /* find_best_by.cpp in Sources */,
 				CA5AEDDC1F5FFB5D0095F382 /* vector2d.cpp in Sources */,
 				CA7306F61F8F4B2300C4BBAD /* mapcat.cpp in Sources */,
+				CA557D1C219AE93300910DA2 /* deref_t.cpp in Sources */,
 				CA6195B81FB4397400AC0888 /* holder.cpp in Sources */,
 				CA7306A61F84ECEC00C4BBAD /* container_wrapper.cpp in Sources */,
 				CA33AF3E1FC556A500BAB51F /* shuffle.cpp in Sources */,

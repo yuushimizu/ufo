@@ -268,29 +268,6 @@ namespace {
         ASSERT_EQ(42, r);
     }
     
-    TEST(OptionTest, Deref) {
-        int x = 123;
-        auto o = option<int &>(x);
-        decltype(auto) r = o.deref();
-        static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(123, *r);
-        ASSERT_NE(&x, &*r);
-    }
-    
-    TEST(OptionTest, DerefNullopt) {
-        auto o = option<int &> {};
-        ASSERT_EQ(nullopt, o.deref());
-    }
-    
-    TEST(OptionTest, DerefConst) {
-        const int x = 42;
-        auto o = option<const int &>(x);
-        decltype(auto) r = o.deref();
-        static_assert(std::is_same_v<option<int>, decltype(r)>);
-        ASSERT_EQ(42, *r);
-        ASSERT_NE(&x, &*r);
-    }
-    
     TEST(OptionTest, OptionOfOptionFalse) {
         auto o = option<option<int>> {};
         ASSERT_FALSE(o);

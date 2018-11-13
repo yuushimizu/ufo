@@ -13,10 +13,12 @@ namespace ufo {
     class option;
     
     template <typename T>
-    option(T) -> option<T>;
+    constexpr option<T> forward_option(T &&value) noexcept {
+        return std::forward<T>(value);
+    }
     
     template <typename T>
-    constexpr option<T> refoption(T &&value) noexcept;
+    using forward_option_t = decltype(forward_option(std::declval<T>()));
     
     template <typename Derived>
     class option_trait {
@@ -34,22 +36,19 @@ namespace ufo {
         
         template <typename Self, typename F>
         static constexpr auto map_(Self &&self, F &&f) {
-            using result = decltype(refoption(std::invoke(std::forward<F>(f), *std::forward<Self>(self))));
-            if (!self) return result {};
-            return refoption(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));
+            auto invoke = [&]() {return forward_option(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));};
+            return self ? invoke() : decltype(invoke()) {};
         }
         
         template <typename Self, typename F>
         static constexpr auto and_then_(Self &&self, F &&f) {
-            using result = decltype(std::invoke(std::forward<F>(f), *std::forward<Self>(self)));
-            if (!self) return result {};
-            return std::invoke(std::forward<F>(f), *std::forward<Self>(self));
+            auto invoke = [&]() {return std::invoke(std::forward<F>(f), *std::forward<Self>(self));};
+            return self ? invoke() : decltype(invoke()) {};
         }
         
         template <typename Self, typename U>
-        static constexpr auto unwrap_or_(Self &&self, U &&value) {
-            using result = std::decay_t<decltype(*std::forward<Self>(self))>;
-            if (!self) return static_cast<result>(std::forward<U>(value));
+        static constexpr auto unwrap_or_(Self &&self, U &&value) -> std::decay_t<deref_t<Self>> {
+            if (!self) return std::forward<U>(value);
             return *std::forward<Self>(self);
         }
         
@@ -110,7 +109,7 @@ namespace ufo {
     public:
         using value_type = T;
         
-        constexpr explicit option() noexcept : optional_ {} {
+        constexpr option() noexcept : optional_ {} {
         }
         
         ~option() noexcept = default;
@@ -218,7 +217,7 @@ namespace ufo {
     public:
         using value_type = T &;
         
-        constexpr explicit option() noexcept : pointer_(nullptr) {
+        constexpr option() noexcept : pointer_(nullptr) {
         }
         
         ~option() noexcept = default;
@@ -278,10 +277,6 @@ namespace ufo {
             return *pointer_;
         }
         
-        constexpr auto deref() const noexcept {
-            return this->map([](auto &x) -> std::decay_t<T> {return x;});
-        }
-        
         template <typename LHS, typename RHS>
         friend constexpr bool operator==(const option<LHS &> &lhs, const option<RHS &> &rhs) noexcept;
         
@@ -305,11 +300,6 @@ namespace ufo {
     template <typename T>
     constexpr bool operator==(nullopt_t, const option<T &> &option) noexcept {
         return option.pointer_ == nullptr;
-    }
-    
-    template <typename T>
-    constexpr option<T> refoption(T &&value) noexcept {
-        return std::forward<T>(value);
     }
 }
 

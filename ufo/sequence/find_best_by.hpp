@@ -6,16 +6,14 @@
 #include "map.hpp"
 #include "find_best.hpp"
 #include "../type_traits.hpp"
-#include "../holder.hpp"
-
-#include "../TD.hpp"
+#include "../box.hpp"
 
 namespace ufo {
     template <typename KeyF, typename CompareF>
     constexpr auto find_best_by(KeyF &&key_f, CompareF &&compare_f) {
         return sequence_operator([](auto &&key_f, auto &&compare_f, auto &&sequence) {
-            using element_holder = holder<sequence_element_t<decltype(sequence)>>;
-            using key_holder = holder<decltype(std::invoke(key_f, *sequence.next()))>;
+            using element_holder = box<sequence_element_t<decltype(sequence)>>;
+            using key_holder = box<decltype(std::invoke(key_f, *sequence.next()))>;
             return (std::forward<decltype(sequence)>(sequence) | map([&key_f](auto &&value) constexpr {
                 auto key = key_holder(std::invoke(key_f, value));
                 return std::make_tuple(element_holder(std::forward<decltype(value)>(value)), std::move(key));

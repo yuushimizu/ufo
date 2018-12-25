@@ -4,7 +4,6 @@
 #include <forward_list>
 #include "option.hpp"
 #include "type_traits.hpp"
-#include "scope_exit.hpp"
 #include "container.hpp"
 
 namespace ufo {
@@ -68,11 +67,11 @@ namespace ufo {
             };
             
         public:
-            template <typename F, enable_if_t<is_convertible_v<std::result_of_t<F(Args ...)>, R>> = nullptr>
+            template <typename F, enable_if_t<is_convertible_v<std::result_of_t<F(Args ...)>, R>> = enabler>
             explicit Part(F f) : impl_(std::make_unique<Normal<F>>(std::move(f))) {
             }
             
-            template <typename F, enable_if_t<is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = nullptr>
+            template <typename F, enable_if_t<is_convertible_v<std::result_of_t<F(Args ...)>, coroutine<R(Args ...)>>> = enabler>
             explicit Part(F f) : impl_(std::make_unique<Nested<F>>(std::move(f))) {
             }
             
@@ -100,13 +99,13 @@ namespace ufo {
         static auto add_parts(std::forward_list<Part> &parts) {
         }
         
-        template <typename T, typename ... Rest, enable_if_t<!std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        template <typename T, typename ... Rest, enable_if_t<!std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = enabler>
         static auto add_parts(std::forward_list<Part> &parts, T &&arg, Rest && ... rest) {
             add_parts(parts, std::forward<Rest>(rest) ...);
             parts.push_front(Part(std::forward<T>(arg)));
         }
         
-        template <typename T, typename ... Rest, enable_if_t<std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        template <typename T, typename ... Rest, enable_if_t<std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = enabler>
         static auto add_parts(std::forward_list<Part> &parts, T other, Rest && ... rest) {
             add_parts(parts, std::forward<Rest>(rest) ...);
             parts.splice_after(parts.before_begin(), std::move(other.parts_));
@@ -127,11 +126,11 @@ namespace ufo {
     public:
         constexpr coroutine() noexcept = default;
         
-        template <typename T, enable_if_t<is_part_source_v<T> && !std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = nullptr>
+        template <typename T, enable_if_t<is_part_source_v<T> && !std::is_same_v<coroutine<R(Args ...)>, std::decay_t<T>>> = enabler>
         coroutine(T &&arg) : parts_(make_parts(std::forward<T>(arg))) {
         }
         
-        template <typename First, typename Second, typename ... PartArgs, enable_if_t<is_part_source_v<First> && is_part_source_v<Second> && (... && is_part_source_v<PartArgs>)> = nullptr>
+        template <typename First, typename Second, typename ... PartArgs, enable_if_t<is_part_source_v<First> && is_part_source_v<Second> && (... && is_part_source_v<PartArgs>)> = enabler>
         coroutine(First &&first, Second &&second, PartArgs && ... part_args) : parts_(make_parts(std::forward<First>(first), std::forward<Second>(second), std::forward<PartArgs>(part_args) ...)) {
         }
         

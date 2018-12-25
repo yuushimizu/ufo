@@ -101,13 +101,11 @@ namespace ufo {
     
     template <typename T>
     class option : public option_trait<option<T>> {
-        static_assert(std::is_nothrow_move_constructible_v<T>);
-        
     private:
         std::optional<T> optional_;
         
     public:
-        using value_type = T;
+        using type = T;
         
         constexpr option() noexcept : optional_ {} {
         }
@@ -119,12 +117,16 @@ namespace ufo {
         
         constexpr option(const option &) = default;
         
-        constexpr option(option &&) noexcept = default;
+        constexpr option(option &&) noexcept(std::is_nothrow_move_constructible_v<T>) = default;
         
         constexpr option(const T &value) : optional_(value) {
         }
         
         constexpr option(T &&value) : optional_(std::move(value)) {
+        }
+        
+        template <typename ... Args>
+        constexpr option(std::in_place_t, Args && ... args) : optional_(std::in_place, std::forward<Args>(args) ...) {
         }
         
         constexpr option &operator=(nullopt_t) noexcept {
@@ -215,7 +217,7 @@ namespace ufo {
         T *pointer_;
         
     public:
-        using value_type = T &;
+        using type = T &;
         
         constexpr option() noexcept : pointer_(nullptr) {
         }

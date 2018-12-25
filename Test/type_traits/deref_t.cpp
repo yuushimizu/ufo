@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include "ufo/type_traits.hpp"
 
-using namespace ufo;
-
 namespace {
     TEST(DerefTTest, Class) {
         struct X {
@@ -26,16 +24,16 @@ namespace {
         private:
             X();
         };
-        static_assert(std::is_same_v<long, deref_t<X>>);
-        static_assert(std::is_same_v<double, deref_t<X &>>);
-        static_assert(std::is_same_v<int, deref_t<const X &>>);
-        static_assert(std::is_same_v<long, deref_t<X &&>>);
+        static_assert(std::is_same_v<long, ufo::deref_t<X>>);
+        static_assert(std::is_same_v<double, ufo::deref_t<X &>>);
+        static_assert(std::is_same_v<int, ufo::deref_t<const X &>>);
+        static_assert(std::is_same_v<long, ufo::deref_t<X &&>>);
         SUCCEED();
     }
     
     TEST(DerefTTest, Pointer) {
-        static_assert(std::is_same_v<int &, deref_t<int *>>);
-        static_assert(std::is_same_v<const int &, deref_t<const int *>>);
+        static_assert(std::is_same_v<int &, ufo::deref_t<int *>>);
+        static_assert(std::is_same_v<const int &, ufo::deref_t<const int *>>);
         SUCCEED();
     }
 }

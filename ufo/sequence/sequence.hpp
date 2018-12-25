@@ -13,7 +13,7 @@ namespace ufo {
     using sequence_option_t = decltype(std::declval<T>().next());
     
     template <typename T>
-    using sequence_element_t = typename sequence_option_t<T>::value_type;
+    using sequence_element_t = typename sequence_option_t<T>::type;
 }
 
 #endif

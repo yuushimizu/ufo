@@ -32,7 +32,7 @@ namespace ufo {
         }
     };
     
-    template <typename Sequence, typename Op, enable_if_t<!is_instantiation_of_v<SequenceOperator, Sequence> && is_instantiation_of_v<SequenceOperator, std::decay_t<Op>>> = nullptr>
+    template <typename Sequence, typename Op, enable_if_t<!is_instantiation_of_v<SequenceOperator, Sequence> && is_instantiation_of_v<SequenceOperator, std::decay_t<Op>>> = enabler>
     constexpr decltype(auto) operator|(Sequence &&sequence, Op &&op) {
         return std::forward<Op>(op)(std::forward<Sequence>(sequence));
     }
@@ -42,7 +42,7 @@ namespace ufo {
         return SequenceOperator<F, FixedArgs ...>(std::move(f), {std::move(fixed_args) ...});
     }
     
-    template <typename LHSOp, typename RHSOp, enable_if_t<is_instantiation_of_v<SequenceOperator, std::decay_t<LHSOp>> && is_instantiation_of_v<SequenceOperator, std::decay_t<RHSOp>>> = nullptr>
+    template <typename LHSOp, typename RHSOp, enable_if_t<is_instantiation_of_v<SequenceOperator, std::decay_t<LHSOp>> && is_instantiation_of_v<SequenceOperator, std::decay_t<RHSOp>>> = enabler>
     constexpr decltype(auto) operator|(LHSOp &&lhs, RHSOp &&rhs) {
         return sequence_operator([](auto &&lhs, auto &&rhs, auto && ... sequences) {
             return std::forward<LHSOp>(lhs)(std::forward<decltype(sequences)>(sequences) ...) | std::forward<RHSOp>(rhs);

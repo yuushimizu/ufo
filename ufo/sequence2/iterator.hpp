@@ -42,9 +42,6 @@ namespace ufo::s2 {
     private:
         std::invoke_result_t<F> f_;
     };
-    
-    template <typename Emitter>
-    iterator(const Emitter &emitter) -> iterator<std::invoke_result_t<decltype(emitter.f_)>>;
 }
 
 #endif

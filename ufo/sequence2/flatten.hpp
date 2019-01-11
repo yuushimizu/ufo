@@ -8,13 +8,13 @@
 namespace ufo::s2 {
     constexpr auto flatten() noexcept {
         return sequence_operator([](auto &&seq) {
-            return sequence([seq = forward_box<decltype(seq)>(seq)]() {
+            return sequence([seq = std::forward<decltype(seq)>(seq)]() {
                 auto next_sequence = [](auto &&i) {
                     return std::forward<decltype(i)>(i).next().map([](auto &&seq) {return ensure_sequence(std::forward<decltype(seq)>(seq));});
                 };
-                using seq_option_type = decltype(next_sequence(seq->begin()));
-                using inner_iterator_type = decltype(next_sequence(seq->begin())->begin());
-                return [next_sequence, base = seq->begin(), inner_seq = seq_option_type {}, inner_iterator = option<inner_iterator_type> {}]() mutable {
+                using seq_option_type = decltype(next_sequence(seq.begin()));
+                using inner_iterator_type = decltype(next_sequence(seq.begin())->begin());
+                return [next_sequence, base = seq.begin(), inner_seq = seq_option_type {}, inner_iterator = option<inner_iterator_type> {}]() mutable {
                     while (true) {
                         if (inner_iterator) {
                             auto next = inner_iterator->next();

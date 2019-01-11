@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "ufo/sequence2/empty.hpp"
 #include "test_utility.hpp"
-#include <type_traits>
 
 namespace {
     TEST(EmptyTest, Empty) {

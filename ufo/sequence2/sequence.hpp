@@ -2,13 +2,15 @@
 #define ufo_sequence_sequence
 
 #include <functional>
+#include <type_traits>
 #include "iterator.hpp"
-#include "../type_traits.hpp"
 #include "../functional.hpp"
 
 namespace ufo::s2 {
+    class sequence_tag {};
+    
     template <typename F>
-    class sequence {
+    class sequence : public sequence_tag {
     public:
         constexpr sequence(F f) noexcept : emitter_(std::move(f)) {
         }
@@ -36,7 +38,7 @@ namespace ufo::s2 {
     };
     
     template <typename T>
-    constexpr inline const bool is_sequence_v = is_instantiation_of_v<sequence, T>;
+    constexpr inline const bool is_sequence_v = std::is_base_of_v<sequence_tag, T>;
 }
 
 #endif

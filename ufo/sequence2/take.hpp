@@ -8,8 +8,8 @@
 namespace ufo::s2 {
     constexpr auto take(std::size_t count) noexcept {
         return sequence_operator([count](auto &&seq) {
-            return sequence([count, seq = forward_box<decltype(seq)>(seq)]() {
-                return [rest = count, base = seq->begin()]() mutable {
+            return sequence([count, seq = std::forward<decltype(seq)>(seq)]() {
+                return [rest = count, base = seq.begin()]() mutable {
                     if (rest <= 0) return decltype(base.next()) {};
                     auto next = base.next();
                     --rest;
